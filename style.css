@@ -3,79 +3,61 @@
 html, body { height:100%; margin:0; padding:0; }
 
 body {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000;
-  color: #fff;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  user-select: none;
-  overflow: hidden;
-  min-height: 100vh;
+  position:relative; display:flex; align-items:center; justify-content:center;
+  background:#000; color:#fff;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  user-select:none; overflow:hidden; min-height:100vh;
 }
 
-/* ===== Background ===== */
 body::before {
-  content: "";
-  position: fixed; inset:0; z-index:-3; pointer-events:none;
-  background-image: url("bg_full.png"), url("bg_fuji.png"),
-    radial-gradient(ellipse at 50% 80%, #0a0a1a 0%, #000 100%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: brightness(0.78) saturate(0.95) contrast(1.05);
-  transform: scale(1.01);
+  content:""; position:fixed; inset:0; z-index:-3; pointer-events:none;
+  background-image:url("bg_full.png"),url("bg_fuji.png"),
+    radial-gradient(ellipse at 50% 80%,#0a0a1a 0%,#000 100%);
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+  filter:brightness(0.78) saturate(0.95) contrast(1.05); transform:scale(1.01);
 }
 body::after {
-  content: "";
-  position: fixed; inset:0; z-index:-2; pointer-events:none;
-  background: radial-gradient(60% 60% at 50% 45%, rgba(0,0,0,.08) 0%, rgba(0,0,0,.60) 100%);
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:radial-gradient(60% 60% at 50% 45%,rgba(0,0,0,.08) 0%,rgba(0,0,0,.60) 100%);
 }
+
+/* ===== Top hint ===== */
+#topHint {
+  position:fixed; top:10px; left:50%; transform:translateX(-50%);
+  z-index:55; pointer-events:auto; cursor:pointer;
+  font-size:12px; color:rgba(255,255,255,.35); letter-spacing:.06em;
+  padding:4px 14px; border-radius:20px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  transition:opacity 200ms ease, color 200ms ease;
+  white-space:nowrap;
+}
+#topHint:hover { color:rgba(255,255,255,.7); background:rgba(255,255,255,.12); }
 
 /* ===== Hotspot ===== */
 #topHotspot {
-  position: fixed; top:0; left:0; right:0; height:56px;
+  position:fixed; top:0; left:0; right:0; height:56px;
   z-index:50; pointer-events:auto;
 }
 
 /* ===== Topbar ===== */
 .topbar {
-  position: fixed;
-  top: 10px; left:50%;
-  transform: translateX(-50%) translateY(-130%);
-  opacity: 0; pointer-events: none;
-  z-index: 60;
-  width: min(1400px, 97vw);
-  display: flex; align-items:center; justify-content:space-between;
-  gap:10px; flex-wrap:wrap;
-  padding: 10px 14px;
-  border-radius: 16px;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.09) inset, 0 8px 32px rgba(0,0,0,.5);
-  transition: transform 180ms ease, opacity 180ms ease;
+  position:fixed; top:10px; left:50%;
+  transform:translateX(-50%) translateY(-130%);
+  opacity:0; pointer-events:none; z-index:60;
+  width:min(1400px,97vw);
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; flex-wrap:wrap; padding:10px 14px; border-radius:16px;
+  background:rgba(0,0,0,.55); backdrop-filter:blur(14px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.09) inset,0 8px 32px rgba(0,0,0,.5);
+  transition:transform 180ms ease,opacity 180ms ease;
 }
-.topbar.visible {
-  transform: translateX(-50%) translateY(0);
-  opacity:1; pointer-events:auto;
-}
+.topbar.visible { transform:translateX(-50%) translateY(0); opacity:1; pointer-events:auto; }
 
-.tb-left {
-  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-}
-.tb-right {
-  display:flex; align-items:center;
-}
-.tb-group {
-  display:contents; /* children participate directly in flex layout */
-}
-.tb-sep {
-  width:1px; height:22px;
-  background: rgba(255,255,255,.15);
-  margin: 0 4px;
-  display:inline-block;
-}
+.tb-left { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.tb-right { display:flex; align-items:center; }
+.tb-group { display:contents; }
+.tb-sep { width:1px; height:22px; background:rgba(255,255,255,.15); margin:0 4px; display:inline-block; }
 
 .label { font-size:13px; color:#ccc; white-space:nowrap; }
 
@@ -93,8 +75,7 @@ select option { background:#1a1a2e; color:#fff; }
 }
 
 .chk {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:6px 10px; border-radius:10px;
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:10px;
   background:rgba(255,255,255,.08); color:#ccc; font-size:13px;
   cursor:pointer; box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;
 }
@@ -104,83 +85,77 @@ select option { background:#1a1a2e; color:#fff; }
 
 /* ===== Wrap ===== */
 .wrap {
-  width: min(1280px, 96vw);
+  width:min(1280px,96vw);
   display:flex; flex-direction:column; align-items:center;
-  gap:0; padding-bottom:12px;
+  padding-bottom:12px;
 }
 
 /* ===== Flashcard view ===== */
-#flashView {
-  width:100%; display:flex; flex-direction:column; align-items:center;
-}
+#flashView { width:100%; display:flex; flex-direction:column; align-items:center; }
 
 /* ===== Card ===== */
 .card {
-  position:relative;
-  width:100%; max-width:660px;
-  min-height: min(52vh, 480px);
-  border-radius:24px;
-  background:rgba(0,0,0,.38);
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 20px 60px rgba(0,0,0,.55);
+  position:relative; width:100%; max-width:660px;
+  min-height:min(52vh,480px); border-radius:24px;
+  background:rgba(0,0,0,.38); backdrop-filter:blur(10px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 20px 60px rgba(0,0,0,.55);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  cursor:pointer; outline:none;
-  padding:24px 20px 28px;
+  cursor:pointer; outline:none; padding:24px 20px 28px;
   transition:box-shadow 120ms ease;
 }
-.card:hover { box-shadow:0 0 0 1px rgba(255,255,255,.13) inset, 0 20px 60px rgba(0,0,0,.55); }
-
+.card:hover { box-shadow:0 0 0 1px rgba(255,255,255,.13) inset,0 20px 60px rgba(0,0,0,.55); }
 .card.fading .card-face,
 .card.fading .card-answer { opacity:0; transform:scale(0.96); }
 
 .card-face {
-  font-size: clamp(90px, 16vw, 240px);
-  line-height:1.15; color:#fff;
-  text-shadow:0 0 20px rgba(255,255,255,.30), 0 0 2px rgba(255,255,255,.4);
-  text-align:center; overflow:visible; padding-bottom:4px;
-  transition:opacity 160ms ease, transform 160ms ease;
+  font-size:clamp(90px,16vw,240px); line-height:1.15; color:#fff;
+  text-shadow:0 0 20px rgba(255,255,255,.30),0 0 2px rgba(255,255,255,.4);
+  text-align:center; padding-bottom:4px;
+  transition:opacity 160ms ease,transform 160ms ease;
 }
-
 .card-face.both-together {
   display:flex; align-items:baseline; gap:.18em;
-  font-size:clamp(80px, 12vw, 180px); line-height:1.15;
+  font-size:clamp(80px,12vw,180px);
 }
 .card-face.both-together .sep-slash { font-size:.4em; opacity:.4; align-self:center; }
+.card-face.romaji-prompt  { font-size:clamp(60px,10vw,160px); letter-spacing:.04em; }
+.card-face.number-prompt  { font-size:clamp(70px,12vw,200px); letter-spacing:.02em; font-variant-numeric:tabular-nums; }
 
-.card-face.romaji-prompt  { font-size:clamp(60px, 10vw, 160px); letter-spacing:.04em; }
-.card-face.number-prompt  { font-size:clamp(70px, 12vw, 200px); letter-spacing:.02em; font-variant-numeric:tabular-nums; }
+/* Time card fronts */
+.card-face.time-digital     { font-size:clamp(56px,9vw,140px); font-variant-numeric:tabular-nums; letter-spacing:.02em; display:flex; align-items:baseline; gap:.15em; }
+.card-face.time-kanji-prompt{ font-size:clamp(48px,7vw,120px); line-height:1.1; }
+.card-face.time-hira-prompt { font-size:clamp(32px,5vw,80px);  line-height:1.2; }
+.card-face.time-romaji-prompt{ font-size:clamp(32px,5vw,80px); line-height:1.2; letter-spacing:.04em; }
+.time-prefix-symbol { font-size:.55em; opacity:.8; flex-shrink:0; }
 
 /* ── Card answer ── */
 .card-answer {
   margin-top:10px; text-align:center;
   display:flex; flex-direction:column; align-items:center; gap:6px;
   opacity:0; transform:translateY(10px);
-  transition:opacity 160ms ease, transform 160ms ease;
+  transition:opacity 160ms ease,transform 160ms ease;
   min-height:1.3em; padding-bottom:4px;
 }
 .card-answer.shown { opacity:1; transform:translateY(0); }
-
-/* kana answer = plain text, sized in parent */
-.card-answer:not(:has(.ans-kanji)) {
-  font-size:clamp(22px, 3.5vw, 42px); color:#ddd; line-height:1.3;
+.card-answer:not(:has(.ans-kanji,.ans-time-dig,.ans-hira,.ans-romaji)) {
+  font-size:clamp(22px,3.5vw,42px); color:#ddd; line-height:1.3;
 }
 
-/* number answer lines */
-.ans-kanji  { font-size:clamp(32px, 5vw, 70px);  color:#fff;  line-height:1.1; text-shadow:0 0 14px rgba(255,255,255,.25); }
-.ans-romaji { font-size:clamp(16px, 2.2vw, 28px); color:#ccc;  line-height:1.2; letter-spacing:.04em; }
-.ans-hira   { font-size:clamp(14px, 1.8vw, 22px); color:#aaa;  line-height:1.2; }
+.ans-kanji     { font-size:clamp(28px,4vw,60px);  color:#fff;  line-height:1.1; text-shadow:0 0 14px rgba(255,255,255,.25); }
+.ans-time-dig  { font-size:clamp(20px,2.8vw,38px); color:#aad4ff; line-height:1.2; font-variant-numeric:tabular-nums; letter-spacing:.03em; }
+.ans-romaji    { font-size:clamp(14px,2vw,24px);   color:#ccc;  line-height:1.2; letter-spacing:.04em; }
+.ans-hira      { font-size:clamp(14px,1.8vw,22px); color:#aaa;  line-height:1.2; }
+.ans-note      { font-size:clamp(11px,1.2vw,15px); color:#888;  line-height:1.2; font-style:italic; }
+.exc-badge     { font-size:12px; color:#ffd97a; background:rgba(255,200,60,.12); border-radius:8px; padding:2px 8px; margin-top:4px; border:1px solid rgba(255,200,60,.25); }
 
 /* ===== Choices ===== */
-.choices-row {
-  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
-  margin-top:14px; max-width:700px;
-}
+.choices-row { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px; max-width:700px; }
 .choices-row .choice {
   border:0; border-radius:14px; padding:10px 16px;
   background:rgba(0,0,0,.42); color:#fff;
   font-size:clamp(20px,3vw,30px); cursor:pointer;
   box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
-  transition:background 100ms ease, transform 80ms ease;
+  transition:background 100ms ease,transform 80ms ease;
   min-width:56px; text-align:center; line-height:1.2;
 }
 .choices-row .choice:hover  { background:rgba(255,255,255,.13); }
@@ -189,16 +164,13 @@ select option { background:#1a1a2e; color:#fff; }
 .choices-row .choice.wrong   { background:rgba(220,60,60,.45)!important; box-shadow:0 0 0 1px rgba(220,60,60,.5) inset; }
 
 /* ===== Actions ===== */
-.actions-row {
-  display:flex; gap:10px; justify-content:center;
-  margin-top:14px; flex-wrap:wrap;
-}
+.actions-row { display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap; }
 
 button {
   border:0; border-radius:14px; padding:10px 18px;
   background:rgba(0,0,0,.42); color:#fff; font-size:15px;
   cursor:pointer; box-shadow:0 0 0 1px rgba(255,255,255,.09) inset;
-  transition:background 100ms ease, transform 80ms ease;
+  transition:background 100ms ease,transform 80ms ease;
 }
 button:hover  { background:rgba(255,255,255,.12); }
 button:active { transform:translateY(1px); }
@@ -207,16 +179,10 @@ button.primary:hover { background:rgba(100,160,255,.38); }
 button.ghost  { background:rgba(255,255,255,.06); }
 button.ghost:hover { background:rgba(255,255,255,.12); }
 
-/* ===== Tables button ===== */
-.tables-btn {
-  margin-top:14px; font-size:14px; padding:8px 20px;
-  border-radius:12px; background:rgba(255,255,255,.09);
-}
+.tables-btn { margin-top:14px; font-size:14px; padding:8px 20px; border-radius:12px; background:rgba(255,255,255,.09); }
 
 /* ===== Table view ===== */
-#tableView {
-  width:100%; display:flex; flex-direction:column; align-items:center;
-}
+#tableView { width:100%; display:flex; flex-direction:column; align-items:center; }
 .table-header { margin-bottom:10px; text-align:center; }
 .table-title  { font-size:16px; opacity:.85; color:#ccc; }
 
@@ -224,13 +190,11 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
   width:100%; max-height:82vh; overflow-y:auto; overflow-x:auto;
   padding:14px; border-radius:22px;
   background:rgba(0,0,0,.35); backdrop-filter:blur(10px);
-  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 20px 60px rgba(0,0,0,.55);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 20px 60px rgba(0,0,0,.55);
 }
 
 /* ===== Kana table ===== */
-.kana-table {
-  width:100%; border-collapse:separate; border-spacing:3px; background:transparent;
-}
+.kana-table { width:100%; border-collapse:separate; border-spacing:3px; background:transparent; }
 .kana-table th {
   font-size:clamp(9px,.9vw,12px); color:#ccc; padding:5px 3px 4px;
   text-align:center; font-weight:600; letter-spacing:.05em; white-space:nowrap;
@@ -250,216 +214,209 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
 .kana-table td.empty:hover { background:transparent; }
 .kana-table td.dak-cell { background:rgba(90,60,160,.22); box-shadow:0 0 0 1px rgba(160,120,255,.12) inset; }
 .kana-table td.dak-cell:hover { background:rgba(130,100,220,.30); }
-
 .kana-table td.row-head {
   font-size:clamp(10px,.9vw,13px); color:#777; background:transparent; box-shadow:none;
   min-width:30px; padding:4px 6px; white-space:nowrap; text-align:left;
 }
 .kana-table td.row-head:hover { background:transparent; }
-
 .kana-table td .cell-h,
 .kana-table td .cell-k { font-size:clamp(14px,1.6vw,22px); color:#fff; line-height:1.15; display:block; padding-bottom:1px; }
 .kana-table td .cell-r { font-size:clamp(8px,.75vw,11px); color:#bbb; display:block; margin-top:1px; letter-spacing:.03em; }
 
-/* ===== Numbers table ===== */
-.num-table {
-  width:100%; border-collapse:separate; border-spacing:3px; background:transparent;
+/* ===== Yoon section ===== */
+.yoon-section { margin-top:14px; }
+.yoon-title { font-size:14px; color:#ccc; font-weight:600; letter-spacing:.05em; margin-bottom:8px; padding:0 2px; }
+.yoon-sub-title { font-size:12px; color:#b8a0ff; font-weight:500; margin:10px 0 6px; padding:0 2px; letter-spacing:.04em; }
+.yoon-grid { display:flex; flex-wrap:wrap; gap:6px; }
+.yoon-block {
+  display:flex; align-items:stretch; gap:3px;
+  background:rgba(0,0,0,.20); border-radius:12px; padding:4px 5px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;
 }
+.yoon-block.yoon-dak { background:rgba(90,60,160,.18); box-shadow:0 0 0 1px rgba(160,120,255,.12) inset; }
+.yoon-base-label {
+  font-size:clamp(9px,.8vw,11px); color:#888;
+  writing-mode:vertical-rl; text-orientation:mixed;
+  align-self:center; padding:0 2px; letter-spacing:.04em; white-space:nowrap;
+}
+.yoon-cell {
+  border-radius:9px; background:rgba(0,0,0,.32);
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;
+  padding:4px 5px; text-align:center; cursor:default;
+  transition:background 110ms ease; min-width:42px;
+  display:flex; flex-direction:column; align-items:center;
+}
+.yoon-cell:hover { background:rgba(255,255,255,.11); }
+.yoon-cell.yoon-dak-cell { background:rgba(90,60,160,.22); }
+.yoon-cell.yoon-dak-cell:hover { background:rgba(130,100,220,.30); }
+.yoon-cell .cell-h,.yoon-cell .cell-k { font-size:clamp(13px,1.5vw,20px); }
+.yoon-cell .cell-r { font-size:clamp(7px,.7vw,10px); }
+
+/* ===== Numbers table ===== */
+.num-table { width:100%; border-collapse:separate; border-spacing:3px; background:transparent; }
 .num-table th {
   font-size:clamp(10px,1vw,13px); color:#ccc; font-weight:600;
   padding:5px 8px 4px; text-align:center; letter-spacing:.04em;
-  background:rgba(0,0,0,.45); border-radius:10px; white-space:nowrap;
-  line-height:1.4;
+  background:rgba(0,0,0,.45); border-radius:10px; white-space:nowrap; line-height:1.4;
 }
 .num-table th .th-jp { font-size:.82em; color:#aaa; font-weight:400; display:block; }
 .num-table th:first-child { width:28px; background:transparent; color:#777; }
-
 .num-table td.row-head {
   font-size:clamp(11px,1vw,14px); color:#888; text-align:center;
   padding:3px 4px; background:transparent; white-space:nowrap;
 }
-
-/* ── Compact cell layout ──
-   arabic number: top-right, tiny
-   then one row: kanji (left, big) + text column (romaji / hiragana, right, small)
-*/
 .num-cell {
-  border-radius:10px;
-  background:rgba(0,0,0,.32);
-  backdrop-filter:blur(6px);
+  border-radius:10px; background:rgba(0,0,0,.32); backdrop-filter:blur(6px);
   box-shadow:0 0 0 1px rgba(255,255,255,.07) inset;
-  padding:4px 7px 5px;
-  cursor:default;
-  transition:background 110ms ease;
-  vertical-align:middle;
-  min-width:100px;
+  padding:4px 7px 5px; cursor:default; transition:background 110ms ease;
+  vertical-align:middle; min-width:100px;
 }
 .num-cell:hover { background:rgba(255,255,255,.11); }
-
-/* Exception cells — subtle warm highlight */
-.num-cell-special {
-  background: rgba(60,40,10,.50);
-  box-shadow: 0 0 0 1px rgba(255,200,80,.18) inset;
-}
-.num-cell-special:hover { background: rgba(80,55,10,.65); }
-
-.num-arabic {
-  font-size:clamp(8px,.7vw,10px); color:#666;
-  display:block; text-align:right; line-height:1;
-  margin-bottom:2px;
-  font-variant-numeric:tabular-nums;
-}
-
-/* Inline row: kanji + text side by side */
-.num-inline {
-  display:flex; align-items:center; gap:6px;
-}
-
-.num-kanji {
-  font-size:clamp(18px,2vw,26px);
-  color:#fff; line-height:1;
-  text-shadow:0 0 10px rgba(255,255,255,.2);
-  flex-shrink:0;
-  white-space:nowrap;
-}
-/* Special reading kanji gets accent colour */
-.num-inline.num-special .num-kanji {
-  color:#ffd97a;
-  text-shadow:0 0 12px rgba(255,200,60,.35);
-}
-
-.num-text {
-  display:flex; flex-direction:column; justify-content:center; gap:1px;
-  text-align:left;
-}
-.num-romaji {
-  font-size:clamp(9px,.85vw,12px); color:#ccc;
-  line-height:1.2; letter-spacing:.02em; white-space:nowrap;
-}
-/* Special reading romaji underline */
-.num-inline.num-special .num-romaji {
-  color:#ffd97a;
-  text-decoration:underline;
-  text-decoration-color:rgba(255,200,80,.5);
-  text-underline-offset:2px;
-}
-.num-hira {
-  font-size:clamp(9px,.85vw,12px); color:#999;
-  line-height:1.2; white-space:nowrap;
-}
-
+.num-cell-special { background:rgba(60,40,10,.50); box-shadow:0 0 0 1px rgba(255,200,80,.18) inset; }
+.num-cell-special:hover { background:rgba(80,55,10,.65); }
+.num-arabic { font-size:clamp(8px,.7vw,10px); color:#666; display:block; text-align:right; line-height:1; margin-bottom:2px; font-variant-numeric:tabular-nums; }
+.num-inline { display:flex; align-items:center; gap:6px; }
+.num-kanji  { font-size:clamp(18px,2vw,26px); color:#fff; line-height:1; text-shadow:0 0 10px rgba(255,255,255,.2); flex-shrink:0; white-space:nowrap; }
+.num-inline.num-special .num-kanji { color:#ffd97a; text-shadow:0 0 12px rgba(255,200,60,.35); }
+.num-text   { display:flex; flex-direction:column; justify-content:center; gap:1px; text-align:left; }
+.num-romaji { font-size:clamp(9px,.85vw,12px); color:#ccc; line-height:1.2; letter-spacing:.02em; white-space:nowrap; }
+.num-inline.num-special .num-romaji { color:#ffd97a; text-decoration:underline; text-decoration-color:rgba(255,200,80,.5); text-underline-offset:2px; }
+.num-hira   { font-size:clamp(9px,.85vw,12px); color:#999; line-height:1.2; white-space:nowrap; }
 .num-table td.empty { background:transparent; box-shadow:none; }
 .zero-row td { border-top:2px solid rgba(255,255,255,.08); }
-.big-row td   { border-top:2px solid rgba(255,255,255,.12); }
+.big-row td  { border-top:2px solid rgba(255,255,255,.12); }
 .big-row td.row-head { color:#a0c0ff; }
+.num-cell-dual { background:rgba(20,40,70,.48); box-shadow:0 0 0 1px rgba(100,170,255,.16) inset; }
+.num-cell-dual:hover { background:rgba(30,55,95,.65); }
+.num-inline.num-dual { align-items:center; gap:5px; }
+.num-inline.num-dual .num-kanji { color:#8ecfff; text-shadow:0 0 12px rgba(120,190,255,.30); }
+.num-divider { font-size:clamp(10px,1vw,14px); color:rgba(255,255,255,.25); flex-shrink:0; align-self:center; line-height:1; }
 
-/* Dual-reading cells (4×, 7×, 9×) */
-.num-cell-dual {
-  background: rgba(20,40,70,.48);
-  box-shadow: 0 0 0 1px rgba(100,170,255,.16) inset;
-}
-.num-cell-dual:hover { background: rgba(30,55,95,.65); }
-
-/* Dual inline layout: kanji | reading1 / reading2 */
-.num-inline.num-dual {
-  align-items: center;
-  gap: 5px;
-}
-.num-inline.num-dual .num-kanji {
-  color: #8ecfff;
-  text-shadow: 0 0 12px rgba(120,190,255,.30);
-}
-/* The slash divider between two readings */
-.num-divider {
-  font-size: clamp(10px, 1vw, 14px);
-  color: rgba(255,255,255,.25);
-  flex-shrink: 0;
-  align-self: center;
-  line-height: 1;
+/* ===== Time table ===== */
+.time-table-wrap {
+  display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;
 }
 
-
-/* ===== Yoon section (below kana table) ===== */
-.yoon-section {
-  margin-top: 14px;
+.time-section {
+  flex:1; min-width:220px;
 }
 
-.yoon-title {
-  font-size: 14px;
-  color: #ccc;
-  font-weight: 600;
-  letter-spacing: .05em;
-  margin-bottom: 8px;
-  padding: 0 2px;
+.time-section-title {
+  font-size:13px; font-weight:700; color:#ccc; letter-spacing:.06em;
+  margin-bottom:8px; padding:0 2px; text-transform:uppercase;
 }
 
-.yoon-sub-title {
-  font-size: 12px;
-  color: #b8a0ff;
-  font-weight: 500;
-  margin: 10px 0 6px;
-  padding: 0 2px;
-  letter-spacing: .04em;
+.time-tbl {
+  width:100%; border-collapse:separate; border-spacing:3px;
+}
+.time-tbl th {
+  font-size:11px; color:#aaa; font-weight:600; padding:4px 6px;
+  background:rgba(0,0,0,.40); border-radius:7px; text-align:center;
+  letter-spacing:.04em; white-space:nowrap;
+}
+.time-tbl td {
+  font-size:clamp(10px,.95vw,13px); color:#ddd; padding:4px 8px;
+  background:rgba(0,0,0,.28); border-radius:8px;
+  text-align:center; white-space:nowrap; vertical-align:middle;
+}
+.time-tbl td.row-head {
+  font-size:11px; color:#777; background:transparent; text-align:right; padding-right:6px;
+}
+/* Exception rows */
+.time-tbl tr.time-row-ex td { background:rgba(60,40,10,.48); color:#ffd97a; }
+.time-tbl tr.time-row-ex td.row-head { color:#e8b44a; background:transparent; }
+/* Note rows */
+.time-tbl tr.time-row-note td {
+  font-size:11px; color:#888; background:rgba(255,255,255,.04);
+  border-radius:8px; padding:4px 10px; text-align:left; font-style:italic;
+  white-space:normal;
 }
 
-/* Grid of yoon blocks, wrapping */
-.yoon-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
 
-/* One block = base-label + 3 cells in a row */
-.yoon-block {
-  display: flex;
-  align-items: stretch;
-  gap: 3px;
-  background: rgba(0,0,0,.20);
-  border-radius: 12px;
-  padding: 4px 5px;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
-}
-.yoon-block.yoon-dak {
-  background: rgba(90,60,160,.18);
-  box-shadow: 0 0 0 1px rgba(160,120,255,.12) inset;
-}
-
-/* Base label column: ki-, shi-, etc. */
-.yoon-base-label {
-  font-size: clamp(9px,.8vw,11px);
-  color: #888;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  align-self: center;
-  padding: 0 2px;
-  letter-spacing: .04em;
-  white-space: nowrap;
-}
-
-/* Individual ya/yu/yo cell */
-.yoon-cell {
-  border-radius: 9px;
-  background: rgba(0,0,0,.32);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
-  padding: 4px 5px;
-  text-align: center;
-  cursor: default;
-  transition: background 110ms ease;
-  min-width: 42px;
+/* ===== Calendar mode ===== */
+.cal-table-wrap {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 18px;
 }
-.yoon-cell:hover { background: rgba(255,255,255,.11); }
-.yoon-cell.yoon-dak-cell {
-  background: rgba(90,60,160,.22);
-}
-.yoon-cell.yoon-dak-cell:hover { background: rgba(130,100,220,.30); }
 
-/* Reuse existing cell-h / cell-k / cell-r sizes */
-.yoon-cell .cell-h,
-.yoon-cell .cell-k { font-size: clamp(13px,1.5vw,20px); }
-.yoon-cell .cell-r  { font-size: clamp(7px,.7vw,10px); }
+.cal-section { }
+.cal-section-title {
+  font-size: 13px; font-weight: 700; color: #ccc; letter-spacing: .06em;
+  margin-bottom: 8px; padding: 0 2px; text-transform: uppercase;
+}
+
+/* ── Weekdays compact table ── */
+.cal-wd-tbl {
+  border-collapse: separate; border-spacing: 3px;
+}
+.cal-wd-tbl th {
+  font-size: 11px; color: #aaa; font-weight: 600; padding: 4px 10px;
+  background: rgba(0,0,0,.40); border-radius: 7px; text-align: center;
+  letter-spacing: .04em; white-space: nowrap;
+}
+.cal-wd-tbl td {
+  font-size: clamp(11px, 1vw, 14px); color: #ddd; padding: 5px 12px;
+  background: rgba(0,0,0,.28); border-radius: 8px;
+  text-align: center; white-space: nowrap; vertical-align: middle;
+}
+.cal-wd-tbl td.cal-wd-head {
+  font-size: clamp(13px, 1.3vw, 18px); color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,.2);
+  background: rgba(0,0,0,.38);
+  font-weight: 600;
+}
+
+/* ── Month days calendar grid ── */
+.cal-day-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.cal-dow-hd {
+  text-align: center; font-size: 13px; font-weight: 700;
+  color: #aaa; padding: 5px 2px; letter-spacing: .05em;
+  background: rgba(0,0,0,.35); border-radius: 7px;
+}
+/* Sunday = red tint, Saturday = blue tint */
+.cal-dow-hd:nth-child(1) { color: #ff9999; background: rgba(120,0,0,.25); }
+.cal-dow-hd:nth-child(7) { color: #99bbff; background: rgba(0,40,120,.25); }
+
+.cal-day-cell {
+  border-radius: 10px;
+  background: rgba(0,0,0,.30);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+  padding: 5px 4px 4px;
+  text-align: center;
+  cursor: default;
+  transition: background 100ms ease;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  min-height: 56px;
+}
+.cal-day-cell:hover { background: rgba(255,255,255,.10); }
+.cal-day-cell.cal-day-empty { background: transparent; box-shadow: none; pointer-events: none; }
+
+/* Exception cells: 1–10, 14, 20, 24 */
+.cal-day-cell.cal-day-ex {
+  background: rgba(50,30,0,.55);
+  box-shadow: 0 0 0 1px rgba(255,190,60,.20) inset;
+}
+.cal-day-cell.cal-day-ex:hover { background: rgba(80,50,0,.65); }
+
+.cal-day-num  { font-size: clamp(10px,.9vw,13px); color: #ffd97a; font-weight: 700; line-height: 1.1; }
+.cal-day-cell:not(.cal-day-ex) .cal-day-num { color: #ddd; }
+.cal-day-hira { font-size: clamp(9px,.82vw,12px); color: #eee; line-height: 1.2; white-space: nowrap; }
+.cal-day-roma { font-size: clamp(7px,.68vw,10px); color: #888; line-height: 1.1; white-space: nowrap; }
+
+/* Calendar flashcard fronts */
+.card-face.cal-kanji-prompt   { font-size: clamp(48px,8vw,130px); line-height: 1.1; }
+.card-face.cal-hira-prompt    { font-size: clamp(32px,5vw,80px);  line-height: 1.2; }
+.card-face.cal-romaji-prompt  { font-size: clamp(28px,4.5vw,72px); letter-spacing: .04em; }
+.card-face.cal-meaning-prompt { font-size: clamp(40px,6vw,100px); letter-spacing: .02em; }
+
+/* Meaning answer line */
+.ans-meaning { font-size: clamp(14px,2vw,24px); color: #b8d4ff; line-height: 1.2; letter-spacing: .02em; }
 
 /* ===== Utility ===== */
 .hidden { display:none !important; }
@@ -467,8 +424,8 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
 @media (max-width:700px) {
   .card-face { font-size:clamp(70px,20vw,160px); }
   .card-face.both-together { font-size:clamp(52px,15vw,110px); }
-  .kana-table td .cell-h,
-  .kana-table td .cell-k { font-size:14px; }
+  .kana-table td .cell-h,.kana-table td .cell-k { font-size:14px; }
   .num-cell { min-width:70px; }
   .num-kanji { font-size:18px; }
+  .time-table-wrap { flex-direction:column; }
 }

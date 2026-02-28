@@ -1,6 +1,6 @@
 {
   "contentrating": "Everyone",
-  "description": "Kana Night — Japanese Practice\nLearn Hiragana, Katakana and Japanese numbers with flashcards and reference tables.\n\nModes:\n- Kana: Hiragana / Katakana flashcards with optional reverse quiz\n- Numbers: Random number flashcards with kanji/romaji/hiragana answers\n\nFeatures:\n- Auto-hiding settings panel\n- Reference tables for kana and numbers\n- Session statistics\n- Wallpaper Engine property support",
+  "description": "Kana Night — Japanese Practice\nLearn Hiragana, Katakana, Numbers and Time with flashcards and reference tables.\n\nModes: Kana · Numbers · Time",
   "file": "index.html",
   "general": {
     "properties": {
@@ -23,6 +23,14 @@
           {
             "label": "Numbers",
             "value": "numbers"
+          },
+          {
+            "label": "Time",
+            "value": "time"
+          },
+          {
+            "label": "Calendar",
+            "value": "calendar"
           }
         ]
       },
@@ -72,6 +80,12 @@
         "type": "bool",
         "value": false
       },
+      "default_yoon": {
+        "order": 103,
+        "text": "Kana: Yoon (拗音)",
+        "type": "bool",
+        "value": false
+      },
       "default_random_next": {
         "order": 104,
         "text": "Kana: Random order",
@@ -118,12 +132,16 @@
           {
             "label": "Thousands (1000–9999)",
             "value": "thousands"
+          },
+          {
+            "label": "Large (10k–999k)",
+            "value": "large"
           }
         ]
       },
       "num_min": {
         "order": 202,
-        "text": "Numbers: minimum value",
+        "text": "Numbers: minimum",
         "type": "slider",
         "value": 1,
         "min": 0,
@@ -132,11 +150,11 @@
       },
       "num_max": {
         "order": 203,
-        "text": "Numbers: maximum value",
+        "text": "Numbers: maximum",
         "type": "slider",
         "value": 9999,
         "min": 1,
-        "max": 99999,
+        "max": 999999,
         "step": 1
       },
       "num_deck_size": {
@@ -150,27 +168,257 @@
       },
       "num_show_kanji": {
         "order": 205,
-        "text": "Numbers: show kanji in answer",
+        "text": "Numbers: show kanji",
         "type": "bool",
         "value": true
       },
       "num_show_romaji": {
         "order": 206,
-        "text": "Numbers: show romaji in answer",
+        "text": "Numbers: show romaji",
         "type": "bool",
         "value": true
       },
       "num_show_hiragana": {
         "order": 207,
-        "text": "Numbers: show hiragana in answer",
+        "text": "Numbers: show hiragana",
         "type": "bool",
         "value": true
       },
-      "default_yoon": {
-        "order": 103,
-        "text": "Kana: Yoon (拗音)",
+      "time_format": {
+        "order": 301,
+        "text": "Time: format",
+        "type": "combo",
+        "value": "24h",
+        "options": [
+          {
+            "label": "24h",
+            "value": "24h"
+          },
+          {
+            "label": "12h",
+            "value": "12h"
+          }
+        ]
+      },
+      "time_step": {
+        "order": 302,
+        "text": "Time: step (minutes)",
+        "type": "combo",
+        "value": "5",
+        "options": [
+          {
+            "label": "1 min",
+            "value": "1"
+          },
+          {
+            "label": "5 min",
+            "value": "5"
+          },
+          {
+            "label": "10 min",
+            "value": "10"
+          },
+          {
+            "label": "15 min",
+            "value": "15"
+          },
+          {
+            "label": "30 min",
+            "value": "30"
+          }
+        ]
+      },
+      "time_range": {
+        "order": 303,
+        "text": "Time: range",
+        "type": "combo",
+        "value": "full",
+        "options": [
+          {
+            "label": "Full day",
+            "value": "full"
+          },
+          {
+            "label": "Morning (5–11)",
+            "value": "morning"
+          },
+          {
+            "label": "Day (12–17)",
+            "value": "day"
+          },
+          {
+            "label": "Evening (18–22)",
+            "value": "evening"
+          },
+          {
+            "label": "Night (23–4)",
+            "value": "night"
+          }
+        ]
+      },
+      "time_show_front": {
+        "order": 304,
+        "text": "Time: show on card front",
+        "type": "combo",
+        "value": "time",
+        "options": [
+          {
+            "label": "Time digits",
+            "value": "time"
+          },
+          {
+            "label": "Kanji",
+            "value": "kanji"
+          },
+          {
+            "label": "Hiragana",
+            "value": "hira"
+          },
+          {
+            "label": "Romaji",
+            "value": "romaji"
+          },
+          {
+            "label": "Mixed",
+            "value": "mixed"
+          }
+        ]
+      },
+      "time_order": {
+        "order": 305,
+        "text": "Time: card order",
+        "type": "combo",
+        "value": "random",
+        "options": [
+          {
+            "label": "Random",
+            "value": "random"
+          },
+          {
+            "label": "Sequential",
+            "value": "sequential"
+          }
+        ]
+      },
+      "time_gozen_gogo": {
+        "order": 306,
+        "text": "Time: show 午前/午後 (12h only)",
         "type": "bool",
         "value": false
+      },
+      "time_include_special": {
+        "order": 307,
+        "text": "Time: include special phrases",
+        "type": "bool",
+        "value": false
+      },
+      "cal_scope": {
+        "order": 401,
+        "text": "Calendar: scope",
+        "type": "combo",
+        "value": "mixed",
+        "options": [
+          {
+            "label": "Mixed",
+            "value": "mixed"
+          },
+          {
+            "label": "Weekdays only",
+            "value": "weekdays"
+          },
+          {
+            "label": "Month days only",
+            "value": "days"
+          }
+        ]
+      },
+      "cal_show_front": {
+        "order": 402,
+        "text": "Calendar: card front",
+        "type": "combo",
+        "value": "kanji",
+        "options": [
+          {
+            "label": "Kanji",
+            "value": "kanji"
+          },
+          {
+            "label": "Hiragana",
+            "value": "hira"
+          },
+          {
+            "label": "Romaji",
+            "value": "romaji"
+          },
+          {
+            "label": "Meaning",
+            "value": "meaning"
+          },
+          {
+            "label": "Mixed",
+            "value": "mixed"
+          }
+        ]
+      },
+      "cal_order": {
+        "order": 403,
+        "text": "Calendar: order",
+        "type": "combo",
+        "value": "random",
+        "options": [
+          {
+            "label": "Random",
+            "value": "random"
+          },
+          {
+            "label": "Sequential",
+            "value": "sequential"
+          }
+        ]
+      },
+      "cal_day_min": {
+        "order": 404,
+        "text": "Calendar: day range from",
+        "type": "slider",
+        "value": 1,
+        "min": 1,
+        "max": 31,
+        "step": 1
+      },
+      "cal_day_max": {
+        "order": 405,
+        "text": "Calendar: day range to",
+        "type": "slider",
+        "value": 31,
+        "min": 1,
+        "max": 31,
+        "step": 1
+      },
+      "cal_ex_only": {
+        "order": 406,
+        "text": "Calendar: exceptions only",
+        "type": "bool",
+        "value": false
+      },
+      "cal_meaning_lang": {
+        "order": 407,
+        "text": "Calendar: meaning language",
+        "type": "combo",
+        "value": "en",
+        "options": [
+          {
+            "label": "English",
+            "value": "en"
+          },
+          {
+            "label": "Русский",
+            "value": "ru"
+          },
+          {
+            "label": "Off",
+            "value": "off"
+          }
+        ]
       }
     },
     "supportsaudioprocessing": false
