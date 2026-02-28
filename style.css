@@ -1,0 +1,474 @@
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height:100%; margin:0; padding:0; }
+
+body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  user-select: none;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* ===== Background ===== */
+body::before {
+  content: "";
+  position: fixed; inset:0; z-index:-3; pointer-events:none;
+  background-image: url("bg_full.png"), url("bg_fuji.png"),
+    radial-gradient(ellipse at 50% 80%, #0a0a1a 0%, #000 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.78) saturate(0.95) contrast(1.05);
+  transform: scale(1.01);
+}
+body::after {
+  content: "";
+  position: fixed; inset:0; z-index:-2; pointer-events:none;
+  background: radial-gradient(60% 60% at 50% 45%, rgba(0,0,0,.08) 0%, rgba(0,0,0,.60) 100%);
+}
+
+/* ===== Hotspot ===== */
+#topHotspot {
+  position: fixed; top:0; left:0; right:0; height:56px;
+  z-index:50; pointer-events:auto;
+}
+
+/* ===== Topbar ===== */
+.topbar {
+  position: fixed;
+  top: 10px; left:50%;
+  transform: translateX(-50%) translateY(-130%);
+  opacity: 0; pointer-events: none;
+  z-index: 60;
+  width: min(1400px, 97vw);
+  display: flex; align-items:center; justify-content:space-between;
+  gap:10px; flex-wrap:wrap;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.09) inset, 0 8px 32px rgba(0,0,0,.5);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+.topbar.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity:1; pointer-events:auto;
+}
+
+.tb-left {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.tb-right {
+  display:flex; align-items:center;
+}
+.tb-group {
+  display:contents; /* children participate directly in flex layout */
+}
+.tb-sep {
+  width:1px; height:22px;
+  background: rgba(255,255,255,.15);
+  margin: 0 4px;
+  display:inline-block;
+}
+
+.label { font-size:13px; color:#ccc; white-space:nowrap; }
+
+select {
+  border:0; border-radius:10px; padding:7px 10px;
+  background:rgba(255,255,255,.10); color:#fff; font-size:13px;
+  outline:none; box-shadow:0 0 0 1px rgba(255,255,255,.10) inset; cursor:pointer;
+}
+select option { background:#1a1a2e; color:#fff; }
+
+.num {
+  width:62px; border:0; border-radius:10px; padding:7px 8px;
+  background:rgba(255,255,255,.10); color:#fff; font-size:13px;
+  outline:none; box-shadow:0 0 0 1px rgba(255,255,255,.10) inset; text-align:center;
+}
+
+.chk {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 10px; border-radius:10px;
+  background:rgba(255,255,255,.08); color:#ccc; font-size:13px;
+  cursor:pointer; box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;
+}
+.chk input { cursor:pointer; }
+
+.stat-txt { font-size:13px; color:#aaa; white-space:nowrap; }
+
+/* ===== Wrap ===== */
+.wrap {
+  width: min(1280px, 96vw);
+  display:flex; flex-direction:column; align-items:center;
+  gap:0; padding-bottom:12px;
+}
+
+/* ===== Flashcard view ===== */
+#flashView {
+  width:100%; display:flex; flex-direction:column; align-items:center;
+}
+
+/* ===== Card ===== */
+.card {
+  position:relative;
+  width:100%; max-width:660px;
+  min-height: min(52vh, 480px);
+  border-radius:24px;
+  background:rgba(0,0,0,.38);
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 20px 60px rgba(0,0,0,.55);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; outline:none;
+  padding:24px 20px 28px;
+  transition:box-shadow 120ms ease;
+}
+.card:hover { box-shadow:0 0 0 1px rgba(255,255,255,.13) inset, 0 20px 60px rgba(0,0,0,.55); }
+
+.card.fading .card-face,
+.card.fading .card-answer { opacity:0; transform:scale(0.96); }
+
+.card-face {
+  font-size: clamp(90px, 16vw, 240px);
+  line-height:1.15; color:#fff;
+  text-shadow:0 0 20px rgba(255,255,255,.30), 0 0 2px rgba(255,255,255,.4);
+  text-align:center; overflow:visible; padding-bottom:4px;
+  transition:opacity 160ms ease, transform 160ms ease;
+}
+
+.card-face.both-together {
+  display:flex; align-items:baseline; gap:.18em;
+  font-size:clamp(80px, 12vw, 180px); line-height:1.15;
+}
+.card-face.both-together .sep-slash { font-size:.4em; opacity:.4; align-self:center; }
+
+.card-face.romaji-prompt  { font-size:clamp(60px, 10vw, 160px); letter-spacing:.04em; }
+.card-face.number-prompt  { font-size:clamp(70px, 12vw, 200px); letter-spacing:.02em; font-variant-numeric:tabular-nums; }
+
+/* ── Card answer ── */
+.card-answer {
+  margin-top:10px; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  opacity:0; transform:translateY(10px);
+  transition:opacity 160ms ease, transform 160ms ease;
+  min-height:1.3em; padding-bottom:4px;
+}
+.card-answer.shown { opacity:1; transform:translateY(0); }
+
+/* kana answer = plain text, sized in parent */
+.card-answer:not(:has(.ans-kanji)) {
+  font-size:clamp(22px, 3.5vw, 42px); color:#ddd; line-height:1.3;
+}
+
+/* number answer lines */
+.ans-kanji  { font-size:clamp(32px, 5vw, 70px);  color:#fff;  line-height:1.1; text-shadow:0 0 14px rgba(255,255,255,.25); }
+.ans-romaji { font-size:clamp(16px, 2.2vw, 28px); color:#ccc;  line-height:1.2; letter-spacing:.04em; }
+.ans-hira   { font-size:clamp(14px, 1.8vw, 22px); color:#aaa;  line-height:1.2; }
+
+/* ===== Choices ===== */
+.choices-row {
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+  margin-top:14px; max-width:700px;
+}
+.choices-row .choice {
+  border:0; border-radius:14px; padding:10px 16px;
+  background:rgba(0,0,0,.42); color:#fff;
+  font-size:clamp(20px,3vw,30px); cursor:pointer;
+  box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
+  transition:background 100ms ease, transform 80ms ease;
+  min-width:56px; text-align:center; line-height:1.2;
+}
+.choices-row .choice:hover  { background:rgba(255,255,255,.13); }
+.choices-row .choice:active { transform:translateY(1px); }
+.choices-row .choice.correct { background:rgba(60,200,80,.45)!important; box-shadow:0 0 0 1px rgba(60,200,80,.5) inset; }
+.choices-row .choice.wrong   { background:rgba(220,60,60,.45)!important; box-shadow:0 0 0 1px rgba(220,60,60,.5) inset; }
+
+/* ===== Actions ===== */
+.actions-row {
+  display:flex; gap:10px; justify-content:center;
+  margin-top:14px; flex-wrap:wrap;
+}
+
+button {
+  border:0; border-radius:14px; padding:10px 18px;
+  background:rgba(0,0,0,.42); color:#fff; font-size:15px;
+  cursor:pointer; box-shadow:0 0 0 1px rgba(255,255,255,.09) inset;
+  transition:background 100ms ease, transform 80ms ease;
+}
+button:hover  { background:rgba(255,255,255,.12); }
+button:active { transform:translateY(1px); }
+button.primary { background:rgba(100,160,255,.25); box-shadow:0 0 0 1px rgba(100,160,255,.30) inset; }
+button.primary:hover { background:rgba(100,160,255,.38); }
+button.ghost  { background:rgba(255,255,255,.06); }
+button.ghost:hover { background:rgba(255,255,255,.12); }
+
+/* ===== Tables button ===== */
+.tables-btn {
+  margin-top:14px; font-size:14px; padding:8px 20px;
+  border-radius:12px; background:rgba(255,255,255,.09);
+}
+
+/* ===== Table view ===== */
+#tableView {
+  width:100%; display:flex; flex-direction:column; align-items:center;
+}
+.table-header { margin-bottom:10px; text-align:center; }
+.table-title  { font-size:16px; opacity:.85; color:#ccc; }
+
+.table-scroller {
+  width:100%; max-height:82vh; overflow-y:auto; overflow-x:auto;
+  padding:14px; border-radius:22px;
+  background:rgba(0,0,0,.35); backdrop-filter:blur(10px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 20px 60px rgba(0,0,0,.55);
+}
+
+/* ===== Kana table ===== */
+.kana-table {
+  width:100%; border-collapse:separate; border-spacing:3px; background:transparent;
+}
+.kana-table th {
+  font-size:clamp(9px,.9vw,12px); color:#ccc; padding:5px 3px 4px;
+  text-align:center; font-weight:600; letter-spacing:.05em; white-space:nowrap;
+  background:rgba(0,0,0,.40); border-radius:8px;
+}
+.kana-table th.dak-head  { color:#c4aaff; background:rgba(80,40,140,.45); }
+.kana-table th.corner-th { width:32px; background:transparent; }
+
+.kana-table td {
+  text-align:center; padding:5px 3px 4px; border-radius:10px;
+  background:rgba(0,0,0,.32); backdrop-filter:blur(6px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;
+  cursor:default; transition:background 110ms ease; vertical-align:middle; min-width:46px;
+}
+.kana-table td:hover { background:rgba(255,255,255,.11); }
+.kana-table td.empty { background:transparent; box-shadow:none; }
+.kana-table td.empty:hover { background:transparent; }
+.kana-table td.dak-cell { background:rgba(90,60,160,.22); box-shadow:0 0 0 1px rgba(160,120,255,.12) inset; }
+.kana-table td.dak-cell:hover { background:rgba(130,100,220,.30); }
+
+.kana-table td.row-head {
+  font-size:clamp(10px,.9vw,13px); color:#777; background:transparent; box-shadow:none;
+  min-width:30px; padding:4px 6px; white-space:nowrap; text-align:left;
+}
+.kana-table td.row-head:hover { background:transparent; }
+
+.kana-table td .cell-h,
+.kana-table td .cell-k { font-size:clamp(14px,1.6vw,22px); color:#fff; line-height:1.15; display:block; padding-bottom:1px; }
+.kana-table td .cell-r { font-size:clamp(8px,.75vw,11px); color:#bbb; display:block; margin-top:1px; letter-spacing:.03em; }
+
+/* ===== Numbers table ===== */
+.num-table {
+  width:100%; border-collapse:separate; border-spacing:3px; background:transparent;
+}
+.num-table th {
+  font-size:clamp(10px,1vw,13px); color:#ccc; font-weight:600;
+  padding:5px 8px 4px; text-align:center; letter-spacing:.04em;
+  background:rgba(0,0,0,.45); border-radius:10px; white-space:nowrap;
+  line-height:1.4;
+}
+.num-table th .th-jp { font-size:.82em; color:#aaa; font-weight:400; display:block; }
+.num-table th:first-child { width:28px; background:transparent; color:#777; }
+
+.num-table td.row-head {
+  font-size:clamp(11px,1vw,14px); color:#888; text-align:center;
+  padding:3px 4px; background:transparent; white-space:nowrap;
+}
+
+/* ── Compact cell layout ──
+   arabic number: top-right, tiny
+   then one row: kanji (left, big) + text column (romaji / hiragana, right, small)
+*/
+.num-cell {
+  border-radius:10px;
+  background:rgba(0,0,0,.32);
+  backdrop-filter:blur(6px);
+  box-shadow:0 0 0 1px rgba(255,255,255,.07) inset;
+  padding:4px 7px 5px;
+  cursor:default;
+  transition:background 110ms ease;
+  vertical-align:middle;
+  min-width:100px;
+}
+.num-cell:hover { background:rgba(255,255,255,.11); }
+
+/* Exception cells — subtle warm highlight */
+.num-cell-special {
+  background: rgba(60,40,10,.50);
+  box-shadow: 0 0 0 1px rgba(255,200,80,.18) inset;
+}
+.num-cell-special:hover { background: rgba(80,55,10,.65); }
+
+.num-arabic {
+  font-size:clamp(8px,.7vw,10px); color:#666;
+  display:block; text-align:right; line-height:1;
+  margin-bottom:2px;
+  font-variant-numeric:tabular-nums;
+}
+
+/* Inline row: kanji + text side by side */
+.num-inline {
+  display:flex; align-items:center; gap:6px;
+}
+
+.num-kanji {
+  font-size:clamp(18px,2vw,26px);
+  color:#fff; line-height:1;
+  text-shadow:0 0 10px rgba(255,255,255,.2);
+  flex-shrink:0;
+  white-space:nowrap;
+}
+/* Special reading kanji gets accent colour */
+.num-inline.num-special .num-kanji {
+  color:#ffd97a;
+  text-shadow:0 0 12px rgba(255,200,60,.35);
+}
+
+.num-text {
+  display:flex; flex-direction:column; justify-content:center; gap:1px;
+  text-align:left;
+}
+.num-romaji {
+  font-size:clamp(9px,.85vw,12px); color:#ccc;
+  line-height:1.2; letter-spacing:.02em; white-space:nowrap;
+}
+/* Special reading romaji underline */
+.num-inline.num-special .num-romaji {
+  color:#ffd97a;
+  text-decoration:underline;
+  text-decoration-color:rgba(255,200,80,.5);
+  text-underline-offset:2px;
+}
+.num-hira {
+  font-size:clamp(9px,.85vw,12px); color:#999;
+  line-height:1.2; white-space:nowrap;
+}
+
+.num-table td.empty { background:transparent; box-shadow:none; }
+.zero-row td { border-top:2px solid rgba(255,255,255,.08); }
+.big-row td   { border-top:2px solid rgba(255,255,255,.12); }
+.big-row td.row-head { color:#a0c0ff; }
+
+/* Dual-reading cells (4×, 7×, 9×) */
+.num-cell-dual {
+  background: rgba(20,40,70,.48);
+  box-shadow: 0 0 0 1px rgba(100,170,255,.16) inset;
+}
+.num-cell-dual:hover { background: rgba(30,55,95,.65); }
+
+/* Dual inline layout: kanji | reading1 / reading2 */
+.num-inline.num-dual {
+  align-items: center;
+  gap: 5px;
+}
+.num-inline.num-dual .num-kanji {
+  color: #8ecfff;
+  text-shadow: 0 0 12px rgba(120,190,255,.30);
+}
+/* The slash divider between two readings */
+.num-divider {
+  font-size: clamp(10px, 1vw, 14px);
+  color: rgba(255,255,255,.25);
+  flex-shrink: 0;
+  align-self: center;
+  line-height: 1;
+}
+
+
+/* ===== Yoon section (below kana table) ===== */
+.yoon-section {
+  margin-top: 14px;
+}
+
+.yoon-title {
+  font-size: 14px;
+  color: #ccc;
+  font-weight: 600;
+  letter-spacing: .05em;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+.yoon-sub-title {
+  font-size: 12px;
+  color: #b8a0ff;
+  font-weight: 500;
+  margin: 10px 0 6px;
+  padding: 0 2px;
+  letter-spacing: .04em;
+}
+
+/* Grid of yoon blocks, wrapping */
+.yoon-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* One block = base-label + 3 cells in a row */
+.yoon-block {
+  display: flex;
+  align-items: stretch;
+  gap: 3px;
+  background: rgba(0,0,0,.20);
+  border-radius: 12px;
+  padding: 4px 5px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+.yoon-block.yoon-dak {
+  background: rgba(90,60,160,.18);
+  box-shadow: 0 0 0 1px rgba(160,120,255,.12) inset;
+}
+
+/* Base label column: ki-, shi-, etc. */
+.yoon-base-label {
+  font-size: clamp(9px,.8vw,11px);
+  color: #888;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  align-self: center;
+  padding: 0 2px;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+/* Individual ya/yu/yo cell */
+.yoon-cell {
+  border-radius: 9px;
+  background: rgba(0,0,0,.32);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset;
+  padding: 4px 5px;
+  text-align: center;
+  cursor: default;
+  transition: background 110ms ease;
+  min-width: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.yoon-cell:hover { background: rgba(255,255,255,.11); }
+.yoon-cell.yoon-dak-cell {
+  background: rgba(90,60,160,.22);
+}
+.yoon-cell.yoon-dak-cell:hover { background: rgba(130,100,220,.30); }
+
+/* Reuse existing cell-h / cell-k / cell-r sizes */
+.yoon-cell .cell-h,
+.yoon-cell .cell-k { font-size: clamp(13px,1.5vw,20px); }
+.yoon-cell .cell-r  { font-size: clamp(7px,.7vw,10px); }
+
+/* ===== Utility ===== */
+.hidden { display:none !important; }
+
+@media (max-width:700px) {
+  .card-face { font-size:clamp(70px,20vw,160px); }
+  .card-face.both-together { font-size:clamp(52px,15vw,110px); }
+  .kana-table td .cell-h,
+  .kana-table td .cell-k { font-size:14px; }
+  .num-cell { min-width:70px; }
+  .num-kanji { font-size:18px; }
+}

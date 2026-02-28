@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kana Night — Japanese Practice</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="topHotspot"></div>
+
+  <div class="topbar" id="topbar">
+    <div class="tb-left">
+
+      <!-- ① Global mode — always first -->
+      <span class="label">Mode:</span>
+      <select id="selGlobalMode">
+        <option value="kana">Kana</option>
+        <option value="numbers">Numbers</option>
+      </select>
+
+      <span class="tb-sep"></span>
+
+      <!-- ② Kana-specific controls -->
+      <span id="kanaControls" class="tb-group">
+        <span class="label">Script:</span>
+        <select id="selScript">
+          <option value="hiragana">Hiragana</option>
+          <option value="katakana">Katakana</option>
+          <option value="both_mix">Both (mix)</option>
+          <option value="both_together">Both (together)</option>
+        </select>
+
+        <span class="label">Order:</span>
+        <select id="selOrder">
+          <option value="sequential">Sequential</option>
+          <option value="random">Random</option>
+        </select>
+
+        <label class="chk"><input type="checkbox" id="optDakuten" /> Dakuten</label>
+        <label class="chk"><input type="checkbox" id="optYoon" /> Yoon</label>
+        <label class="chk"><input type="checkbox" id="optReverse" /> Reverse quiz</label>
+
+        <span class="label hidden" id="choicesLabel">Choices:</span>
+        <input id="choicesN" type="number" min="2" max="12" value="6" class="num hidden" />
+      </span>
+
+      <!-- ③ Numbers-specific controls -->
+      <span id="numControls" class="tb-group hidden">
+        <span class="label">Range:</span>
+        <select id="selNumMode">
+          <option value="mixed">Mixed</option>
+          <option value="units">Units (0–9)</option>
+          <option value="tens">Tens (10–99)</option>
+          <option value="hundreds">Hundreds (100–999)</option>
+          <option value="thousands">Thousands (1000–9999)</option>
+        </select>
+
+        <span class="label">Min:</span>
+        <input id="numMin" type="number" min="0" max="99999" value="1" class="num" />
+
+        <span class="label">Max:</span>
+        <input id="numMax" type="number" min="0" max="99999" value="9999" class="num" />
+
+        <span class="label">Cards:</span>
+        <input id="numDeckSize" type="number" min="1" max="100" value="20" class="num" />
+
+        <label class="chk"><input type="checkbox" id="optNumKanji"  checked /> Kanji</label>
+        <label class="chk"><input type="checkbox" id="optNumRomaji" checked /> Romaji</label>
+        <label class="chk"><input type="checkbox" id="optNumHira"   checked /> Hiragana</label>
+      </span>
+
+    </div>
+    <div class="tb-right">
+      <span class="stat-txt" id="statTxt"></span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- Flashcard view -->
+    <div id="flashView">
+      <div class="card" id="card" tabindex="0">
+        <div class="card-face" id="cardFront"></div>
+        <div class="card-answer" id="cardAnswer"></div>
+      </div>
+
+      <div class="choices-row hidden" id="choicesRow"></div>
+
+      <div class="actions-row" id="actionsRow">
+        <button id="btnAgain">↩ Again</button>
+        <button id="btnKnown" class="primary">✓ Known</button>
+        <button id="btnReset" class="ghost">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Tables view -->
+    <div id="tableView" class="hidden">
+      <div class="table-header">
+        <span class="table-title" id="tableTitle">Chart</span>
+      </div>
+      <div class="table-scroller" id="tableScroller"></div>
+    </div>
+
+    <button class="tables-btn" id="btnTables">Tables</button>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
