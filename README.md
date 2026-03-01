@@ -112,8 +112,9 @@ project.json — Wallpaper Engine property definitions
 
 ### Wallpaper Engine
 
-1. Add via **Open from disk**
-2. Select `index.html`
+Add via **Wallpaper Editor**
+ -> Select `Create wallpaper`
+   -> Select `index.html`
 
 Or install from the Steam Workshop:  
 👉 https://steamcommunity.com/sharedfiles/filedetails/?id=3676193993
