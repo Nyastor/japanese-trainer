@@ -132,7 +132,7 @@ Or install from the Steam Workshop:
 - Vanilla HTML / CSS / JavaScript — zero dependencies
 - Wallpaper Engine Web-type wallpaper
 - Tested at 1920×1080 and 2560×1440
-- 
+
 ---
 
 ## AI Usage
@@ -144,7 +144,7 @@ AI was used for:
 - refining UX concepts
 - improving wording and documentation
 - generating structured reference data patterns
-- 
+
 ---
 
 ## License
