@@ -358,13 +358,30 @@ function buildTimeDeck(cfg) {
 
 /* ── Weekdays ── */
 const WEEKDAYS = [
-  { n:1, kanji:'月曜日', short:'月', hira:'げつようび', romaji:'getsuyoubi', en:'Monday',    ru:'Понедельник' },
-  { n:2, kanji:'火曜日', short:'火', hira:'かようび',   romaji:'kayoubi',    en:'Tuesday',   ru:'Вторник'     },
-  { n:3, kanji:'水曜日', short:'水', hira:'すいようび', romaji:'suiyoubi',   en:'Wednesday', ru:'Среда'       },
-  { n:4, kanji:'木曜日', short:'木', hira:'もくようび', romaji:'mokuyoubi',  en:'Thursday',  ru:'Четверг'     },
-  { n:5, kanji:'金曜日', short:'金', hira:'きんようび', romaji:'kinyoubi',   en:'Friday',    ru:'Пятница'     },
-  { n:6, kanji:'土曜日', short:'土', hira:'どようび',   romaji:'doyoubi',    en:'Saturday',  ru:'Суббота'     },
-  { n:7, kanji:'日曜日', short:'日', hira:'にちようび', romaji:'nichiyoubi', en:'Sunday',    ru:'Воскресенье' },
+  { n:1, kanji:'月曜日', short:'月', emoji:'🌙', hira:'げつようび', romaji:'getsuyoubi', en:'Monday',    ru:'Понедельник' },
+  { n:2, kanji:'火曜日', short:'火', emoji:'🔥', hira:'かようび',   romaji:'kayoubi',    en:'Tuesday',   ru:'Вторник'     },
+  { n:3, kanji:'水曜日', short:'水', emoji:'💧', hira:'すいようび', romaji:'suiyoubi',   en:'Wednesday', ru:'Среда'       },
+  { n:4, kanji:'木曜日', short:'木', emoji:'🌳', hira:'もくようび', romaji:'mokuyoubi',  en:'Thursday',  ru:'Четверг'     },
+  { n:5, kanji:'金曜日', short:'金', emoji:'✨', hira:'きんようび', romaji:'kinyoubi',   en:'Friday',    ru:'Пятница'     },
+  { n:6, kanji:'土曜日', short:'土', emoji:'🌍', hira:'どようび',   romaji:'doyoubi',    en:'Saturday',  ru:'Суббота'     },
+  { n:7, kanji:'日曜日', short:'日', emoji:'☀️', hira:'にちようび', romaji:'nichiyoubi', en:'Sunday',    ru:'Воскресенье' },
+];
+
+
+/* ── Months ── */
+const MONTHS = [
+  { n:1,  kanji:'一月',  short:'1月',  hira:'いちがつ',    romaji:'ichigatsu',   en:'January',   ru:'Январь',    emoji:'🎍' },
+  { n:2,  kanji:'二月',  short:'2月',  hira:'にがつ',      romaji:'nigatsu',     en:'February',  ru:'Февраль',   emoji:'❄️' },
+  { n:3,  kanji:'三月',  short:'3月',  hira:'さんがつ',    romaji:'sangatsu',    en:'March',     ru:'Март',      emoji:'🌸' },
+  { n:4,  kanji:'四月',  short:'4月',  hira:'しがつ',      romaji:'shigatsu',    en:'April',     ru:'Апрель',    emoji:'🌷' },
+  { n:5,  kanji:'五月',  short:'5月',  hira:'ごがつ',      romaji:'gogatsu',     en:'May',       ru:'Май',       emoji:'🎏' },
+  { n:6,  kanji:'六月',  short:'6月',  hira:'ろくがつ',    romaji:'rokugatsu',   en:'June',      ru:'Июнь',      emoji:'☔' },
+  { n:7,  kanji:'七月',  short:'7月',  hira:'しちがつ',    romaji:'shichigatsu', en:'July',      ru:'Июль',      emoji:'🎆' },
+  { n:8,  kanji:'八月',  short:'8月',  hira:'はちがつ',    romaji:'hachigatsu',  en:'August',    ru:'Август',    emoji:'🌻' },
+  { n:9,  kanji:'九月',  short:'9月',  hira:'くがつ',      romaji:'kugatsu',     en:'September', ru:'Сентябрь',  emoji:'🍂' },
+  { n:10, kanji:'十月',  short:'10月', hira:'じゅうがつ',  romaji:'juugatsu',    en:'October',   ru:'Октябрь',   emoji:'🎃' },
+  { n:11, kanji:'十一月',short:'11月', hira:'じゅういちがつ',romaji:'juuichigatsu',en:'November', ru:'Ноябрь',   emoji:'🍁' },
+  { n:12, kanji:'十二月',short:'12月', hira:'じゅうにがつ',romaji:'juunigatsu',  en:'December',  ru:'Декабрь',   emoji:'⛄' },
 ];
 
 /* ── Month days 1–31 ── */
@@ -415,18 +432,35 @@ const MONTH_DAYS = Array.from({length:31}, (_,i) => {
   };
 });
 
+/* ── Calendar easter eggs (day-of-month + real month check) ── */
+const CAL_EASTER_EGGS = (() => {
+  const now = new Date();
+  const m = now.getMonth() + 1; // 1-based
+  const eggs = {};
+  if (m === 4)  eggs[3]  = '🎂 Поздравь с днём рождения @Able_ebg в телеграмме!';
+  if (m === 12) eggs[8]  = '🎂 Поздравь с днём рождения @ISpa_Nec0 в телеграмме!';
+  if (m === 4)  eggs[11] = '🎌 Поздравляю с днём анимешника!~';
+  return eggs;
+})();
+
 /* ── Calendar deck builder ── */
 function buildCalendarDeck(cfg) {
-  const { calScope, calDayMin, calDayMax, calExOnly, calOrder } = cfg;
+  const { calScope, calDayMin, calDayMax, calExOnly, calMonthMin, calMonthMax } = cfg;
   let entries = [];
 
-  if (calScope === 'weekdays' || calScope === 'mixed') {
-    WEEKDAYS.forEach(w => entries.push({ type:'weekday', ...w }));
-  }
-  if (calScope === 'days' || calScope === 'mixed') {
+  const useWeekdays = ['weekdays','mixed','wd_days'].includes(calScope);
+  const useDays     = ['days','mixed','wd_days','days_months'].includes(calScope);
+  const useMonths   = ['months','mixed','days_months'].includes(calScope);
+
+  if (useWeekdays) WEEKDAYS.forEach(w => entries.push({ type:'weekday', ...w }));
+  if (useDays) {
     let days = MONTH_DAYS.filter(d => d.n >= calDayMin && d.n <= calDayMax);
     if (calExOnly) days = days.filter(d => d.ex);
     days.forEach(d => entries.push({ type:'day', ...d }));
+  }
+  if (useMonths) {
+    MONTHS.filter(m => m.n >= calMonthMin && m.n <= calMonthMax)
+          .forEach(m => entries.push({ type:'month', ...m }));
   }
   return entries;
 }
@@ -468,13 +502,15 @@ const state = {
   includeSpecial: false,
 
   // Calendar
-  calScope:    'mixed',   // 'weekdays'|'days'|'mixed'
+  calScope:    'mixed',   // 'weekdays'|'days'|'months'|'mixed'|'wd_days'|'days_months'
   calShowFront:'kanji',   // 'kanji'|'hira'|'romaji'|'meaning'|'mixed'
   calOrder:    'random',  // 'random'|'sequential'
   calDayMin:   1,
   calDayMax:   31,
   calExOnly:   false,
   calMeaningLang: 'en',   // 'en'|'ru'|'off'
+  calMonthMin: 1,
+  calMonthMax: 12,
 
   // Session
   deck: [], queue: [], currentIdx: 0, current: null,
@@ -534,6 +570,8 @@ const selCalDayMin   = $('selCalDayMin');
 const selCalDayMax   = $('selCalDayMax');
 const optCalExOnly   = $('optCalExOnly');
 const selCalMeaning  = $('selCalMeaning');
+const selCalMonthMin = $('selCalMonthMin');
+const selCalMonthMax = $('selCalMonthMax');
 
 // Card / flash
 const flashView  = $('flashView');
@@ -628,6 +666,8 @@ function applyWEProperty(name, value) {
     case 'cal_day_max':      state.calDayMax     = parseInt(value,10)||31; selCalDayMax.value  = state.calDayMax; break;
     case 'cal_ex_only':      state.calExOnly     = !!value; optCalExOnly.checked = !!value; break;
     case 'cal_meaning_lang': state.calMeaningLang= value; selCalMeaning.value  = value; break;
+    case 'cal_month_min':    state.calMonthMin   = parseInt(value,10)||1;  selCalMonthMin.value= state.calMonthMin; break;
+    case 'cal_month_max':    state.calMonthMax   = parseInt(value,10)||12; selCalMonthMax.value= state.calMonthMax; break;
   }
 }
 
@@ -679,6 +719,8 @@ selCalDayMin.addEventListener('change',  () => { state.calDayMin     = parseInt(
 selCalDayMax.addEventListener('change',  () => { state.calDayMax     = parseInt(selCalDayMax.value,10)||31; restart(); });
 optCalExOnly.addEventListener('change',  () => { state.calExOnly     = optCalExOnly.checked; restart(); });
 selCalMeaning.addEventListener('change', () => { state.calMeaningLang= selCalMeaning.value;  showCard(); });
+selCalMonthMin.addEventListener('change', () => { state.calMonthMin = parseInt(selCalMonthMin.value,10)||1;  restart(); });
+selCalMonthMax.addEventListener('change', () => { state.calMonthMax = parseInt(selCalMonthMax.value,10)||12; restart(); });
 
 btnAgain.addEventListener('click',  doAgain);
 btnKnown.addEventListener('click',  doKnown);
@@ -844,6 +886,11 @@ function renderNumberCard(entry) {
   cardFront.classList.add('number-prompt');
   cardFront.textContent = entry.n.toLocaleString();
   cardAnswer.innerHTML = '';
+  // 🥚 Easter egg: 777
+  if (entry.n === 777) {
+    const s = document.createElement('span'); s.className='easter-egg jackpot'; s.textContent='🎰 Джекпот!'; cardAnswer.appendChild(s);
+    actionsRow.classList.remove('hidden'); return;
+  }
   if (state.numShowKanji)    { const s=document.createElement('span'); s.className='ans-kanji';  s.textContent=entry.kanji;    cardAnswer.appendChild(s); }
   if (state.numShowRomaji)   { const s=document.createElement('span'); s.className='ans-romaji'; s.textContent=entry.romaji;   cardAnswer.appendChild(s); }
   if (state.numShowHiragana) { const s=document.createElement('span'); s.className='ans-hira';   s.textContent=entry.hiragana; cardAnswer.appendChild(s); }
@@ -924,6 +971,15 @@ function renderTimeCard(entry) {
     badge.textContent = '⚠ 例外';
     cardAnswer.appendChild(badge);
   }
+
+  // 🥚 Easter egg: 20:31
+  if (entry.type === 'time' && entry.hour24 === 20 && entry.minute === 31) {
+    cardAnswer.innerHTML = '';
+    const s = document.createElement('span');
+    s.className = 'easter-egg';
+    s.textContent = '✨ прибыл Годжу Сатору.';
+    cardAnswer.appendChild(s);
+  }
 }
 
 
@@ -935,6 +991,12 @@ function renderCalendarCard(entry) {
   const meaning = lang === 'en'  ? entry.en
                 : lang === 'ru'  ? entry.ru
                 : null;
+
+  // ── EASTER EGGS ──
+  // Day 3 April
+  if (entry.type === 'day' && entry._monthCtx === 3 && entry.n === 3) {
+    // можно расширить через контекст месяца; пасхалка на 3 апреля через deck entry
+  }
 
   // Resolve front type
   let sFront = state.calShowFront;
@@ -981,6 +1043,15 @@ function renderCalendarCard(entry) {
     badge.className = 'exc-badge';
     badge.textContent = '⚠ 例外';
     cardAnswer.appendChild(badge);
+  }
+
+  // 🥚 Calendar easter eggs (month days)
+  if (entry.type === 'day') {
+    const egg = CAL_EASTER_EGGS[entry.n];
+    if (egg) {
+      cardAnswer.innerHTML = '';
+      const s = document.createElement('span'); s.className='easter-egg'; s.textContent = egg; cardAnswer.appendChild(s);
+    }
   }
 }
 
@@ -1386,7 +1457,7 @@ function renderCalendarTable() {
   const wdTbody = wdTable.createTBody();
   WEEKDAYS.forEach(w => {
     const tr = wdTbody.insertRow();
-    const cells = [`${w.kanji}（${w.short}）`, w.hira, w.romaji];
+    const cells = [`${w.emoji} ${w.kanji}（${w.short}）`, w.hira, w.romaji];
     if (lang !== 'off') cells.push(lang === 'ru' ? w.ru : w.en);
     cells.forEach((txt,i) => {
       const td = tr.insertCell(); td.textContent = txt;
@@ -1409,8 +1480,8 @@ function renderCalendarTable() {
   const calGrid = document.createElement('div');
   calGrid.className = 'cal-day-grid';
 
-  // Header row (日 → 土, matching Japanese calendar: Sun first)
-  const DOW_LABELS = ['日','月','火','水','木','金','土'];
+  // Header row Пн–Вс (Monday first, Sunday last)
+  const DOW_LABELS = ['月','火','水','木','金','土','日'];
   DOW_LABELS.forEach(d => {
     const cell = document.createElement('div');
     cell.className = 'cal-dow-hd';
@@ -1420,8 +1491,8 @@ function renderCalendarTable() {
 
   // Determine which column day 1 falls on (use day 1 = Tuesday historically → we just
   // fill from column 0 for simplicity since no specific year is implied)
-  // Per the screenshot layout: 1日 is in column 0 (日/Sunday)
-  const startCol = 0; // fill from col 0
+  // Start col = 0 (Monday). Layout: Mon–Sun
+  const startCol = 0; // fill from col 0 (Monday)
   // Empty cells before day 1
   for (let i = 0; i < startCol; i++) {
     const emp = document.createElement('div');
@@ -1453,6 +1524,36 @@ function renderCalendarTable() {
 
   mdDiv.appendChild(calGrid);
   wrap.appendChild(mdDiv);
+
+  // ── Section 3: Months ──
+  const moDiv = document.createElement('div');
+  moDiv.className = 'cal-section';
+  const moTitle = document.createElement('div');
+  moTitle.className = 'cal-section-title';
+  moTitle.textContent = '月 Months';
+  moDiv.appendChild(moTitle);
+
+  const moTable = document.createElement('table');
+  moTable.className = 'cal-wd-tbl cal-mo-tbl';
+  const moThead = moTable.createTHead();
+  const moHr = moThead.insertRow();
+  const moCols = ['#','漢字','ひらがな','Romaji'];
+  if (lang !== 'off') moCols.push(lang === 'ru' ? 'Русский' : 'English');
+  moCols.forEach(t => { const th=document.createElement('th'); th.textContent=t; moHr.appendChild(th); });
+
+  const moTbody = moTable.createTBody();
+  MONTHS.forEach(mo => {
+    const tr = moTbody.insertRow();
+    const mCells = [`${mo.emoji} ${mo.kanji}（${mo.short}）`, mo.hira, mo.romaji];
+    if (lang !== 'off') mCells.push(lang === 'ru' ? mo.ru : mo.en);
+    mCells.forEach((txt,i) => {
+      const td = tr.insertCell(); td.textContent = txt;
+      if (i===0) td.classList.add('cal-wd-head');
+    });
+  });
+  moDiv.appendChild(moTable);
+  wrap.appendChild(moDiv);
+
   tableScroller.appendChild(wrap);
 }
 
@@ -1504,6 +1605,8 @@ function init() {
   selCalDayMax.value    = state.calDayMax;
   optCalExOnly.checked  = state.calExOnly;
   selCalMeaning.value   = state.calMeaningLang;
+  selCalMonthMin.value  = state.calMonthMin;
+  selCalMonthMax.value  = state.calMonthMax;
 
   updateTimeUI();
   syncModeUI();

@@ -319,16 +319,28 @@
         "value": "mixed",
         "options": [
           {
-            "label": "Mixed",
+            "label": "All",
             "value": "mixed"
           },
           {
-            "label": "Weekdays only",
+            "label": "Weekdays",
             "value": "weekdays"
           },
           {
-            "label": "Month days only",
+            "label": "Month days",
             "value": "days"
+          },
+          {
+            "label": "Months",
+            "value": "months"
+          },
+          {
+            "label": "Weekdays + Days",
+            "value": "wd_days"
+          },
+          {
+            "label": "Days + Months",
+            "value": "days_months"
           }
         ]
       },
@@ -419,6 +431,24 @@
             "value": "off"
           }
         ]
+      },
+      "cal_month_min": {
+        "order": 408,
+        "text": "Calendar: month from",
+        "type": "slider",
+        "value": 1,
+        "min": 1,
+        "max": 12,
+        "step": 1
+      },
+      "cal_month_max": {
+        "order": 409,
+        "text": "Calendar: month to",
+        "type": "slider",
+        "value": 12,
+        "min": 1,
+        "max": 12,
+        "step": 1
       }
     },
     "supportsaudioprocessing": false
