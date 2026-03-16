@@ -2211,19 +2211,25 @@ function onCardClick() {
   if (state.locked) return;
   if (!state.revealed) {
     state.revealed = true;
+    if (state.globalMode === 'sentences') _sentRevealed = true;
     cardAnswer.classList.add('shown');
     state.attempts++;
     updateStat();
   } else {
     cardAnswer.classList.remove('shown');
     state.revealed = false;
+    if (state.globalMode === 'sentences') _sentRevealed = false;
   }
 }
 
 function doAgain() {
   if (state.globalMode === 'sentences') {
+    state.attempts++;
+    // Push current item a few spots ahead so it comes back
+    const cur = _sentDeck.splice(_sentIdx, 1)[0];
+    const at  = Math.min(_sentIdx + 5, _sentDeck.length);
+    _sentDeck.splice(at, 0, cur);
     _sentRevealed = false;
-    _sentIdx++; // treat as "didn't know" — move on without counting
     showSentence();
     updateStat();
     return;
@@ -3248,20 +3254,27 @@ function showSentence() {
     const verbNative    = state.uiLang === 'en' ? item.verbCard.en : item.verbCard.ru;
     const formLabel     = T('vf_' + item.verbCard.verbKey);
 
-    // Front: subject + verb meaning + form tag
+    // ── FRONT: 100% native language — no Japanese ──
     cardFront.classList.add('verb-meaning-prompt');
+
+    // Subject (native only, smaller)
     const subjectEl = document.createElement('span');
-    subjectEl.className = 'sent-subject-inline';
-    subjectEl.innerHTML = `<span class="sent-jp-inline">${item.subject.jp}</span><span class="sent-native-inline">${subjectNative}</span>`;
+    subjectEl.className = 'sent-subject-native';
+    subjectEl.textContent = subjectNative;
+
+    // Verb meaning (native)
     const verbEl = document.createElement('span');
     verbEl.className = 'verb-meaning-main';
     verbEl.textContent = verbNative;
+
+    // Tense tag
     const tagEl = document.createElement('span');
     tagEl.className = 'verb-form-tag';
     tagEl.textContent = formLabel;
+
     cardFront.append(subjectEl, verbEl, tagEl);
 
-    // Answer: full sentence JP + romaji + tile breakdown
+    // ── ANSWER: full Japanese sentence + romaji + tile breakdown ──
     const fullJP = item.subject.jp + 'は ' + item.verbCard.jp;
     const fullR  = item.subject.romaji + ' wa ' + item.verbCard.romaji;
 
@@ -3275,22 +3288,24 @@ function showSentence() {
     rSpan.textContent = fullR;
     cardAnswer.appendChild(rSpan);
 
-    // Tiles
+    // Tile breakdown
     const tilesDiv = document.createElement('div');
     tilesDiv.className = 'sent-tiles-inline';
     [
-      { jp: item.subject.jp, r: item.subject.romaji },
-      { jp: 'は', r: 'wa' },
-      { jp: item.verbCard.jp, r: item.verbCard.romaji },
+      { jp: item.subject.jp, r: item.subject.romaji, native: subjectNative },
+      { jp: 'は', r: 'wa', native: '' },
+      { jp: item.verbCard.jp, r: item.verbCard.romaji, native: verbNative },
     ].forEach(t => {
       const tile = document.createElement('div');
       tile.className = 'sent-tile';
-      tile.innerHTML = `<span class="sent-tile-jp">${t.jp}</span><span class="sent-tile-r">${t.r}</span>`;
+      tile.innerHTML =
+        `<span class="sent-tile-jp">${t.jp}</span>` +
+        `<span class="sent-tile-r">${t.r}</span>` +
+        (t.native ? `<span class="sent-tile-native">${t.native}</span>` : '');
       tilesDiv.appendChild(tile);
     });
     cardAnswer.appendChild(tilesDiv);
 
-    // Use standard buttons
     choicesRow.classList.add('hidden');
     actionsRow.classList.remove('hidden');
 

@@ -746,7 +746,7 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
 .sent-tiles.hidden { display:none; }
 .sent-tile {
   background:rgba(255,255,255,.08); border-radius:12px; padding:8px 14px;
-  display:flex; flex-direction:column; align-items:center; gap:3px;
+  display:flex; flex-direction:column; align-items:center; gap:2px;
   box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
   min-width:70px;
 }
@@ -754,11 +754,13 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
 .sent-tile-r  { font-size:11px; color:#888; letter-spacing:.04em; }
 
 /* Sentences inline (rendered inside flashView card) */
-.sent-subject-inline {
-  display:flex; align-items:baseline; gap:10px; justify-content:center;
+/* Subject native label on front (no Japanese on front) */
+.sent-subject-native {
+  font-size:clamp(14px,1.8vw,22px); color:rgba(255,255,255,.60);
+  letter-spacing:.02em; text-align:center;
 }
-.sent-jp-inline     { font-size:clamp(22px,3.5vw,50px); color:#fff; }
-.sent-native-inline { font-size:clamp(12px,1.4vw,16px); color:rgba(255,255,255,.5); }
+/* Tile native hint under the Japanese */
+.sent-tile-native { font-size:10px; color:rgba(255,255,255,.45); text-align:center; margin-top:1px; }
 .sent-tiles-inline  {
   display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:8px;
 }
