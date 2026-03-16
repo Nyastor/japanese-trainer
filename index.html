@@ -25,6 +25,9 @@
         <option value="calendar">Календарь</option>
         <option value="vocab">📖 Слова</option>
         <option value="verbs">🔤 Глаголы</option>
+        <option value="kanji">🈴 Кандзи N5</option>
+        <option value="quiz">🎯 Квиз</option>
+        <option value="sentences">🔀 Предложения</option>
       </select>
 
       <span class="tb-sep"></span>
@@ -223,15 +226,24 @@
       <span id="vocabControls" class="tb-group hidden">
         <span class="label" data-i18n="group">Группа:</span>
         <select id="selVocabScope">
-          <option value="all" data-i18n-opt="all_words">Все слова</option>
-          <option value="lesson1" data-i18n-opt="lesson1">Урок 1 — Люди</option>
-          <option value="countries" data-i18n-opt="countries">Страны</option>
-          <option value="lesson2" data-i18n-opt="lesson2">Урок 2 — Предметы</option>
-          <option value="fruits" data-i18n-opt="fruits">Фрукты</option>
-          <option value="lesson3" data-i18n-opt="lesson3">Урок 3 — Места</option>
-          <option value="lesson4" data-i18n-opt="lesson4">Урок 4 — Время</option>
-          <option value="family_own" data-i18n-opt="family_own">Семья (своя)</option>
+          <option value="all"          data-i18n-opt="all_words">Все слова</option>
+          <option value="lesson1"      data-i18n-opt="lesson1">Урок 1 — Люди</option>
+          <option value="countries"    data-i18n-opt="countries">Страны</option>
+          <option value="lesson2"      data-i18n-opt="lesson2">Урок 2 — Предметы</option>
+          <option value="fruits"       data-i18n-opt="fruits">Фрукты</option>
+          <option value="lesson3"      data-i18n-opt="lesson3">Урок 3 — Места</option>
+          <option value="lesson4"      data-i18n-opt="lesson4">Урок 4 — Время</option>
+          <option value="family_own"   data-i18n-opt="family_own">Семья (своя)</option>
           <option value="family_other" data-i18n-opt="family_other">Семья (вежл.)</option>
+          <option value="colors"       data-i18n-opt="g_colors">Цвета</option>
+          <option value="food"         data-i18n-opt="g_food">Еда и напитки</option>
+          <option value="body"         data-i18n-opt="g_body">Тело</option>
+          <option value="clothes"      data-i18n-opt="g_clothes">Одежда</option>
+          <option value="house"        data-i18n-opt="g_house">Дом и мебель</option>
+          <option value="transport"    data-i18n-opt="g_transport">Транспорт</option>
+          <option value="adj_i"        data-i18n-opt="g_adj_i">Прилаг. い</option>
+          <option value="adj_na"       data-i18n-opt="g_adj_na">Прилаг. な</option>
+          <option value="questions"    data-i18n-opt="g_questions">Вопросы</option>
         </select>
         <span class="label" data-i18n="front">Фронт:</span>
         <select id="selVocabFront">
@@ -249,9 +261,12 @@
       <span id="verbControls" class="tb-group hidden">
         <span class="label" data-i18n="group">Группа:</span>
         <select id="selVerbScope">
-          <option value="all" data-i18n-opt="all_verbs">Все глаголы</option>
-          <option value="lesson4" data-i18n-opt="lesson4">Урок 4</option>
-          <option value="lesson5" data-i18n-opt="lesson5">Урок 5</option>
+          <option value="all"          data-i18n-opt="all_verbs">Все глаголы</option>
+          <option value="lesson4"      data-i18n-opt="lesson4">Урок 4</option>
+          <option value="lesson5"      data-i18n-opt="lesson5">Урок 5</option>
+          <option value="verbs_motion" data-i18n-opt="g_verbs_motion">Движение</option>
+          <option value="verbs_daily"  data-i18n-opt="g_verbs_daily">Повседневные</option>
+          <option value="verbs_comm"   data-i18n-opt="g_verbs_comm">Общение</option>
         </select>
         <span class="label" data-i18n="form">Форма:</span>
         <label class="chk"><input type="checkbox" id="optVerbPres" checked /> <span data-i18n="vpres">Наст/Буд</span></label>
@@ -270,6 +285,84 @@
         </select>
       </span>
 
+      <!-- ⑧ Kanji controls -->
+      <span id="kanjiControls" class="tb-group hidden">
+        <span class="label" data-i18n="front">Фронт:</span>
+        <select id="selKanjiFront">
+          <option value="kanji"   data-i18n-opt="kf_kanji">Кандзи → Значение</option>
+          <option value="meaning" data-i18n-opt="kf_meaning">Значение → Кандзи</option>
+          <option value="on"      data-i18n-opt="kf_on">Он-ёми</option>
+          <option value="kun"     data-i18n-opt="kf_kun">Кун-ёми</option>
+        </select>
+        <span class="label" data-i18n="order">Порядок:</span>
+        <select id="selKanjiOrder">
+          <option value="random"     data-i18n-opt="random">Случайный</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
+        </select>
+      </span>
+
+      <!-- ⑨ Quiz controls -->
+      <span id="quizControls" class="tb-group hidden">
+        <span class="label" data-i18n="scope">Тема:</span>
+        <select id="selQuizSource">
+          <option value="vocab" data-i18n-opt="quiz_vocab">Слова</option>
+          <option value="kanji" data-i18n-opt="quiz_kanji">Кандзи</option>
+          <option value="verbs" data-i18n-opt="quiz_verbs">Глаголы</option>
+        </select>
+        <span class="label" data-i18n="choices">Вариантов:</span>
+        <select id="selQuizChoices">
+          <option value="4">4</option>
+          <option value="6">6</option>
+        </select>
+      </span>
+
+      <!-- ⑩ Sprint controls -->
+      <span id="sprintControls" class="tb-group hidden">
+        <span class="label" data-i18n="scope">Тема:</span>
+        <select id="selSprintSource">
+          <option value="vocab" data-i18n-opt="quiz_vocab">Слова</option>
+          <option value="kanji" data-i18n-opt="quiz_kanji">Кандзи</option>
+          <option value="verbs" data-i18n-opt="quiz_verbs">Глаголы</option>
+        </select>
+        <span class="label" data-i18n="step">Время:</span>
+        <select id="selSprintTime">
+          <option value="30"  data-i18n-opt="s30">30 сек</option>
+          <option value="60"  data-i18n-opt="s60" selected>60 сек</option>
+          <option value="120" data-i18n-opt="s120">2 мин</option>
+        </select>
+      </span>
+
+      <!-- ⑪ Recall controls -->
+      <span id="recallControls" class="tb-group hidden">
+        <span class="label" data-i18n="scope">Тема:</span>
+        <select id="selRecallSource">
+          <option value="vocab" data-i18n-opt="quiz_vocab">Слова</option>
+          <option value="kanji" data-i18n-opt="quiz_kanji">Кандзи</option>
+        </select>
+        <span class="label" data-i18n="front">Ввод:</span>
+        <select id="selRecallMode">
+          <option value="romaji"  data-i18n-opt="rec_romaji">Ромаджи</option>
+          <option value="meaning" data-i18n-opt="rec_meaning">Перевод</option>
+        </select>
+      </span>
+
+      <!-- ⑫ Sentences controls -->
+      <span id="sentencesControls" class="tb-group hidden">
+        <span class="label" data-i18n="group">Глаголы:</span>
+        <select id="selSentVerbScope">
+          <option value="all"          data-i18n-opt="all_verbs">Все</option>
+          <option value="lesson4"      data-i18n-opt="lesson4">Урок 4</option>
+          <option value="lesson5"      data-i18n-opt="lesson5">Урок 5</option>
+          <option value="verbs_motion" data-i18n-opt="g_verbs_motion">Движение</option>
+          <option value="verbs_daily"  data-i18n-opt="g_verbs_daily">Повседневные</option>
+        </select>
+        <span class="label" data-i18n="form">Форма:</span>
+        <label class="chk"><input type="checkbox" id="optSentPres" checked /> <span data-i18n="vpres">Наст/Буд</span></label>
+        <label class="chk"><input type="checkbox" id="optSentPast" checked /> <span data-i18n="vpast">Прошедшее</span></label>
+        <label class="chk"><input type="checkbox" id="optSentNeg"  checked /> <span data-i18n="vneg">Отрицание</span></label>
+        <label class="chk"><input type="checkbox" id="optSentLet"  /> ましょう</label>
+      </span>
+
     </div>
     <div class="tb-right">
       <span class="stat-txt" id="statTxt"></span>
@@ -278,7 +371,7 @@
 
   <div class="wrap">
 
-    <!-- Flashcard view -->
+    <!-- Flashcard view (kana / numbers / time / calendar / vocab / verbs / kanji) -->
     <div id="flashView">
       <div class="card" id="card" tabindex="0">
         <div class="card-face" id="cardFront"></div>
@@ -292,8 +385,60 @@
       </div>
     </div>
 
+    <!-- Quiz view -->
+    <div id="quizView" class="hidden">
+      <div id="quizPrompt" class="quiz-prompt"></div>
+      <div id="quizChoicesGrid" class="quiz-choices-grid"></div>
+      <div class="actions-row">
+        <button id="btnQuizReset" class="ghost">↺ <span data-i18n="reset">Сброс</span></button>
+      </div>
+    </div>
+
+    <!-- Sprint view -->
+    <div id="sprintView" class="hidden">
+      <div id="sprintScreen">
+        <div id="sprintTimer" class="sprint-timer">60</div>
+        <div id="sprintCard" class="sprint-card"></div>
+        <div class="sprint-btns">
+          <button id="btnSprintNo"  class="sprint-no">✗</button>
+          <button id="btnSprintYes" class="sprint-yes">✓</button>
+        </div>
+      </div>
+      <div id="sprintResult" class="sprint-result hidden">
+        <div id="sprintResultInner"></div>
+        <button id="btnSprintAgain" class="primary" style="margin-top:18px">↺ <span data-i18n="again">Ещё раз</span></button>
+      </div>
+    </div>
+
+    <!-- Recall view -->
+    <div id="recallView" class="hidden">
+      <div class="card recall-card" id="recallCard">
+        <div class="card-face" id="recallPrompt"></div>
+        <div class="recall-input-wrap">
+          <input id="recallInput" class="recall-input" type="text" autocomplete="off" spellcheck="false" placeholder="Введите ответ…" />
+          <button id="btnRecallCheck" class="primary">→</button>
+        </div>
+        <div id="recallFeedback" class="recall-feedback"></div>
+      </div>
+      <div class="actions-row" style="margin-top:12px">
+        <button id="btnRecallSkip" class="ghost">⏭ <span data-i18n="again">Пропустить</span></button>
+        <button id="btnRecallReset" class="ghost">↺ <span data-i18n="reset">Сброс</span></button>
+      </div>
+    </div>
+
     <!-- Tables view -->
     <div id="tableView" class="hidden">
+
+    <!-- Hidden stubs for sentences DOM refs (rendered into flashView instead) -->
+    <span id="sentencesView" style="display:none"></span>
+    <span id="sentSubject"   style="display:none"></span>
+    <span id="sentVerb"      style="display:none"></span>
+    <span id="sentFormTag"   style="display:none"></span>
+    <span id="sentAnswer"    style="display:none"></span>
+    <span id="sentTiles"     style="display:none"></span>
+    <button id="btnSentReveal" style="display:none"></button>
+    <button id="btnSentNext"   style="display:none"></button>
+    <button id="btnSentReset"  style="display:none"></button>
       <div class="table-header">
         <span class="table-title" id="tableTitle">Chart</span>
       </div>
@@ -304,5 +449,6 @@
 
   </div>
 
+  <script src="kanji.js"></script>
   <script src="main.js"></script>
 </body>

@@ -693,6 +693,136 @@ const VOCAB_DATA = [
   {group:'family_other',ru:'Муж (вежл.)',en:'Husband (polite)',jp:'ごしゅじん',romaji:'goshujin',script:'h'},
   {group:'family_other',ru:'Дочь (вежл.)',en:'Daughter (polite)',jp:'むすめさん',romaji:'musumesan',script:'h'},
   {group:'family_other',ru:'Сын (вежл.)',en:'Son (polite)',jp:'むすこさん',romaji:'musukosan',script:'h'},
+  // ── Colors ──
+  {group:'colors',ru:'Красный',en:'Red',jp:'あかい',romaji:'akai',script:'h'},
+  {group:'colors',ru:'Синий',en:'Blue',jp:'あおい',romaji:'aoi',script:'h'},
+  {group:'colors',ru:'Белый',en:'White',jp:'しろい',romaji:'shiroi',script:'h'},
+  {group:'colors',ru:'Чёрный',en:'Black',jp:'くろい',romaji:'kuroi',script:'h'},
+  {group:'colors',ru:'Жёлтый',en:'Yellow',jp:'きいろい',romaji:'kiiroi',script:'h'},
+  {group:'colors',ru:'Зелёный',en:'Green',jp:'みどり',romaji:'midori',script:'h'},
+  {group:'colors',ru:'Оранжевый',en:'Orange',jp:'オレンジ色',romaji:'orenji iro',script:'k'},
+  {group:'colors',ru:'Розовый',en:'Pink',jp:'ピンク',romaji:'pinku',script:'k'},
+  {group:'colors',ru:'Коричневый',en:'Brown',jp:'ちゃいろ',romaji:'chairo',script:'h'},
+  {group:'colors',ru:'Серый',en:'Grey',jp:'グレー',romaji:'guree',script:'k'},
+  {group:'colors',ru:'Фиолетовый',en:'Purple',jp:'むらさき',romaji:'murasaki',script:'h'},
+  {group:'colors',ru:'Цвет',en:'Color',jp:'いろ',romaji:'iro',script:'h'},
+  // ── Food & Drinks ──
+  {group:'food',ru:'Рис варёный',en:'Cooked rice',jp:'ごはん',romaji:'gohan',script:'h'},
+  {group:'food',ru:'Хлеб',en:'Bread',jp:'パン',romaji:'pan',script:'k'},
+  {group:'food',ru:'Яйцо',en:'Egg',jp:'たまご',romaji:'tamago',script:'h'},
+  {group:'food',ru:'Мясо',en:'Meat',jp:'にく',romaji:'niku',script:'h'},
+  {group:'food',ru:'Рыба',en:'Fish',jp:'さかな',romaji:'sakana',script:'h'},
+  {group:'food',ru:'Овощи',en:'Vegetables',jp:'やさい',romaji:'yasai',script:'h'},
+  {group:'food',ru:'Суши',en:'Sushi',jp:'すし',romaji:'sushi',script:'h'},
+  {group:'food',ru:'Рамен',en:'Ramen',jp:'ラーメン',romaji:'raamen',script:'k'},
+  {group:'food',ru:'Вода',en:'Water',jp:'みず',romaji:'mizu',script:'h'},
+  {group:'food',ru:'Чай',en:'Tea',jp:'おちゃ',romaji:'ocha',script:'h'},
+  {group:'food',ru:'Кофе',en:'Coffee',jp:'コーヒー',romaji:'koohii',script:'k'},
+  {group:'food',ru:'Сок',en:'Juice',jp:'ジュース',romaji:'juusu',script:'k'},
+  {group:'food',ru:'Пиво',en:'Beer',jp:'ビール',romaji:'biiru',script:'k'},
+  {group:'food',ru:'Молоко',en:'Milk',jp:'ぎゅうにゅう',romaji:'gyuunyuu',script:'h'},
+  {group:'food',ru:'Завтрак',en:'Breakfast',jp:'あさごはん',romaji:'asagohan',script:'h'},
+  {group:'food',ru:'Обед',en:'Lunch',jp:'ひるごはん',romaji:'hirugohan',script:'h'},
+  {group:'food',ru:'Ужин',en:'Dinner',jp:'ばんごはん',romaji:'bangohan',script:'h'},
+  {group:'food',ru:'Суп',en:'Soup',jp:'スープ',romaji:'suupu',script:'k'},
+  {group:'food',ru:'Вкусный',en:'Delicious',jp:'おいしい',romaji:'oishii',script:'h'},
+  // ── Body ──
+  {group:'body',ru:'Голова',en:'Head',jp:'あたま',romaji:'atama',script:'h'},
+  {group:'body',ru:'Лицо',en:'Face',jp:'かお',romaji:'kao',script:'h'},
+  {group:'body',ru:'Глаза',en:'Eyes',jp:'め',romaji:'me',script:'h'},
+  {group:'body',ru:'Нос',en:'Nose',jp:'はな',romaji:'hana',script:'h'},
+  {group:'body',ru:'Рот',en:'Mouth',jp:'くち',romaji:'kuchi',script:'h'},
+  {group:'body',ru:'Ухо',en:'Ear',jp:'みみ',romaji:'mimi',script:'h'},
+  {group:'body',ru:'Зубы',en:'Teeth',jp:'は',romaji:'ha',script:'h'},
+  {group:'body',ru:'Рука',en:'Hand/Arm',jp:'て',romaji:'te',script:'h'},
+  {group:'body',ru:'Нога',en:'Leg/Foot',jp:'あし',romaji:'ashi',script:'h'},
+  {group:'body',ru:'Спина',en:'Back',jp:'せなか',romaji:'senaka',script:'h'},
+  {group:'body',ru:'Живот',en:'Stomach',jp:'おなか',romaji:'onaka',script:'h'},
+  {group:'body',ru:'Тело',en:'Body',jp:'からだ',romaji:'karada',script:'h'},
+  {group:'body',ru:'Волосы',en:'Hair',jp:'かみ',romaji:'kami',script:'h'},
+  // ── Clothes ──
+  {group:'clothes',ru:'Одежда',en:'Clothes',jp:'ふく',romaji:'fuku',script:'h'},
+  {group:'clothes',ru:'Рубашка',en:'Shirt',jp:'シャツ',romaji:'shatsu',script:'k'},
+  {group:'clothes',ru:'Брюки',en:'Trousers',jp:'ズボン',romaji:'zubon',script:'k'},
+  {group:'clothes',ru:'Юбка',en:'Skirt',jp:'スカート',romaji:'sukaato',script:'k'},
+  {group:'clothes',ru:'Платье',en:'Dress',jp:'ワンピース',romaji:'wanpiisu',script:'k'},
+  {group:'clothes',ru:'Пальто',en:'Coat',jp:'コート',romaji:'kooto',script:'k'},
+  {group:'clothes',ru:'Свитер',en:'Sweater',jp:'セーター',romaji:'seetaa',script:'k'},
+  {group:'clothes',ru:'Носки',en:'Socks',jp:'くつした',romaji:'kutsushita',script:'h'},
+  {group:'clothes',ru:'Обувь',en:'Shoes',jp:'くつ',romaji:'kutsu',script:'h'},
+  {group:'clothes',ru:'Шапка',en:'Hat/Cap',jp:'ぼうし',romaji:'boushi',script:'h'},
+  {group:'clothes',ru:'Галстук',en:'Tie',jp:'ネクタイ',romaji:'nekutai',script:'k'},
+  {group:'clothes',ru:'Очки',en:'Glasses',jp:'めがね',romaji:'megane',script:'h'},
+  // ── House ──
+  {group:'house',ru:'Дверь',en:'Door',jp:'ドア',romaji:'doa',script:'k'},
+  {group:'house',ru:'Окно',en:'Window',jp:'まど',romaji:'mado',script:'h'},
+  {group:'house',ru:'Стол',en:'Desk/Table',jp:'つくえ',romaji:'tsukue',script:'h'},
+  {group:'house',ru:'Стул',en:'Chair',jp:'いす',romaji:'isu',script:'h'},
+  {group:'house',ru:'Кровать',en:'Bed',jp:'ベッド',romaji:'beddo',script:'k'},
+  {group:'house',ru:'Телевизор',en:'TV',jp:'テレビ',romaji:'terebi',script:'k'},
+  {group:'house',ru:'Холодильник',en:'Refrigerator',jp:'れいぞうこ',romaji:'reizouko',script:'h'},
+  {group:'house',ru:'Ванная',en:'Bathroom',jp:'おふろ',romaji:'ofuro',script:'h'},
+  {group:'house',ru:'Кухня',en:'Kitchen',jp:'だいどころ',romaji:'daidokoro',script:'h'},
+  {group:'house',ru:'Гостиная',en:'Living room',jp:'リビング',romaji:'ribingu',script:'k'},
+  {group:'house',ru:'Спальня',en:'Bedroom',jp:'しんしつ',romaji:'shinshitsu',script:'h'},
+  {group:'house',ru:'Лестница',en:'Stairs',jp:'かいだん',romaji:'kaidan',script:'h'},
+  // ── Transport ──
+  {group:'transport',ru:'Поезд',en:'Train',jp:'でんしゃ',romaji:'densha',script:'h'},
+  {group:'transport',ru:'Метро',en:'Subway',jp:'ちかてつ',romaji:'chikatetsu',script:'h'},
+  {group:'transport',ru:'Автобус',en:'Bus',jp:'バス',romaji:'basu',script:'k'},
+  {group:'transport',ru:'Такси',en:'Taxi',jp:'タクシー',romaji:'takushii',script:'k'},
+  {group:'transport',ru:'Самолёт',en:'Airplane',jp:'ひこうき',romaji:'hikouki',script:'h'},
+  {group:'transport',ru:'Корабль',en:'Ship',jp:'ふね',romaji:'fune',script:'h'},
+  {group:'transport',ru:'Автомобиль',en:'Car',jp:'くるま',romaji:'kuruma',script:'h'},
+  {group:'transport',ru:'Велосипед',en:'Bicycle',jp:'じてんしゃ',romaji:'jitensha',script:'h'},
+  {group:'transport',ru:'Вокзал',en:'Station',jp:'えき',romaji:'eki',script:'h'},
+  {group:'transport',ru:'Аэропорт',en:'Airport',jp:'くうこう',romaji:'kuukou',script:'h'},
+  {group:'transport',ru:'Остановка',en:'Bus stop',jp:'バスてい',romaji:'basutei',script:'h'},
+  // ── Adjectives い ──
+  {group:'adj_i',ru:'Большой',en:'Big',jp:'おおきい',romaji:'ookii',script:'h'},
+  {group:'adj_i',ru:'Маленький',en:'Small',jp:'ちいさい',romaji:'chiisai',script:'h'},
+  {group:'adj_i',ru:'Высокий',en:'Tall/High',jp:'たかい',romaji:'takai',script:'h'},
+  {group:'adj_i',ru:'Низкий',en:'Low/Short',jp:'ひくい',romaji:'hikui',script:'h'},
+  {group:'adj_i',ru:'Длинный',en:'Long',jp:'ながい',romaji:'nagai',script:'h'},
+  {group:'adj_i',ru:'Короткий',en:'Short',jp:'みじかい',romaji:'mijikai',script:'h'},
+  {group:'adj_i',ru:'Дорогой',en:'Expensive',jp:'たかい',romaji:'takai',script:'h'},
+  {group:'adj_i',ru:'Дешёвый',en:'Cheap',jp:'やすい',romaji:'yasui',script:'h'},
+  {group:'adj_i',ru:'Новый',en:'New',jp:'あたらしい',romaji:'atarashii',script:'h'},
+  {group:'adj_i',ru:'Старый',en:'Old',jp:'ふるい',romaji:'furui',script:'h'},
+  {group:'adj_i',ru:'Горячий',en:'Hot',jp:'あつい',romaji:'atsui',script:'h'},
+  {group:'adj_i',ru:'Холодный',en:'Cold',jp:'つめたい',romaji:'tsumetai',script:'h'},
+  {group:'adj_i',ru:'Тёплый',en:'Warm',jp:'あたたかい',romaji:'atatakai',script:'h'},
+  {group:'adj_i',ru:'Вкусный',en:'Delicious',jp:'おいしい',romaji:'oishii',script:'h'},
+  {group:'adj_i',ru:'Трудный',en:'Difficult',jp:'むずかしい',romaji:'muzukashii',script:'h'},
+  {group:'adj_i',ru:'Лёгкий',en:'Easy',jp:'やさしい',romaji:'yasashii',script:'h'},
+  {group:'adj_i',ru:'Весёлый',en:'Fun',jp:'たのしい',romaji:'tanoshii',script:'h'},
+  {group:'adj_i',ru:'Скучный',en:'Boring',jp:'つまらない',romaji:'tsumaranai',script:'h'},
+  {group:'adj_i',ru:'Страшный',en:'Scary',jp:'こわい',romaji:'kowai',script:'h'},
+  {group:'adj_i',ru:'Грустный',en:'Sad',jp:'かなしい',romaji:'kanashii',script:'h'},
+  // ── Adjectives な ──
+  {group:'adj_na',ru:'Удобный',en:'Convenient',jp:'べんりな',romaji:'benrina',script:'h'},
+  {group:'adj_na',ru:'Нравится',en:'Liked',jp:'すきな',romaji:'sukina',script:'h'},
+  {group:'adj_na',ru:'Не нравится',en:'Disliked',jp:'きらいな',romaji:'kiraina',script:'h'},
+  {group:'adj_na',ru:'Знаменитый',en:'Famous',jp:'ゆうめいな',romaji:'yuumeina',script:'h'},
+  {group:'adj_na',ru:'Спокойный',en:'Quiet',jp:'しずかな',romaji:'shizukana',script:'h'},
+  {group:'adj_na',ru:'Шумный',en:'Noisy',jp:'にぎやかな',romaji:'nigiyakana',script:'h'},
+  {group:'adj_na',ru:'Здоровый',en:'Healthy',jp:'げんきな',romaji:'genkina',script:'h'},
+  {group:'adj_na',ru:'Важный',en:'Important',jp:'たいせつな',romaji:'taisetsuna',script:'h'},
+  {group:'adj_na',ru:'Свободный',en:'Free/Available',jp:'ひまな',romaji:'himana',script:'h'},
+  {group:'adj_na',ru:'Чистый',en:'Clean',jp:'きれいな',romaji:'kireina',script:'h'},
+  {group:'adj_na',ru:'Добрый',en:'Kind',jp:'しんせつな',romaji:'shinsetsuna',script:'h'},
+  // ── Questions ──
+  {group:'questions',ru:'Что?',en:'What?',jp:'なに',romaji:'nani',script:'h'},
+  {group:'questions',ru:'Кто?',en:'Who?',jp:'だれ',romaji:'dare',script:'h'},
+  {group:'questions',ru:'Где?',en:'Where?',jp:'どこ',romaji:'doko',script:'h'},
+  {group:'questions',ru:'Когда?',en:'When?',jp:'いつ',romaji:'itsu',script:'h'},
+  {group:'questions',ru:'Почему?',en:'Why?',jp:'なぜ',romaji:'naze',script:'h'},
+  {group:'questions',ru:'Как?',en:'How?',jp:'どう',romaji:'dou',script:'h'},
+  {group:'questions',ru:'Сколько (цена)?',en:'How much?',jp:'いくら',romaji:'ikura',script:'h'},
+  {group:'questions',ru:'Сколько (штук)?',en:'How many?',jp:'いくつ',romaji:'ikutsu',script:'h'},
+  {group:'questions',ru:'Который час?',en:'What time?',jp:'なんじ',romaji:'nanji',script:'h'},
+  {group:'questions',ru:'Какой?',en:'Which?',jp:'どの',romaji:'dono',script:'h'},
+  {group:'questions',ru:'Сколько лет?',en:'How old?',jp:'なんさい',romaji:'nansai',script:'h'},
 ];
 
 /* ── Verb data ──────────────────────────────────────────── */
@@ -727,8 +857,42 @@ const VERB_DATA = [
   {group:'lesson5', ru:'Покупать',             en:'To buy',                stem:'かい',         romaji_stem:'kai'},
   {group:'lesson5', ru:'Ждать',                en:'To wait',               stem:'まち',         romaji_stem:'machi'},
   {group:'lesson5', ru:'Встречаться',          en:'To meet',               stem:'あい',         romaji_stem:'ai'},
-  {group:'lesson5', ru:'Начинать',             en:'To begin',              stem:'はじめ',       romaji_stem:'hajime'},
-  {group:'lesson5', ru:'Заканчивать',          en:'To finish',             stem:'おわり',       romaji_stem:'owari'},
+  {group:'lesson5', ru:'Начинать',en:'To begin',stem:'はじめ',romaji_stem:'hajime'},
+  {group:'lesson5', ru:'Заканчивать',en:'To finish',stem:'おわり',romaji_stem:'owari'},
+  // ── Motion ──
+  {group:'verbs_motion',ru:'Входить',en:'To enter',stem:'はいり',romaji_stem:'hairi'},
+  {group:'verbs_motion',ru:'Выходить',en:'To exit',stem:'で',romaji_stem:'de'},
+  {group:'verbs_motion',ru:'Ехать (транспорт)',en:'To ride',stem:'のり',romaji_stem:'nori'},
+  {group:'verbs_motion',ru:'Бежать',en:'To run',stem:'はしり',romaji_stem:'hashiri'},
+  {group:'verbs_motion',ru:'Идти пешком',en:'To walk',stem:'あるき',romaji_stem:'aruki'},
+  {group:'verbs_motion',ru:'Плавать',en:'To swim',stem:'およぎ',romaji_stem:'oyogi'},
+  {group:'verbs_motion',ru:'Стоять',en:'To stand',stem:'たち',romaji_stem:'tachi'},
+  {group:'verbs_motion',ru:'Сидеть',en:'To sit',stem:'すわり',romaji_stem:'suwari'},
+  // ── Daily ──
+  {group:'verbs_daily',ru:'Открывать',en:'To open',stem:'あけ',romaji_stem:'ake'},
+  {group:'verbs_daily',ru:'Закрывать',en:'To close',stem:'しめ',romaji_stem:'shime'},
+  {group:'verbs_daily',ru:'Включать',en:'To turn on',stem:'つけ',romaji_stem:'tsuke'},
+  {group:'verbs_daily',ru:'Выключать',en:'To turn off',stem:'けし',romaji_stem:'keshi'},
+  {group:'verbs_daily',ru:'Мыть',en:'To wash',stem:'あらい',romaji_stem:'arai'},
+  {group:'verbs_daily',ru:'Готовить',en:'To cook',stem:'つくり',romaji_stem:'tsukuri'},
+  {group:'verbs_daily',ru:'Убирать',en:'To clean',stem:'そうじし',romaji_stem:'souji shi'},
+  {group:'verbs_daily',ru:'Звонить',en:'To call',stem:'でんわし',romaji_stem:'denwa shi'},
+  {group:'verbs_daily',ru:'Показывать',en:'To show',stem:'みせ',romaji_stem:'mise'},
+  {group:'verbs_daily',ru:'Давать',en:'To give',stem:'あげ',romaji_stem:'age'},
+  {group:'verbs_daily',ru:'Получать',en:'To receive',stem:'もらい',romaji_stem:'morai'},
+  {group:'verbs_daily',ru:'Брать',en:'To take',stem:'とり',romaji_stem:'tori'},
+  {group:'verbs_daily',ru:'Класть',en:'To put/place',stem:'おき',romaji_stem:'oki'},
+  {group:'verbs_daily',ru:'Надевать',en:'To put on',stem:'き',romaji_stem:'ki'},
+  {group:'verbs_daily',ru:'Снимать одежду',en:'To take off',stem:'ぬぎ',romaji_stem:'nugi'},
+  // ── Communication ──
+  {group:'verbs_comm',ru:'Спрашивать',en:'To ask',stem:'きき',romaji_stem:'kiki'},
+  {group:'verbs_comm',ru:'Отвечать',en:'To answer',stem:'こたえ',romaji_stem:'kotae'},
+  {group:'verbs_comm',ru:'Думать',en:'To think',stem:'おもい',romaji_stem:'omoi'},
+  {group:'verbs_comm',ru:'Знать',en:'To know',stem:'しり',romaji_stem:'shiri'},
+  {group:'verbs_comm',ru:'Помнить',en:'To remember',stem:'おぼえ',romaji_stem:'oboe'},
+  {group:'verbs_comm',ru:'Забывать',en:'To forget',stem:'わすれ',romaji_stem:'wasure'},
+  {group:'verbs_comm',ru:'Встречаться',en:'To meet',stem:'あい',romaji_stem:'ai'},
+  {group:'verbs_comm',ru:'Объяснять',en:'To explain',stem:'せつめいし',romaji_stem:'setsumei shi'},
 ];
 
 /* Verb form definitions */
@@ -818,11 +982,24 @@ const TRANSLATIONS = {
     lesson1:'Урок 1 — Люди', countries:'Страны', lesson2:'Урок 2 — Предметы',
     fruits:'Фрукты', lesson3:'Урок 3 — Места', lesson4:'Урок 4',
     lesson5:'Урок 5', family_own:'Семья (своя)', family_other:'Семья (вежл.)',
+    g_colors:'Цвета', g_food:'Еда и напитки', g_body:'Тело',
+    g_clothes:'Одежда', g_house:'Дом и мебель', g_transport:'Транспорт',
+    g_adj_i:'Прилаг. い', g_adj_na:'Прилаг. な', g_questions:'Вопросы',
+    g_verbs_motion:'Движение', g_verbs_daily:'Повседневные', g_verbs_comm:'Общение',
     native_to_jp:'Родной → JP', jp_to_native:'JP → Родной',
     vpres:'Наст/Буд', vpast:'Прошедшее', vneg:'Отрицание',
     // mode names
     kana_mode:'Кана', numbers_mode:'Числа', time_mode:'Время',
     calendar_mode:'Календарь', vocab_mode:'📖 Слова', verbs_mode:'🔤 Глаголы',
+    kanji_mode:'🈴 Кандзи N5', quiz_mode:'🎯 Квиз',
+    sprint_mode:'⚡ Спринт', recall_mode:'✍️ Recall', sentences_mode:'🔀 Предложения',
+    kf_kanji:'Кандзи → Значение', kf_meaning:'Значение → Кандзи',
+    kf_on:'Он-ёми', kf_kun:'Кун-ёми',
+    quiz_vocab:'Слова', quiz_kanji:'Кандзи', quiz_verbs:'Глаголы',
+    s30:'30 сек', s60:'60 сек', s120:'2 мин',
+    rec_romaji:'Ромаджи', rec_meaning:'Перевод',
+    sent_reveal:'Показать ответ',
+    tbl_kanji:'Таблица кандзи N5',
     // buttons
     again:'Повтор', known:'Знаю', reset:'Сброс',
     tables_btn:'Таблицы', flashcards_btn:'← Карточки',
@@ -844,7 +1021,6 @@ const TRANSLATIONS = {
     vf_pres:'Настоящее / Будущее', vf_past:'Прошедшее',
     vf_neg_pres:'Настоящее отрицательное', vf_neg_past:'Прошедшее отрицательное',
     vf_let:'Давайте…',
-    // misc card answer labels
     exc_badge:'⚠ 例外',
   },
   en: {
@@ -869,10 +1045,23 @@ const TRANSLATIONS = {
     lesson1:'Lesson 1 — People', countries:'Countries', lesson2:'Lesson 2 — Items',
     fruits:'Fruits', lesson3:'Lesson 3 — Places', lesson4:'Lesson 4',
     lesson5:'Lesson 5', family_own:'Family (own)', family_other:'Family (polite)',
+    g_colors:'Colors', g_food:'Food & Drinks', g_body:'Body',
+    g_clothes:'Clothes', g_house:'House & Furniture', g_transport:'Transport',
+    g_adj_i:'Adj. い', g_adj_na:'Adj. な', g_questions:'Questions',
+    g_verbs_motion:'Motion', g_verbs_daily:'Daily actions', g_verbs_comm:'Communication',
     native_to_jp:'Native → JP', jp_to_native:'JP → Native',
     vpres:'Pres/Future', vpast:'Past', vneg:'Negative',
     kana_mode:'Kana', numbers_mode:'Numbers', time_mode:'Time',
     calendar_mode:'Calendar', vocab_mode:'📖 Words', verbs_mode:'🔤 Verbs',
+    kanji_mode:'🈴 Kanji N5', quiz_mode:'🎯 Quiz',
+    sprint_mode:'⚡ Sprint', recall_mode:'✍️ Recall', sentences_mode:'🔀 Sentences',
+    kf_kanji:'Kanji → Meaning', kf_meaning:'Meaning → Kanji',
+    kf_on:'On-yomi', kf_kun:'Kun-yomi',
+    quiz_vocab:'Words', quiz_kanji:'Kanji', quiz_verbs:'Verbs',
+    s30:'30 sec', s60:'60 sec', s120:'2 min',
+    rec_romaji:'Romaji', rec_meaning:'Translation',
+    sent_reveal:'Show answer',
+    tbl_kanji:'Kanji N5 table',
     again:'Again', known:'Known', reset:'Reset',
     tables_btn:'Tables', flashcards_btn:'← Flashcards',
     stat_known:'Known', stat_attempts:'Attempts', stat_deck:'Deck',
@@ -922,6 +1111,8 @@ function applyI18n() {
   const modeMap = {
     kana: tr.kana_mode, numbers: tr.numbers_mode, time: tr.time_mode,
     calendar: tr.calendar_mode, vocab: tr.vocab_mode, verbs: tr.verbs_mode,
+    kanji: tr.kanji_mode, quiz: tr.quiz_mode,
+    sprint: tr.sprint_mode, recall: tr.recall_mode, sentences: tr.sentences_mode,
   };
   selGlobalMode.querySelectorAll('option').forEach(o => {
     if (modeMap[o.value]) o.textContent = modeMap[o.value];
@@ -1010,7 +1201,24 @@ const state = {
   verbForms: { pres:true, past:true, neg_pres:true, neg_past:true, let:false },
 
   // UI language
-  uiLang: 'ru', // 'ru' | 'en'
+  uiLang: 'ru',
+
+  // Kanji
+  kanjiFront:'kanji', kanjiOrder:'random',
+
+  // Quiz
+  quizSource:'vocab', quizChoices:4,
+
+  // Sprint
+  sprintSource:'vocab', sprintTime:60,
+  _sprintTimer:null, _sprintRunning:false,
+
+  // Recall
+  recallSource:'vocab', recallMode:'romaji',
+
+  // Sentences
+  sentVerbScope:'all',
+  sentForms:{ pres:true, past:true, neg_pres:true, neg_past:true, let:false },
 
   // Session
   deck: [], queue: [], currentIdx: 0, current: null,
@@ -1073,6 +1281,63 @@ const selCalMeaning  = $('selCalMeaning');
 
 // UI language
 const selUiLang      = $('selUiLang');
+
+// Kanji
+const kanjiControls  = $('kanjiControls');
+const selKanjiFront  = $('selKanjiFront');
+const selKanjiOrder  = $('selKanjiOrder');
+
+// Quiz
+const quizControls   = $('quizControls');
+const selQuizSource  = $('selQuizSource');
+const selQuizChoices = $('selQuizChoices');
+const quizView       = $('quizView');
+const quizPrompt     = $('quizPrompt');
+const quizChoicesGrid= $('quizChoicesGrid');
+const btnQuizReset   = $('btnQuizReset');
+
+// Sprint
+const sprintControls = $('sprintControls');
+const selSprintSource= $('selSprintSource');
+const selSprintTime  = $('selSprintTime');
+const sprintView     = $('sprintView');
+const sprintScreen   = $('sprintScreen');
+const sprintTimer    = $('sprintTimer');
+const sprintCard     = $('sprintCard');
+const btnSprintYes   = $('btnSprintYes');
+const btnSprintNo    = $('btnSprintNo');
+const sprintResult   = $('sprintResult');
+const sprintResultInner = $('sprintResultInner');
+const btnSprintAgain = $('btnSprintAgain');
+
+// Recall
+const recallControls = $('recallControls');
+const selRecallSource= $('selRecallSource');
+const selRecallMode  = $('selRecallMode');
+const recallView     = $('recallView');
+const recallPrompt   = $('recallPrompt');
+const recallInput    = $('recallInput');
+const btnRecallCheck = $('btnRecallCheck');
+const recallFeedback = $('recallFeedback');
+const btnRecallSkip  = $('btnRecallSkip');
+const btnRecallReset = $('btnRecallReset');
+
+// Sentences
+const sentencesControls = $('sentencesControls');
+const selSentVerbScope  = $('selSentVerbScope');
+const optSentPres    = $('optSentPres');
+const optSentPast    = $('optSentPast');
+const optSentNeg     = $('optSentNeg');
+const optSentLet     = $('optSentLet');
+const sentencesView  = $('sentencesView');
+const sentSubject    = $('sentSubject');
+const sentVerb       = $('sentVerb');
+const sentFormTag    = $('sentFormTag');
+const sentAnswer     = $('sentAnswer');
+const sentTiles      = $('sentTiles');
+const btnSentReveal  = $('btnSentReveal');
+const btnSentNext    = $('btnSentNext');
+const btnSentReset   = $('btnSentReset');
 const selCalMonthMin = $('selCalMonthMin');
 const selCalMonthMax = $('selCalMonthMax');
 
@@ -1289,6 +1554,40 @@ optVerbNeg.addEventListener('change',    () => {
 });
 optVerbLet.addEventListener('change',    () => { state.verbForms.let  = optVerbLet.checked;      restart(); });
 
+// Kanji
+selKanjiFront.addEventListener('change', () => { state.kanjiFront = selKanjiFront.value; restart(); });
+selKanjiOrder.addEventListener('change', () => { state.kanjiOrder = selKanjiOrder.value; restart(); });
+
+// Quiz
+selQuizSource.addEventListener('change',  () => { state.quizSource  = selQuizSource.value;  startQuiz(); });
+selQuizChoices.addEventListener('change', () => { state.quizChoices = parseInt(selQuizChoices.value)||4; startQuiz(); });
+btnQuizReset.addEventListener('click',    () => startQuiz());
+
+// Sprint
+selSprintSource.addEventListener('change',() => { state.sprintSource = selSprintSource.value; initSprint(); });
+selSprintTime.addEventListener('change',  () => { state.sprintTime   = parseInt(selSprintTime.value)||60; initSprint(); });
+btnSprintYes.addEventListener('click',    () => sprintAnswer(true));
+btnSprintNo.addEventListener('click',     () => sprintAnswer(false));
+btnSprintAgain.addEventListener('click',  () => initSprint());
+
+// Recall
+selRecallSource.addEventListener('change',() => { state.recallSource = selRecallSource.value; startRecall(); });
+selRecallMode.addEventListener('change',  () => { state.recallMode   = selRecallMode.value;   startRecall(); });
+btnRecallCheck.addEventListener('click',  () => checkRecall());
+recallInput.addEventListener('keydown',   e => { if (e.key === 'Enter') checkRecall(); });
+btnRecallSkip.addEventListener('click',   () => { state.attempts++; advanceRecall(); });
+btnRecallReset.addEventListener('click',  () => startRecall());
+
+// Sentences
+selSentVerbScope.addEventListener('change',() => { state.sentVerbScope = selSentVerbScope.value; startSentences(); });
+optSentPres.addEventListener('change', () => { state.sentForms.pres     = optSentPres.checked; startSentences(); });
+optSentPast.addEventListener('change', () => { state.sentForms.past     = optSentPast.checked; startSentences(); });
+optSentNeg.addEventListener('change',  () => { state.sentForms.neg_pres = optSentNeg.checked; state.sentForms.neg_past = optSentNeg.checked; startSentences(); });
+optSentLet.addEventListener('change',  () => { state.sentForms.let      = optSentLet.checked; startSentences(); });
+btnSentReveal.addEventListener('click', () => revealSentence());
+btnSentNext.addEventListener('click',   () => nextSentence());
+btnSentReset.addEventListener('click',  () => startSentences());
+
 btnAgain.addEventListener('click',  doAgain);
 btnKnown.addEventListener('click',  doKnown);
 btnReset.addEventListener('click',  restart);
@@ -1302,12 +1601,30 @@ card.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' ') onCard
 
 function syncModeUI() {
   const m = state.globalMode;
-  kanaControls.classList.toggle('hidden', m !== 'kana');
-  numControls.classList.toggle('hidden',  m !== 'numbers');
-  timeControls.classList.toggle('hidden', m !== 'time');
-  calControls.classList.toggle('hidden',  m !== 'calendar');
-  vocabControls.classList.toggle('hidden', m !== 'vocab');
-  verbControls.classList.toggle('hidden',  m !== 'verbs');
+  const flashModes  = new Set(['kana','numbers','time','calendar','vocab','verbs','kanji','sentences']);
+  const isFlash = flashModes.has(m);
+
+  kanaControls.classList.toggle('hidden',      m !== 'kana');
+  numControls.classList.toggle('hidden',       m !== 'numbers');
+  timeControls.classList.toggle('hidden',      m !== 'time');
+  calControls.classList.toggle('hidden',       m !== 'calendar');
+  vocabControls.classList.toggle('hidden',     m !== 'vocab');
+  verbControls.classList.toggle('hidden',      m !== 'verbs');
+  kanjiControls.classList.toggle('hidden',     m !== 'kanji');
+  quizControls.classList.toggle('hidden',      m !== 'quiz');
+  sprintControls.classList.toggle('hidden',    true);  // Sprint hidden permanently
+  recallControls.classList.toggle('hidden',    true);  // Recall hidden permanently
+  sentencesControls.classList.toggle('hidden', m !== 'sentences');
+
+  // Show/hide the main view containers
+  flashView.classList.toggle('hidden',      !isFlash || state.view === 'tables');
+  quizView.classList.toggle('hidden',       m !== 'quiz');
+  sprintView.classList.toggle('hidden',     true);   // Sprint hidden permanently
+  recallView.classList.toggle('hidden',     true);   // Recall hidden permanently
+  tableView.classList.toggle('hidden',      !isFlash || state.view !== 'tables');
+
+  // Tables button only makes sense for flash modes
+  btnTables.classList.toggle('hidden', !isFlash);
 }
 
 function updateKanaUI() {
@@ -1362,6 +1679,33 @@ function restart() {
     state.deck = buildVerbDeck(state.verbScope, state.verbForms, state.verbOrder);
     buildQueue();
     syncModeUI(); updateNumUI();
+  } else if (state.globalMode === 'kanji') {
+    state.deck = buildKanjiDeck(state.kanjiFront, state.kanjiOrder);
+    buildQueue();
+    syncModeUI(); updateNumUI();
+  } else if (state.globalMode === 'quiz') {
+    syncModeUI();
+    startQuiz();
+    updateStat();
+    return;
+  } else if (state.globalMode === 'sprint') {
+    syncModeUI();
+    initSprint();
+    updateStat();
+    return;
+  } else if (state.globalMode === 'recall') {
+    syncModeUI();
+    startRecall();
+    updateStat();
+    return;
+  } else if (state.globalMode === 'sentences') {
+    _sentDeck = buildSentDeck();
+    _sentIdx = 0; _sentRevealed = false;
+    state.known = 0; state.attempts = 0;
+    syncModeUI();
+    showSentence();
+    updateStat();
+    return;
   }
 
   if (state.view === 'flash') showCard();
@@ -1431,6 +1775,7 @@ function showCard() {
     else if (state.globalMode === 'calendar') renderCalendarCard(entry);
     else if (state.globalMode === 'vocab')    renderVocabCard(entry);
     else if (state.globalMode === 'verbs')    renderVerbCard(entry);
+    else if (state.globalMode === 'kanji')    renderKanjiCard(entry);
 
     card.classList.remove('fading');
     updateStat();
@@ -1875,8 +2220,27 @@ function onCardClick() {
   }
 }
 
-function doAgain() { state.attempts++; pushAgain(); updateStat(); showCard(); }
-function doKnown() { state.known++; state.attempts++; advance(); updateStat(); showCard(); }
+function doAgain() {
+  if (state.globalMode === 'sentences') {
+    _sentRevealed = false;
+    _sentIdx++; // treat as "didn't know" — move on without counting
+    showSentence();
+    updateStat();
+    return;
+  }
+  state.attempts++; pushAgain(); updateStat(); showCard();
+}
+function doKnown() {
+  if (state.globalMode === 'sentences') {
+    state.known++; state.attempts++;
+    _sentIdx++;
+    _sentRevealed = false;
+    showSentence();
+    updateStat();
+    return;
+  }
+  state.known++; state.attempts++; advance(); updateStat(); showCard();
+}
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 12 — VIEW TOGGLE
@@ -1923,6 +2287,7 @@ function renderTable() {
   else if (state.globalMode === 'calendar') renderCalendarTable();
   else if (state.globalMode === 'vocab')    renderVocabTable();
   else if (state.globalMode === 'verbs')    renderVerbTable();
+  else if (state.globalMode === 'kanji')    renderKanjiTable();
 }
 
 /* ── Kana table ── */
@@ -2425,48 +2790,525 @@ function renderVerbTable() {
   tableTitle.textContent = T('tbl_verbs');
   tableScroller.innerHTML = '';
 
+  const VERB_GROUP_LABELS = {
+    lesson4:      { ru:'Урок 4 — Ежедневные',   en:'Lesson 4 — Daily routines' },
+    lesson5:      { ru:'Урок 5 — Действия',      en:'Lesson 5 — Actions' },
+    verbs_motion: { ru:'Движение',               en:'Motion' },
+    verbs_daily:  { ru:'Повседневные действия',  en:'Daily actions' },
+    verbs_comm:   { ru:'Общение',                en:'Communication' },
+  };
+
+  const colHeaders = [
+    T('vcol_native'), T('vcol_pres'), T('vcol_past'),
+    T('vcol_neg_pres'), T('vcol_neg_past'), T('vcol_let'), T('vcol_romaji'),
+  ];
+
+  const groups = scope === 'all'
+    ? [...new Set(VERB_DATA.map(v => v.group))]
+    : [scope];
+
   const wrap = document.createElement('div');
   wrap.className = 'verb-table-wrap';
 
+  groups.forEach(g => {
+    const groupVerbs = verbs.filter(v => v.group === g);
+    if (!groupVerbs.length) return;
+
+    // Group header when showing all
+    if (scope === 'all') {
+      const hdr = document.createElement('div');
+      hdr.className = 'vocab-table-group-hdr';
+      const lbl = VERB_GROUP_LABELS[g];
+      hdr.textContent = lbl ? (state.uiLang === 'en' ? lbl.en : lbl.ru) : g;
+      wrap.appendChild(hdr);
+    }
+
+    const table = document.createElement('table');
+    table.className = 'verb-table';
+    const thead = table.createTHead();
+    const hr = thead.insertRow();
+    colHeaders.forEach(t => {
+      const th = document.createElement('th'); th.textContent = t; hr.appendChild(th);
+    });
+
+    const tbody = table.createTBody();
+    groupVerbs.forEach(v => {
+      const tr = tbody.insertRow();
+      const nativeTxt = state.uiLang === 'en' ? v.en : v.ru;
+      const cells = [
+        nativeTxt,
+        v.stem + 'ます',
+        v.stem + 'ました',
+        v.stem + 'ません',
+        v.stem + 'ませんでした',
+        v.stem + 'ましょう',
+        v.romaji_stem + '-masu',
+      ];
+      cells.forEach((txt, i) => {
+        const td = tr.insertCell();
+        td.textContent = txt;
+        if (i >= 1 && i <= 5) td.className = 'verb-cell-jp';
+        if (i === 3 || i === 4) td.classList.add('verb-cell-neg');
+      });
+    });
+
+    wrap.appendChild(table);
+  });
+
+  tableScroller.appendChild(wrap);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION NEW — KANJI MODE
+   ═══════════════════════════════════════════════════════════ */
+
+function buildKanjiDeck(front, order) {
+  if (typeof KANJI_N5 === 'undefined') return [];
+  let deck = KANJI_N5.map(k => ({ ...k, _front: front }));
+  if (order === 'random') shuffle(deck);
+  return deck;
+}
+
+function renderKanjiCard(entry) {
+  actionsRow.classList.remove('hidden');
+  choicesRow.classList.add('hidden');
+  cardFront.innerHTML = '';
+  cardAnswer.innerHTML = '';
+
+  const front = entry._front;
+  const nativeMeaning = state.uiLang === 'en' ? entry.meaning_en : entry.meaning_ru;
+
+  if (front === 'kanji') {
+    cardFront.classList.add('kanji-main-prompt');
+    cardFront.textContent = entry.k;
+
+    const mSpan = document.createElement('span'); mSpan.className = 'ans-vocab-meaning-main';
+    mSpan.textContent = nativeMeaning; cardAnswer.appendChild(mSpan);
+    const onSpan = document.createElement('span'); onSpan.className = 'ans-kanji-on';
+    onSpan.textContent = '音: ' + entry.on; cardAnswer.appendChild(onSpan);
+    const kunSpan = document.createElement('span'); kunSpan.className = 'ans-kanji-kun';
+    kunSpan.textContent = '訓: ' + entry.kun; cardAnswer.appendChild(kunSpan);
+    if (entry.ex && entry.ex.length) {
+      const exDiv = document.createElement('div'); exDiv.className = 'ans-kanji-ex';
+      entry.ex.slice(0,2).forEach(e => {
+        const s = document.createElement('span'); s.className = 'ans-kanji-ex-item';
+        const exMeaning = state.uiLang === 'en' ? e.en : e.ru;
+        s.textContent = `${e.w}【${e.r}】— ${exMeaning}`;
+        exDiv.appendChild(s);
+      });
+      cardAnswer.appendChild(exDiv);
+    }
+  } else if (front === 'meaning') {
+    cardFront.classList.add('vocab-meaning-prompt');
+    cardFront.textContent = nativeMeaning;
+
+    const kSpan = document.createElement('span'); kSpan.className = 'kanji-main-answer';
+    kSpan.textContent = entry.k; cardAnswer.appendChild(kSpan);
+    const onSpan = document.createElement('span'); onSpan.className = 'ans-kanji-on';
+    onSpan.textContent = '音: ' + entry.on; cardAnswer.appendChild(onSpan);
+    const kunSpan = document.createElement('span'); kunSpan.className = 'ans-kanji-kun';
+    kunSpan.textContent = '訓: ' + entry.kun; cardAnswer.appendChild(kunSpan);
+  } else if (front === 'on') {
+    cardFront.classList.add('vocab-hira-prompt');
+    cardFront.textContent = entry.on;
+    const kSpan = document.createElement('span'); kSpan.className = 'kanji-main-answer';
+    kSpan.textContent = entry.k; cardAnswer.appendChild(kSpan);
+    const mSpan = document.createElement('span'); mSpan.className = 'ans-vocab-meaning-main';
+    mSpan.textContent = nativeMeaning; cardAnswer.appendChild(mSpan);
+    const kunSpan = document.createElement('span'); kunSpan.className = 'ans-kanji-kun';
+    kunSpan.textContent = '訓: ' + entry.kun; cardAnswer.appendChild(kunSpan);
+  } else { // kun
+    cardFront.classList.add('vocab-hira-prompt');
+    cardFront.textContent = entry.kun;
+    const kSpan = document.createElement('span'); kSpan.className = 'kanji-main-answer';
+    kSpan.textContent = entry.k; cardAnswer.appendChild(kSpan);
+    const mSpan = document.createElement('span'); mSpan.className = 'ans-vocab-meaning-main';
+    mSpan.textContent = nativeMeaning; cardAnswer.appendChild(mSpan);
+    const onSpan = document.createElement('span'); onSpan.className = 'ans-kanji-on';
+    onSpan.textContent = '音: ' + entry.on; cardAnswer.appendChild(onSpan);
+  }
+}
+
+function renderKanjiTable() {
+  tableTitle.textContent = T('tbl_kanji');
+  tableScroller.innerHTML = '';
+  if (typeof KANJI_N5 === 'undefined') return;
+
   const table = document.createElement('table');
-  table.className = 'verb-table';
+  table.className = 'vocab-table kanji-ref-table';
+  table.style.tableLayout = 'auto';
   const thead = table.createTHead();
   const hr = thead.insertRow();
-  [
-    T('vcol_native'),
-    T('vcol_pres'),
-    T('vcol_past'),
-    T('vcol_neg_pres'),
-    T('vcol_neg_past'),
-    T('vcol_let'),
-    T('vcol_romaji'),
-  ].forEach(t => {
-    const th = document.createElement('th'); th.textContent = t; hr.appendChild(th);
-  });
-
+  const cols = ['漢字', T('col_native'), '音読み', '訓読み', '例'];
+  cols.forEach(t => { const th = document.createElement('th'); th.textContent = t; hr.appendChild(th); });
   const tbody = table.createTBody();
-  verbs.forEach(v => {
+  KANJI_N5.forEach(k => {
     const tr = tbody.insertRow();
-    const nativeTxt = state.uiLang === 'en' ? v.en : v.ru;
-    const cells = [
-      nativeTxt,
-      v.stem + 'ます',
-      v.stem + 'ました',
-      v.stem + 'ません',
-      v.stem + 'ませんでした',
-      v.stem + 'ましょう',
-      v.romaji_stem + '-masu',
-    ];
-    cells.forEach((txt, i) => {
-      const td = tr.insertCell();
-      td.textContent = txt;
-      if (i >= 1 && i <= 5) td.className = 'verb-cell-jp';
-      if (i === 3 || i === 4) td.classList.add('verb-cell-neg');
+    const nativeMeaning = state.uiLang === 'en' ? k.meaning_en : k.meaning_ru;
+    const exText = k.ex.slice(0,2).map(e => `${e.w}【${e.r}】`).join('　');
+    [k.k, nativeMeaning, k.on, k.kun, exText].forEach((txt, i) => {
+      const td = tr.insertCell(); td.textContent = txt;
+      if (i === 0) { td.className = 'kanji-ref-char'; }
+      if (i === 2 || i === 3) { td.className = 'vocab-cell-hira'; td.style.fontSize = '14px'; }
     });
   });
+  tableScroller.appendChild(table);
+}
 
-  wrap.appendChild(table);
-  tableScroller.appendChild(wrap);
+/* ═══════════════════════════════════════════════════════════
+   SECTION NEW — QUIZ MODE (multiple choice)
+   ═══════════════════════════════════════════════════════════ */
+
+let _quizDeck = [], _quizIdx = 0, _quizCorrect = 0, _quizTotal = 0;
+
+function buildQuizDeck() {
+  const src = state.quizSource;
+  if (src === 'vocab') {
+    return VOCAB_DATA.map(w => ({
+      front: w.jp,
+      correct: state.uiLang === 'en' ? w.en : w.ru,
+      pool: VOCAB_DATA.map(x => state.uiLang === 'en' ? x.en : x.ru),
+    }));
+  } else if (src === 'kanji' && typeof KANJI_N5 !== 'undefined') {
+    return KANJI_N5.map(k => ({
+      front: k.k,
+      correct: state.uiLang === 'en' ? k.meaning_en : k.meaning_ru,
+      pool: KANJI_N5.map(x => state.uiLang === 'en' ? x.meaning_en : x.meaning_ru),
+    }));
+  } else {
+    // verbs — show stem+masu, pick meaning
+    const forms = buildVerbDeck(state.verbScope || 'all', { pres:true }, 'random');
+    return forms.map(v => ({
+      front: v.jp,
+      correct: state.uiLang === 'en' ? v.en : v.ru,
+      pool: forms.map(x => state.uiLang === 'en' ? x.en : x.ru),
+    }));
+  }
+}
+
+function startQuiz() {
+  _quizDeck = buildQuizDeck();
+  shuffle(_quizDeck);
+  _quizIdx = 0; _quizCorrect = 0; _quizTotal = 0;
+  state.deck = _quizDeck; state.known = 0; state.attempts = 0;
+  renderQuizCard();
+}
+
+function renderQuizCard() {
+  if (!_quizDeck.length) return;
+  if (_quizIdx >= _quizDeck.length) _quizIdx = 0;
+  const item = _quizDeck[_quizIdx];
+  const n = parseInt(state.quizChoices) || 4;
+
+  quizPrompt.textContent = item.front;
+
+  // Build choices: 1 correct + (n-1) random wrong
+  const pool = [...new Set(item.pool)].filter(x => x !== item.correct);
+  shuffle(pool);
+  const choices = [item.correct, ...pool.slice(0, n - 1)];
+  shuffle(choices);
+
+  quizChoicesGrid.innerHTML = '';
+  quizChoicesGrid.dataset.cols = n <= 4 ? '2' : '3';
+  choices.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-choice';
+    btn.textContent = ch;
+    btn.addEventListener('click', () => {
+      if (btn.dataset.locked) return;
+      quizChoicesGrid.querySelectorAll('.quiz-choice').forEach(b => b.dataset.locked = '1');
+      state.attempts++; _quizTotal++;
+      if (ch === item.correct) {
+        btn.classList.add('correct'); state.known++; _quizCorrect++;
+        setTimeout(() => { _quizIdx++; renderQuizCard(); updateStat(); }, 700);
+      } else {
+        btn.classList.add('wrong');
+        quizChoicesGrid.querySelectorAll('.quiz-choice').forEach(b => {
+          if (b.textContent === item.correct) b.classList.add('correct');
+        });
+        setTimeout(() => { _quizIdx++; renderQuizCard(); updateStat(); }, 1200);
+      }
+      updateStat();
+    });
+    quizChoicesGrid.appendChild(btn);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION NEW — SPRINT MODE
+   ═══════════════════════════════════════════════════════════ */
+
+let _sprintDeck = [], _sprintIdx = 0, _sprintYes = 0, _sprintNo = 0;
+
+function buildSprintDeck() {
+  const src = state.sprintSource;
+  if (src === 'kanji' && typeof KANJI_N5 !== 'undefined') {
+    return KANJI_N5.map(k => ({
+      front: k.k,
+      back: (state.uiLang === 'en' ? k.meaning_en : k.meaning_ru) + '\n' + k.on,
+    }));
+  } else if (src === 'verbs') {
+    return buildVerbDeck('all', { pres:true }, 'random').map(v => ({
+      front: state.uiLang === 'en' ? v.en : v.ru,
+      back: v.jp,
+    }));
+  } else {
+    return VOCAB_DATA.map(w => ({
+      front: state.uiLang === 'en' ? w.en : w.ru,
+      back: w.jp,
+    }));
+  }
+}
+
+function initSprint() {
+  clearInterval(state._sprintTimer);
+  state._sprintRunning = false;
+  _sprintDeck = buildSprintDeck();
+  shuffle(_sprintDeck);
+  _sprintIdx = 0; _sprintYes = 0; _sprintNo = 0;
+  state.known = 0; state.attempts = 0;
+
+  let timeLeft = parseInt(state.sprintTime) || 60;
+  sprintTimer.textContent = timeLeft;
+  sprintTimer.className = 'sprint-timer';
+  sprintResult.classList.add('hidden');
+  sprintScreen.classList.remove('hidden');
+  renderSprintCard();
+
+  state._sprintRunning = true;
+  state._sprintTimer = setInterval(() => {
+    timeLeft--;
+    sprintTimer.textContent = timeLeft;
+    if (timeLeft <= 10) sprintTimer.classList.add('sprint-timer-warn');
+    if (timeLeft <= 0) {
+      clearInterval(state._sprintTimer);
+      state._sprintRunning = false;
+      endSprint();
+    }
+  }, 1000);
+  updateStat();
+}
+
+function renderSprintCard() {
+  if (!_sprintDeck.length) return;
+  if (_sprintIdx >= _sprintDeck.length) { _sprintIdx = 0; shuffle(_sprintDeck); }
+  sprintCard.innerHTML = '';
+  const item = _sprintDeck[_sprintIdx];
+  const front = document.createElement('div'); front.className = 'sprint-front'; front.textContent = item.front;
+  const back  = document.createElement('div'); back.className  = 'sprint-back';  back.textContent = item.back;
+  sprintCard.appendChild(front);
+  sprintCard.appendChild(back);
+}
+
+function sprintAnswer(knew) {
+  if (!state._sprintRunning) return;
+  state.attempts++;
+  if (knew) { state.known++; _sprintYes++; } else { _sprintNo++; }
+  _sprintIdx++;
+  renderSprintCard();
+  updateStat();
+}
+
+function endSprint() {
+  sprintScreen.classList.add('hidden');
+  sprintResult.classList.remove('hidden');
+  const pct = _sprintYes + _sprintNo > 0 ? Math.round(_sprintYes / (_sprintYes + _sprintNo) * 100) : 0;
+  const label = pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '📚';
+  sprintResultInner.innerHTML =
+    `<div class="sprint-score">${label} ${_sprintYes} / ${_sprintYes + _sprintNo}</div>` +
+    `<div class="sprint-pct">${pct}%</div>` +
+    `<div class="sprint-detail">${state.uiLang === 'en' ? 'Correct' : 'Верно'}: ${_sprintYes} &nbsp;·&nbsp; ${state.uiLang === 'en' ? 'Wrong' : 'Ошибки'}: ${_sprintNo}</div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION NEW — RECALL MODE (type the answer)
+   ═══════════════════════════════════════════════════════════ */
+
+let _recallDeck = [], _recallIdx = 0;
+
+function buildRecallDeck() {
+  const src = state.recallSource;
+  const mode = state.recallMode; // 'romaji' | 'meaning'
+  if (src === 'kanji' && typeof KANJI_N5 !== 'undefined') {
+    return KANJI_N5.map(k => ({
+      prompt: k.k,
+      answer: mode === 'romaji' ? k.on.split('・')[0].toLowerCase() : (state.uiLang === 'en' ? k.meaning_en : k.meaning_ru),
+      hint: state.uiLang === 'en' ? k.meaning_en : k.meaning_ru,
+    }));
+  } else {
+    return VOCAB_DATA.map(w => ({
+      prompt: mode === 'romaji' ? (state.uiLang === 'en' ? w.en : w.ru) : w.jp,
+      answer: mode === 'romaji' ? w.romaji : (state.uiLang === 'en' ? w.en : w.ru),
+      hint: w.jp,
+    }));
+  }
+}
+
+function startRecall() {
+  _recallDeck = buildRecallDeck();
+  shuffle(_recallDeck);
+  _recallIdx = 0;
+  state.known = 0; state.attempts = 0;
+  recallFeedback.textContent = '';
+  recallFeedback.className = 'recall-feedback';
+  recallInput.value = '';
+  const ph = state.uiLang === 'en' ? 'Type your answer…' : 'Введите ответ…';
+  recallInput.placeholder = ph;
+  showRecallCard();
+  updateStat();
+}
+
+function showRecallCard() {
+  if (!_recallDeck.length) return;
+  if (_recallIdx >= _recallDeck.length) { _recallIdx = 0; shuffle(_recallDeck); }
+  const item = _recallDeck[_recallIdx];
+  recallPrompt.textContent = item.prompt;
+  recallInput.value = '';
+  recallFeedback.textContent = '';
+  recallFeedback.className = 'recall-feedback';
+  recallInput.focus();
+}
+
+function checkRecall() {
+  if (!_recallDeck.length) return;
+  const item = _recallDeck[_recallIdx];
+  const typed = recallInput.value.trim().toLowerCase();
+  const expected = item.answer.toLowerCase();
+  state.attempts++;
+
+  if (typed === expected || expected.split('/').map(s=>s.trim()).includes(typed)) {
+    recallFeedback.textContent = '✓  ' + item.answer;
+    recallFeedback.className = 'recall-feedback recall-correct';
+    state.known++;
+    setTimeout(() => advanceRecall(), 800);
+  } else {
+    recallFeedback.textContent = '✗  ' + item.answer + (item.hint ? '  (' + item.hint + ')' : '');
+    recallFeedback.className = 'recall-feedback recall-wrong';
+    recallInput.select();
+  }
+  updateStat();
+}
+
+function advanceRecall() {
+  _recallIdx++;
+  showRecallCard();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION NEW — SENTENCES MODE
+   ═══════════════════════════════════════════════════════════ */
+
+const SUBJECTS = [
+  { jp:'わたし',     romaji:'watashi',     ru:'Я',      en:'I' },
+  { jp:'あなた',     romaji:'anata',       ru:'Ты',     en:'You' },
+  { jp:'かれ',       romaji:'kare',        ru:'Он',     en:'He' },
+  { jp:'かのじょ',   romaji:'kanojo',      ru:'Она',    en:'She' },
+  { jp:'わたしたち', romaji:'watashitachi',ru:'Мы',     en:'We' },
+  { jp:'せんせい',   romaji:'sensei',      ru:'Учитель',en:'Teacher' },
+  { jp:'ともだち',   romaji:'tomodachi',   ru:'Друг',   en:'Friend' },
+];
+
+let _sentDeck = [], _sentIdx = 0, _sentRevealed = false;
+
+function buildSentDeck() {
+  const forms = buildVerbDeck(state.sentVerbScope, state.sentForms, 'random');
+  if (!forms.length) return [];
+  const deck = [];
+  forms.forEach(v => {
+    const subj = SUBJECTS[Math.floor(Math.random() * SUBJECTS.length)];
+    deck.push({ subject: subj, verbCard: v });
+  });
+  shuffle(deck);
+  return deck;
+}
+
+function startSentences() {
+  _sentDeck = buildSentDeck();
+  _sentIdx = 0; _sentRevealed = false;
+  state.known = 0; state.attempts = 0;
+  showSentence();
+  updateStat();
+}
+
+function showSentence() {
+  if (!_sentDeck.length) return;
+  if (_sentIdx >= _sentDeck.length) { _sentIdx = 0; shuffle(_sentDeck); }
+  const item = _sentDeck[_sentIdx];
+  _sentRevealed = false;
+  state.revealed = false;
+
+  card.classList.add('fading');
+  setTimeout(() => {
+    cardAnswer.classList.remove('shown');
+    cardAnswer.innerHTML = '';
+    cardFront.className  = 'card-face';
+    cardFront.innerHTML  = '';
+
+    const subjectNative = state.uiLang === 'en' ? item.subject.en : item.subject.ru;
+    const verbNative    = state.uiLang === 'en' ? item.verbCard.en : item.verbCard.ru;
+    const formLabel     = T('vf_' + item.verbCard.verbKey);
+
+    // Front: subject + verb meaning + form tag
+    cardFront.classList.add('verb-meaning-prompt');
+    const subjectEl = document.createElement('span');
+    subjectEl.className = 'sent-subject-inline';
+    subjectEl.innerHTML = `<span class="sent-jp-inline">${item.subject.jp}</span><span class="sent-native-inline">${subjectNative}</span>`;
+    const verbEl = document.createElement('span');
+    verbEl.className = 'verb-meaning-main';
+    verbEl.textContent = verbNative;
+    const tagEl = document.createElement('span');
+    tagEl.className = 'verb-form-tag';
+    tagEl.textContent = formLabel;
+    cardFront.append(subjectEl, verbEl, tagEl);
+
+    // Answer: full sentence JP + romaji + tile breakdown
+    const fullJP = item.subject.jp + 'は ' + item.verbCard.jp;
+    const fullR  = item.subject.romaji + ' wa ' + item.verbCard.romaji;
+
+    const jpSpan = document.createElement('span');
+    jpSpan.className = 'ans-vocab-hira';
+    jpSpan.textContent = fullJP;
+    cardAnswer.appendChild(jpSpan);
+
+    const rSpan = document.createElement('span');
+    rSpan.className = 'ans-romaji';
+    rSpan.textContent = fullR;
+    cardAnswer.appendChild(rSpan);
+
+    // Tiles
+    const tilesDiv = document.createElement('div');
+    tilesDiv.className = 'sent-tiles-inline';
+    [
+      { jp: item.subject.jp, r: item.subject.romaji },
+      { jp: 'は', r: 'wa' },
+      { jp: item.verbCard.jp, r: item.verbCard.romaji },
+    ].forEach(t => {
+      const tile = document.createElement('div');
+      tile.className = 'sent-tile';
+      tile.innerHTML = `<span class="sent-tile-jp">${t.jp}</span><span class="sent-tile-r">${t.r}</span>`;
+      tilesDiv.appendChild(tile);
+    });
+    cardAnswer.appendChild(tilesDiv);
+
+    // Use standard buttons
+    choicesRow.classList.add('hidden');
+    actionsRow.classList.remove('hidden');
+
+    card.classList.remove('fading');
+    updateStat();
+  }, 160);
+}
+
+function revealSentence() {
+  // No longer called directly — card click handles reveal via onCardClick
+}
+
+function nextSentence() {
+  if (_sentRevealed) state.known++;
+  _sentIdx++;
+  _sentRevealed = false;
+  showSentence();
+  updateStat();
 }
 
 function init() {
@@ -2510,6 +3352,19 @@ function init() {
   optVerbPast.checked   = state.verbForms.past;
   optVerbNeg.checked    = state.verbForms.neg_pres;
   optVerbLet.checked    = state.verbForms.let;
+  selKanjiFront.value   = state.kanjiFront;
+  selKanjiOrder.value   = state.kanjiOrder;
+  selQuizSource.value   = state.quizSource;
+  selQuizChoices.value  = state.quizChoices;
+  selSprintSource.value = state.sprintSource;
+  selSprintTime.value   = state.sprintTime;
+  selRecallSource.value = state.recallSource;
+  selRecallMode.value   = state.recallMode;
+  selSentVerbScope.value= state.sentVerbScope;
+  optSentPres.checked   = state.sentForms.pres;
+  optSentPast.checked   = state.sentForms.past;
+  optSentNeg.checked    = state.sentForms.neg_pres;
+  optSentLet.checked    = state.sentForms.let;
 
   updateTimeUI();
   syncModeUI();

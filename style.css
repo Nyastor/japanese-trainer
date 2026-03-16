@@ -612,6 +612,157 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
 .verb-cell-jp  { font-size:clamp(14px,1.5vw,18px)!important; color:#fff!important; text-align:center; }
 .verb-cell-neg { color:#ffaaaa!important; }
 
+/* ===== Kanji card ===== */
+.card-face.kanji-main-prompt {
+  font-size:clamp(100px,18vw,280px); line-height:1; color:#fff;
+  text-shadow:0 0 30px rgba(255,255,255,.35),0 0 3px rgba(255,255,255,.5);
+}
+.kanji-main-answer { font-size:clamp(52px,8vw,110px); color:#fff; line-height:1.1;
+  text-shadow:0 0 20px rgba(255,255,255,.3); }
+.ans-kanji-on  { font-size:clamp(13px,1.5vw,18px); color:#aad4ff; letter-spacing:.05em; }
+.ans-kanji-kun { font-size:clamp(13px,1.5vw,18px); color:#a8ffcc; letter-spacing:.05em; }
+.ans-kanji-ex  { display:flex; flex-direction:column; gap:4px; margin-top:4px; }
+.ans-kanji-ex-item { font-size:clamp(12px,1.3vw,16px); color:#bbb; }
+.kanji-ref-char { font-size:clamp(22px,2.5vw,32px)!important; color:#fff!important;
+  text-align:center; width:56px; }
+.kanji-ref-table td:nth-child(2) { min-width:120px; }
+.kanji-ref-table td:nth-child(5) { font-size:clamp(12px,1.2vw,15px); color:#aad4ff; }
+
+/* ===== Quiz view ===== */
+#quizView { display:flex; flex-direction:column; align-items:center; gap:18px; width:100%; }
+.quiz-prompt {
+  font-size:clamp(52px,9vw,140px); color:#fff; text-align:center;
+  text-shadow:0 0 20px rgba(255,255,255,.3); line-height:1.15;
+  padding:24px 20px; min-height:140px; display:flex; align-items:center; justify-content:center;
+}
+.quiz-choices-grid {
+  display:grid; gap:10px; width:min(700px,96vw);
+  grid-template-columns: repeat(2,1fr);
+}
+.quiz-choices-grid[data-cols="3"] { grid-template-columns: repeat(3,1fr); }
+.quiz-choice {
+  padding:14px 10px; border-radius:16px; font-size:clamp(14px,1.8vw,20px);
+  background:rgba(0,0,0,.40); color:#fff; border:0; cursor:pointer;
+  box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
+  transition:background 100ms ease, transform 80ms ease;
+  text-align:center; line-height:1.3;
+}
+.quiz-choice:hover  { background:rgba(255,255,255,.13); }
+.quiz-choice.correct { background:rgba(60,200,80,.45)!important; box-shadow:0 0 0 1px rgba(60,200,80,.5) inset; }
+.quiz-choice.wrong   { background:rgba(220,60,60,.45)!important; box-shadow:0 0 0 1px rgba(220,60,60,.5) inset; }
+
+/* ===== Sprint view ===== */
+#sprintView { display:flex; flex-direction:column; align-items:center; width:100%; }
+.sprint-timer {
+  font-size:clamp(28px,4vw,52px); font-variant-numeric:tabular-nums;
+  color:rgba(255,255,255,.6); margin-bottom:10px; font-weight:300; letter-spacing:.04em;
+}
+.sprint-timer-warn { color:#ff8a65; }
+.sprint-card {
+  min-width:min(500px,90vw); min-height:180px;
+  background:rgba(0,0,0,.38); backdrop-filter:blur(10px);
+  border-radius:24px; padding:28px 24px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.sprint-front { font-size:clamp(32px,6vw,80px); color:#fff; text-align:center; line-height:1.2; }
+.sprint-back  { font-size:clamp(16px,2.2vw,26px); color:#aad4ff; text-align:center; letter-spacing:.03em; }
+.sprint-btns { display:flex; gap:20px; margin-top:18px; }
+.sprint-no  {
+  width:80px; height:80px; border-radius:50%; font-size:28px; border:0; cursor:pointer;
+  background:rgba(220,60,60,.30); color:#fff; box-shadow:0 0 0 2px rgba(220,60,60,.40) inset;
+  transition:background 100ms ease, transform 80ms ease;
+}
+.sprint-yes {
+  width:80px; height:80px; border-radius:50%; font-size:28px; border:0; cursor:pointer;
+  background:rgba(60,200,80,.30); color:#fff; box-shadow:0 0 0 2px rgba(60,200,80,.40) inset;
+  transition:background 100ms ease, transform 80ms ease;
+}
+.sprint-no:hover  { background:rgba(220,60,60,.50); transform:scale(1.06); }
+.sprint-yes:hover { background:rgba(60,200,80,.50); transform:scale(1.06); }
+.sprint-no:active,.sprint-yes:active { transform:scale(0.96); }
+.sprint-result { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.sprint-score { font-size:clamp(36px,6vw,80px); color:#fff; font-weight:300; }
+.sprint-pct   { font-size:clamp(22px,3.5vw,48px); color:#a8ffcc; }
+.sprint-detail{ font-size:clamp(14px,1.6vw,18px); color:#aaa; }
+
+/* ===== Recall view ===== */
+#recallView { display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; }
+.recall-card {
+  width:min(560px,94vw); min-height:220px; cursor:default;
+  flex-direction:column; gap:16px;
+}
+.recall-input-wrap {
+  display:flex; gap:10px; align-items:center; width:100%; max-width:420px; margin-top:8px;
+}
+.recall-input {
+  flex:1; border:0; border-radius:14px; padding:12px 16px;
+  background:rgba(255,255,255,.12); color:#fff; font-size:clamp(16px,2vw,22px);
+  outline:none; box-shadow:0 0 0 1px rgba(255,255,255,.15) inset;
+  transition:box-shadow 150ms ease;
+}
+.recall-input:focus { box-shadow:0 0 0 2px rgba(100,160,255,.50) inset; }
+.recall-input::placeholder { color:rgba(255,255,255,.35); }
+.recall-feedback {
+  font-size:clamp(16px,2vw,22px); min-height:28px; text-align:center;
+  transition:color 200ms ease;
+}
+.recall-correct { color:#6dffaa; }
+.recall-wrong   { color:#ff7070; }
+
+/* ===== Sentences view ===== */
+#sentencesView { display:flex; flex-direction:column; align-items:center; gap:14px; width:100%; }
+.sent-card {
+  width:min(640px,96vw); min-height:200px;
+  background:rgba(0,0,0,.38); backdrop-filter:blur(10px);
+  border-radius:24px; padding:28px 28px 24px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 20px 60px rgba(0,0,0,.55);
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+}
+.sent-subject {
+  display:flex; align-items:baseline; gap:14px;
+  font-size:clamp(28px,4.5vw,60px); color:#fff; text-align:center;
+}
+.sent-native { font-size:.45em; color:rgba(255,255,255,.55); }
+.sent-verb-row { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.sent-verb {
+  font-size:clamp(24px,3.5vw,48px); color:#e8e8ff; text-align:center; line-height:1.2;
+}
+.sent-form-tag {
+  font-size:clamp(12px,1.3vw,16px); color:rgba(180,210,255,.75);
+  background:rgba(100,150,255,.15); border-radius:10px;
+  padding:3px 12px; border:1px solid rgba(100,150,255,.22);
+}
+.sent-answer {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  border-top:1px solid rgba(255,255,255,.10); padding-top:14px; width:100%;
+}
+.sent-answer.hidden { display:none; }
+.sent-answer-jp     { font-size:clamp(22px,3.5vw,46px); color:#fff; text-align:center; }
+.sent-answer-romaji { font-size:clamp(14px,1.8vw,20px); color:#aaa; letter-spacing:.04em; }
+.sent-tiles {
+  display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+}
+.sent-tiles.hidden { display:none; }
+.sent-tile {
+  background:rgba(255,255,255,.08); border-radius:12px; padding:8px 14px;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
+  min-width:70px;
+}
+.sent-tile-jp { font-size:clamp(18px,2.5vw,28px); color:#fff; }
+.sent-tile-r  { font-size:11px; color:#888; letter-spacing:.04em; }
+
+/* Sentences inline (rendered inside flashView card) */
+.sent-subject-inline {
+  display:flex; align-items:baseline; gap:10px; justify-content:center;
+}
+.sent-jp-inline     { font-size:clamp(22px,3.5vw,50px); color:#fff; }
+.sent-native-inline { font-size:clamp(12px,1.4vw,16px); color:rgba(255,255,255,.5); }
+.sent-tiles-inline  {
+  display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:8px;
+}
+
 @media (max-width:700px) {
   .card-face { font-size:clamp(70px,20vw,160px); }
   .card-face.both-together { font-size:clamp(52px,15vw,110px); }
@@ -621,4 +772,9 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
   .time-table-wrap { flex-direction:column; }
   .card-face.vocab-meaning-prompt { font-size:clamp(22px,6vw,52px); }
   .card-face.verb-meaning-prompt  { font-size:clamp(20px,5.5vw,46px); }
+  .card-face.kanji-main-prompt    { font-size:clamp(80px,22vw,180px); }
+  .quiz-choices-grid { grid-template-columns:repeat(2,1fr) !important; }
+  .sprint-btns { gap:14px; }
+  .sprint-no,.sprint-yes { width:64px; height:64px; font-size:22px; }
 }
+
