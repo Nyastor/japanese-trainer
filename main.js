@@ -52,10 +52,13 @@ const YOON_ROWS = [
   { base:'pi',  cells:[{r:'pya',h:'ぴゃ',k:'ピャ'},{r:'pyu',h:'ぴゅ',k:'ピュ'},{r:'pyo',h:'ぴょ',k:'ピョ'}], dak:true },
 ];
 
+
+
 function kanaTableLabel(cell) { return cell ? (cell.tl || cell.rl || cell.r) : ''; }
 function kanaRomajiLabel(cell) { return cell.rl || cell.r; }
 
-function buildKanaDeck(script, dakuten, yoon) {
+function buildKanaDeck(script, dakuten, yoon, rows) {
+  const sel = rows && rows.size > 0 ? rows : null; // null = all
   const out = [];
   const add = e => {
     if (!e) return;
@@ -63,16 +66,41 @@ function buildKanaDeck(script, dakuten, yoon) {
     if (script === 'katakana' && !e.k) return;
     out.push(e);
   };
-  VOWELS.forEach(add);
-  MAIN_ROWS.forEach(r => r.cells.forEach(add));
-  add(N_ENTRY);
-  if (dakuten) DAKUTEN_ROWS.forEach(r => r.cells.forEach(add));
+  if (!sel || sel.has('vowels')) VOWELS.forEach(add);
+  MAIN_ROWS.forEach(r => {
+    if (!sel || sel.has(r.c)) r.cells.forEach(add);
+  });
+  if (!sel || sel.has('n')) add(N_ENTRY);
+  if (dakuten) DAKUTEN_ROWS.forEach(r => {
+    if (!sel || sel.has(r.c)) r.cells.forEach(add);
+  });
   if (yoon) {
+    // Добавляем базовые слоги-источники йонов (き し ち に ひ み り + dakuten)
+    const YOON_BASE_CELLS = {
+      'ki': {r:'ki',h:'き',k:'キ'}, 'shi':{r:'si',h:'し',k:'シ',rl:'shi'},
+      'chi':{r:'ti',h:'ち',k:'チ',rl:'chi'}, 'ni':{r:'ni',h:'に',k:'ニ'},
+      'hi': {r:'hi',h:'ひ',k:'ヒ'}, 'mi':{r:'mi',h:'み',k:'ミ'},
+      'ri': {r:'ri',h:'り',k:'リ'},
+      'gi': {r:'gi',h:'ぎ',k:'ギ'}, 'ji':{r:'zi',h:'じ',k:'ジ',rl:'ji'},
+      'di': {r:'di',h:'ぢ',k:'ヂ',tl:'di'},
+      'bi': {r:'bi',h:'び',k:'ビ'}, 'pi':{r:'pi',h:'ぴ',k:'ピ'},
+    };
     YOON_ROWS.forEach(row => {
       if (row.dak && !dakuten) return;
-      row.cells.forEach(add);
+      if (sel && !sel.has('yoon_'+row.base)) return;
+      // Базовый слог-источник
+      const baseCell = YOON_BASE_CELLS[row.base];
+      if (baseCell) add(baseCell);
+      // Йон-тройка (kya/kyu/kyo…)
+      row.cells.forEach(e => {
+        if (!e) return;
+        if (script === 'hiragana' && !e.h) return;
+        if (script === 'katakana' && !e.k) return;
+        out.push({ ...e, _yoonBase: row.base });
+      });
     });
   }
+
   return out;
 }
 
@@ -151,7 +179,8 @@ function randomNumber(cfg) {
   else if (cfg.numMode === 'tens')     { min=Math.max(min,10);     max=Math.min(max,99); }
   else if (cfg.numMode === 'hundreds') { min=Math.max(min,100);    max=Math.min(max,999); }
   else if (cfg.numMode === 'thousands'){ min=Math.max(min,1000);   max=Math.min(max,9999); }
-  else if (cfg.numMode === 'large')    { min=Math.max(min,10000);  max=Math.min(max,999999); }
+  else if (cfg.numMode === 'large')    { min=Math.max(min,10000);  max=Math.min(max,99990000); }
+  else if (cfg.numMode === 'oku')      { min=Math.max(min,100000000); max=Math.min(max,999999999); }
   if (min > max) min = max;
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -526,6 +555,402 @@ function buildCalendarDeck(cfg) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   SECTION 3b — VOCABULARY DATA
+   ═══════════════════════════════════════════════════════════ */
+
+/* Raw vocab data — mirrors vocab.csv embedded for offline use.
+   Format per entry: { group, ru, en, jp, romaji, script }
+   script: 'h' = hiragana, 'k' = katakana */
+const VOCAB_DATA = [
+  // lesson1
+  {group:'lesson1',ru:'Я',en:'I',jp:'わたし',romaji:'watashi',script:'h'},
+  {group:'lesson1',ru:'Ты',en:'You',jp:'あなた',romaji:'anata',script:'h'},
+  {group:'lesson1',ru:'Тот человек',en:'That person',jp:'あのひと',romaji:'ano hito',script:'h'},
+  {group:'lesson1',ru:'Тот человек (вежл.)',en:'That person (polite)',jp:'あのかた',romaji:'ano kata',script:'h'},
+  {group:'lesson1',ru:'Кто?',en:'Who?',jp:'だれ',romaji:'dare',script:'h'},
+  {group:'lesson1',ru:'Да',en:'Yes',jp:'はい',romaji:'hai',script:'h'},
+  {group:'lesson1',ru:'Нет',en:'No',jp:'いいえ',romaji:'iie',script:'h'},
+  {group:'lesson1',ru:'Книга',en:'Book',jp:'ほん',romaji:'hon',script:'h'},
+  {group:'lesson1',ru:'Журнал',en:'Magazine',jp:'ざっし',romaji:'zasshi',script:'h'},
+  {group:'lesson1',ru:'Словарь',en:'Dictionary',jp:'じしょ',romaji:'jisho',script:'h'},
+  {group:'lesson1',ru:'Ручка',en:'Pen',jp:'ペン',romaji:'pen',script:'k'},
+  {group:'lesson1',ru:'Карандаш',en:'Pencil',jp:'えんぴつ',romaji:'enpitsu',script:'h'},
+  {group:'lesson1',ru:'Учитель',en:'Teacher',jp:'きょうし',romaji:'kyoushi',script:'h'},
+  {group:'lesson1',ru:'Студент',en:'Student',jp:'がくせい',romaji:'gakusei',script:'h'},
+  {group:'lesson1',ru:'Сотрудник фирмы',en:'Company employee',jp:'かいしゃいん',romaji:'kaishain',script:'h'},
+  {group:'lesson1',ru:'Служащий банка',en:'Bank employee',jp:'ぎんこういん',romaji:'ginkouin',script:'h'},
+  {group:'lesson1',ru:'Врач',en:'Doctor',jp:'いしゃ',romaji:'isha',script:'h'},
+  {group:'lesson1',ru:'Исследователь',en:'Researcher',jp:'けんきゅうしゃ',romaji:'kenkyuusha',script:'h'},
+  {group:'lesson1',ru:'Домохозяйка',en:'Housewife',jp:'しゅふ',romaji:'shufu',script:'h'},
+  // countries
+  {group:'countries',ru:'Япония',en:'Japan',jp:'にほん',romaji:'nihon',script:'h'},
+  {group:'countries',ru:'Россия',en:'Russia',jp:'ロシア',romaji:'roshia',script:'k'},
+  {group:'countries',ru:'Китай',en:'China',jp:'ちゅうごく',romaji:'chuugoku',script:'h'},
+  {group:'countries',ru:'Южная Корея',en:'South Korea',jp:'かんこく',romaji:'kankoku',script:'h'},
+  {group:'countries',ru:'Франция',en:'France',jp:'フランス',romaji:'furansu',script:'k'},
+  {group:'countries',ru:'Италия',en:'Italy',jp:'イタリア',romaji:'itaria',script:'k'},
+  {group:'countries',ru:'Германия',en:'Germany',jp:'ドイツ',romaji:'doitsu',script:'k'},
+  {group:'countries',ru:'Америка',en:'America',jp:'アメリカ',romaji:'amerika',script:'k'},
+  {group:'countries',ru:'Испания',en:'Spain',jp:'スペイン',romaji:'supein',script:'k'},
+  {group:'countries',ru:'Англия',en:'England',jp:'イギリス',romaji:'igirisu',script:'k'},
+  {group:'countries',ru:'Австралия',en:'Australia',jp:'オーストラリア',romaji:'oosutoraria',script:'k'},
+  {group:'countries',ru:'Индия',en:'India',jp:'インド',romaji:'indo',script:'k'},
+  // lesson2
+  {group:'lesson2',ru:'Это (близко)',en:'This',jp:'これ',romaji:'kore',script:'h'},
+  {group:'lesson2',ru:'То (у собеседника)',en:'That',jp:'それ',romaji:'sore',script:'h'},
+  {group:'lesson2',ru:'Вон то',en:'That over there',jp:'あれ',romaji:'are',script:'h'},
+  {group:'lesson2',ru:'Газета',en:'Newspaper',jp:'しんぶん',romaji:'shinbun',script:'h'},
+  {group:'lesson2',ru:'Тетрадь',en:'Notebook',jp:'ノート',romaji:'nooto',script:'k'},
+  {group:'lesson2',ru:'Записная книжка',en:'Datebook',jp:'てちょう',romaji:'techou',script:'h'},
+  {group:'lesson2',ru:'Велосипед',en:'Bicycle',jp:'じてんしゃ',romaji:'jitensha',script:'h'},
+  {group:'lesson2',ru:'Ключ',en:'Key',jp:'かぎ',romaji:'kagi',script:'h'},
+  {group:'lesson2',ru:'Часы',en:'Watch/Clock',jp:'とけい',romaji:'tokei',script:'h'},
+  {group:'lesson2',ru:'Зонт',en:'Umbrella',jp:'かさ',romaji:'kasa',script:'h'},
+  {group:'lesson2',ru:'Сумка',en:'Bag',jp:'かばん',romaji:'kaban',script:'h'},
+  {group:'lesson2',ru:'Кошелёк',en:'Wallet',jp:'さいふ',romaji:'saifu',script:'h'},
+  {group:'lesson2',ru:'Обувь',en:'Shoes',jp:'くつ',romaji:'kutsu',script:'h'},
+  {group:'lesson2',ru:'Шапка',en:'Hat',jp:'ぼうし',romaji:'boushi',script:'h'},
+  {group:'lesson2',ru:'Компьютер',en:'Computer',jp:'コンピューター',romaji:'konpyuutaa',script:'k'},
+  {group:'lesson2',ru:'Автомобиль',en:'Car',jp:'くるま',romaji:'kuruma',script:'h'},
+  {group:'lesson2',ru:'Путешествие',en:'Travel',jp:'りょこう',romaji:'ryokou',script:'h'},
+  {group:'lesson2',ru:'Мода',en:'Fashion',jp:'ファッション',romaji:'fasshon',script:'k'},
+  {group:'lesson2',ru:'Музыка',en:'Music',jp:'おんがく',romaji:'ongaku',script:'h'},
+  {group:'lesson2',ru:'Спорт',en:'Sport',jp:'スポーツ',romaji:'supootsu',script:'k'},
+  // fruits
+  {group:'fruits',ru:'Яблоко',en:'Apple',jp:'りんご',romaji:'ringo',script:'h'},
+  {group:'fruits',ru:'Груша',en:'Pear',jp:'なし',romaji:'nashi',script:'h'},
+  {group:'fruits',ru:'Арбуз',en:'Watermelon',jp:'すいか',romaji:'suika',script:'h'},
+  {group:'fruits',ru:'Ананас',en:'Pineapple',jp:'パイナップル',romaji:'painappuru',script:'k'},
+  {group:'fruits',ru:'Мандарин',en:'Mandarin',jp:'みかん',romaji:'mikan',script:'h'},
+  {group:'fruits',ru:'Банан',en:'Banana',jp:'バナナ',romaji:'banana',script:'k'},
+  {group:'fruits',ru:'Апельсин',en:'Orange',jp:'オレンジ',romaji:'orenji',script:'k'},
+  {group:'fruits',ru:'Лимон',en:'Lemon',jp:'レモン',romaji:'remon',script:'k'},
+  {group:'fruits',ru:'Хурма',en:'Persimmon',jp:'かき',romaji:'kaki',script:'h'},
+  {group:'fruits',ru:'Виноград',en:'Grapes',jp:'ぶどう',romaji:'budou',script:'h'},
+  // lesson3
+  {group:'lesson3',ru:'Здесь',en:'Here',jp:'ここ',romaji:'koko',script:'h'},
+  {group:'lesson3',ru:'Там',en:'There',jp:'そこ',romaji:'soko',script:'h'},
+  {group:'lesson3',ru:'Вон там',en:'Over there',jp:'あそこ',romaji:'asoko',script:'h'},
+  {group:'lesson3',ru:'Где?',en:'Where?',jp:'どこ',romaji:'doko',script:'h'},
+  {group:'lesson3',ru:'Офис',en:'Office',jp:'じむしょ',romaji:'jimusho',script:'h'},
+  {group:'lesson3',ru:'Аудитория',en:'Classroom',jp:'きょうしつ',romaji:'kyoushitsu',script:'h'},
+  {group:'lesson3',ru:'Туалет',en:'Restroom',jp:'トイレ',romaji:'toire',script:'k'},
+  {group:'lesson3',ru:'Столовая',en:'Cafeteria',jp:'しょくどう',romaji:'shokudou',script:'h'},
+  {group:'lesson3',ru:'Переговорная',en:'Meeting room',jp:'かいぎしつ',romaji:'kaigishitsu',script:'h'},
+  {group:'lesson3',ru:'Комната',en:'Room',jp:'へや',romaji:'heya',script:'h'},
+  {group:'lesson3',ru:'Лифт',en:'Elevator',jp:'エレベーター',romaji:'erebeetaa',script:'k'},
+  {group:'lesson3',ru:'Эскалатор',en:'Escalator',jp:'エスカレーター',romaji:'esukareetaa',script:'k'},
+  {group:'lesson3',ru:'Компания',en:'Company',jp:'かいしゃ',romaji:'kaisha',script:'h'},
+  {group:'lesson3',ru:'Дом',en:'Home',jp:'うち',romaji:'uchi',script:'h'},
+  {group:'lesson3',ru:'Школа',en:'School',jp:'がっこう',romaji:'gakkou',script:'h'},
+  {group:'lesson3',ru:'Университет',en:'University',jp:'だいがく',romaji:'daigaku',script:'h'},
+  {group:'lesson3',ru:'Больница',en:'Hospital',jp:'びょういん',romaji:'byouin',script:'h'},
+  {group:'lesson3',ru:'Банк',en:'Bank',jp:'ぎんこう',romaji:'ginkou',script:'h'},
+  {group:'lesson3',ru:'Почта',en:'Post office',jp:'ゆうびんきょく',romaji:'yuubinkyoku',script:'h'},
+  {group:'lesson3',ru:'Библиотека',en:'Library',jp:'としょかん',romaji:'toshokan',script:'h'},
+  {group:'lesson3',ru:'Супермаркет',en:'Supermarket',jp:'スーパー',romaji:'suupaa',script:'k'},
+  {group:'lesson3',ru:'Ресторан',en:'Restaurant',jp:'レストラン',romaji:'resutoran',script:'k'},
+  {group:'lesson3',ru:'Вокзал/Станция',en:'Station',jp:'えき',romaji:'eki',script:'h'},
+  {group:'lesson3',ru:'Спортзал',en:'Gym',jp:'ジム',romaji:'jimu',script:'k'},
+  // lesson4
+  {group:'lesson4',ru:'Сегодня',en:'Today',jp:'きょう',romaji:'kyou',script:'h'},
+  {group:'lesson4',ru:'Завтра',en:'Tomorrow',jp:'あした',romaji:'ashita',script:'h'},
+  {group:'lesson4',ru:'Послезавтра',en:'Day after tomorrow',jp:'あさって',romaji:'asatte',script:'h'},
+  {group:'lesson4',ru:'Вчера',en:'Yesterday',jp:'きのう',romaji:'kinou',script:'h'},
+  {group:'lesson4',ru:'Позавчера',en:'Day before yesterday',jp:'おととい',romaji:'ototoi',script:'h'},
+  {group:'lesson4',ru:'Этот месяц',en:'This month',jp:'こんげつ',romaji:'kongetsu',script:'h'},
+  {group:'lesson4',ru:'Следующий месяц',en:'Next month',jp:'らいげつ',romaji:'raigetsu',script:'h'},
+  {group:'lesson4',ru:'Прошлый месяц',en:'Last month',jp:'せんげつ',romaji:'sengetsu',script:'h'},
+  {group:'lesson4',ru:'Этот год',en:'This year',jp:'ことし',romaji:'kotoshi',script:'h'},
+  {group:'lesson4',ru:'Следующий год',en:'Next year',jp:'らいねん',romaji:'rainen',script:'h'},
+  {group:'lesson4',ru:'Прошлый год',en:'Last year',jp:'きょねん',romaji:'kyonen',script:'h'},
+  {group:'lesson4',ru:'Каждое утро',en:'Every morning',jp:'まいあさ',romaji:'maiasa',script:'h'},
+  {group:'lesson4',ru:'Каждый вечер',en:'Every evening',jp:'まいばん',romaji:'maiban',script:'h'},
+  {group:'lesson4',ru:'Каждый день',en:'Every day',jp:'まいにち',romaji:'mainichi',script:'h'},
+  // family_own
+  {group:'family_own',ru:'Бабушка (своя)',en:'Grandmother (own)',jp:'そぼ',romaji:'sobo',script:'h'},
+  {group:'family_own',ru:'Дедушка (свой)',en:'Grandfather (own)',jp:'そふ',romaji:'sofu',script:'h'},
+  {group:'family_own',ru:'Мать (своя)',en:'Mother (own)',jp:'はは',romaji:'haha',script:'h'},
+  {group:'family_own',ru:'Отец (свой)',en:'Father (own)',jp:'ちち',romaji:'chichi',script:'h'},
+  {group:'family_own',ru:'Младшая сестра (своя)',en:'Younger sister (own)',jp:'いもうと',romaji:'imouto',script:'h'},
+  {group:'family_own',ru:'Младший брат (свой)',en:'Younger brother (own)',jp:'おとうと',romaji:'otouto',script:'h'},
+  {group:'family_own',ru:'Старшая сестра (своя)',en:'Older sister (own)',jp:'あね',romaji:'ane',script:'h'},
+  {group:'family_own',ru:'Старший брат (свой)',en:'Older brother (own)',jp:'あに',romaji:'ani',script:'h'},
+  {group:'family_own',ru:'Жена (своя)',en:'Wife (own)',jp:'つま',romaji:'tsuma',script:'h'},
+  {group:'family_own',ru:'Муж (свой)',en:'Husband (own)',jp:'おっと',romaji:'otto',script:'h'},
+  {group:'family_own',ru:'Дочь (своя)',en:'Daughter (own)',jp:'むすめ',romaji:'musume',script:'h'},
+  {group:'family_own',ru:'Сын (свой)',en:'Son (own)',jp:'むすこ',romaji:'musuko',script:'h'},
+  // family_other
+  {group:'family_other',ru:'Бабушка (вежл.)',en:'Grandmother (polite)',jp:'おばあさん',romaji:'obaasan',script:'h'},
+  {group:'family_other',ru:'Дедушка (вежл.)',en:'Grandfather (polite)',jp:'おじいさん',romaji:'ojiisan',script:'h'},
+  {group:'family_other',ru:'Мать (вежл.)',en:'Mother (polite)',jp:'おかあさん',romaji:'okaasan',script:'h'},
+  {group:'family_other',ru:'Отец (вежл.)',en:'Father (polite)',jp:'おとうさん',romaji:'otousan',script:'h'},
+  {group:'family_other',ru:'Младшая сестра (вежл.)',en:'Younger sister (polite)',jp:'いもうとさん',romaji:'imoutosan',script:'h'},
+  {group:'family_other',ru:'Младший брат (вежл.)',en:'Younger brother (polite)',jp:'おとうとさん',romaji:'otoutosan',script:'h'},
+  {group:'family_other',ru:'Старшая сестра (вежл.)',en:'Older sister (polite)',jp:'おねえさん',romaji:'oneesan',script:'h'},
+  {group:'family_other',ru:'Старший брат (вежл.)',en:'Older brother (polite)',jp:'おにいさん',romaji:'oniisan',script:'h'},
+  {group:'family_other',ru:'Жена (вежл.)',en:'Wife (polite)',jp:'おくさん',romaji:'okusan',script:'h'},
+  {group:'family_other',ru:'Муж (вежл.)',en:'Husband (polite)',jp:'ごしゅじん',romaji:'goshujin',script:'h'},
+  {group:'family_other',ru:'Дочь (вежл.)',en:'Daughter (polite)',jp:'むすめさん',romaji:'musumesan',script:'h'},
+  {group:'family_other',ru:'Сын (вежл.)',en:'Son (polite)',jp:'むすこさん',romaji:'musukosan',script:'h'},
+];
+
+/* ── Verb data ──────────────────────────────────────────── */
+/* stem_masu: the verb stem before ます
+   Conjugation rules:
+     ます   → stem + ます      (present/future affirmative)
+     ました → stem + ました    (past affirmative)
+     ません → stem + ません    (present/future negative)
+     ませんでした → stem + ませんでした (past negative)
+     ましょう → stem + ましょう (let's / invitation)
+*/
+const VERB_DATA = [
+  // lesson4
+  {group:'lesson4', ru:'Просыпаться',         en:'To wake up',            stem:'おき',         romaji_stem:'oki'},
+  {group:'lesson4', ru:'Спать / Ложиться',     en:'To sleep / go to bed',  stem:'ね',           romaji_stem:'ne'},
+  {group:'lesson4', ru:'Работать',             en:'To work',               stem:'はたらき',     romaji_stem:'hataraki'},
+  {group:'lesson4', ru:'Отдыхать',             en:'To rest',               stem:'やすみ',       romaji_stem:'yasumi'},
+  {group:'lesson4', ru:'Учиться / Заниматься', en:'To study',              stem:'べんきょうし', romaji_stem:'benkyoushi'},
+  // lesson5
+  {group:'lesson5', ru:'Идти / Ехать',         en:'To go',                 stem:'い',           romaji_stem:'i'},
+  {group:'lesson5', ru:'Приходить',            en:'To come',               stem:'き',           romaji_stem:'ki'},
+  {group:'lesson5', ru:'Возвращаться',         en:'To return',             stem:'かえり',       romaji_stem:'kaeri'},
+  {group:'lesson5', ru:'Есть / Кушать',        en:'To eat',                stem:'たべ',         romaji_stem:'tabe'},
+  {group:'lesson5', ru:'Пить',                 en:'To drink',              stem:'のみ',         romaji_stem:'nomi'},
+  {group:'lesson5', ru:'Делать',               en:'To do',                 stem:'し',           romaji_stem:'shi'},
+  {group:'lesson5', ru:'Смотреть / Видеть',    en:'To watch / see',        stem:'み',           romaji_stem:'mi'},
+  {group:'lesson5', ru:'Слушать',              en:'To listen',             stem:'きき',         romaji_stem:'kiki'},
+  {group:'lesson5', ru:'Читать',               en:'To read',               stem:'よみ',         romaji_stem:'yomi'},
+  {group:'lesson5', ru:'Писать',               en:'To write',              stem:'かき',         romaji_stem:'kaki'},
+  {group:'lesson5', ru:'Говорить',             en:'To speak',              stem:'はなし',       romaji_stem:'hanashi'},
+  {group:'lesson5', ru:'Понимать',             en:'To understand',         stem:'わかり',       romaji_stem:'wakari'},
+  {group:'lesson5', ru:'Покупать',             en:'To buy',                stem:'かい',         romaji_stem:'kai'},
+  {group:'lesson5', ru:'Ждать',                en:'To wait',               stem:'まち',         romaji_stem:'machi'},
+  {group:'lesson5', ru:'Встречаться',          en:'To meet',               stem:'あい',         romaji_stem:'ai'},
+  {group:'lesson5', ru:'Начинать',             en:'To begin',              stem:'はじめ',       romaji_stem:'hajime'},
+  {group:'lesson5', ru:'Заканчивать',          en:'To finish',             stem:'おわり',       romaji_stem:'owari'},
+];
+
+/* Verb form definitions */
+const VERB_FORMS = [
+  { key:'pres', label:'Настоящее/Будущее', labelEn:'Present/Future',
+    suffix:'ます', suffix_r:'masu', neg:false },
+  { key:'past', label:'Прошедшее',         labelEn:'Past',
+    suffix:'ました', suffix_r:'mashita', neg:false },
+  { key:'neg_pres', label:'Настоящее отрицат.', labelEn:'Neg. Present',
+    suffix:'ません', suffix_r:'masen', neg:true },
+  { key:'neg_past', label:'Прошедшее отрицат.', labelEn:'Neg. Past',
+    suffix:'ませんでした', suffix_r:'masen deshita', neg:true },
+  { key:'let', label:'Давайте…',           labelEn:'Let\'s…',
+    suffix:'ましょう', suffix_r:'mashou', neg:false },
+];
+
+function makeVerbForm(verb, formKey) {
+  const f = VERB_FORMS.find(x => x.key === formKey);
+  if (!f) return null;
+  return {
+    type: 'verb',
+    verbKey: formKey,
+    ru: verb.ru,
+    en: verb.en,
+    jp: verb.stem + f.suffix,
+    romaji: verb.romaji_stem + f.suffix_r,
+    script: 'h',
+    formLabel: f.label,
+    formLabelEn: f.labelEn,
+    isNeg: f.neg,
+  };
+}
+
+function buildVocabDeck(scope, order) {
+  let words = scope === 'all' ? VOCAB_DATA : VOCAB_DATA.filter(w => w.group === scope);
+  if (order === 'random') { words = [...words]; shuffle(words); }
+  return words;
+}
+
+function buildVerbDeck(scope, forms, order) {
+  let verbs = scope === 'all' ? VERB_DATA : VERB_DATA.filter(v => v.group === scope);
+  const enabledForms = [];
+  if (forms.pres)     enabledForms.push('pres');
+  if (forms.past)     enabledForms.push('past');
+  if (forms.neg_pres) enabledForms.push('neg_pres');
+  if (forms.neg_past) enabledForms.push('neg_past');
+  if (forms.let)      enabledForms.push('let');
+  if (!enabledForms.length) enabledForms.push('pres'); // fallback
+
+  let deck = [];
+  verbs.forEach(v => {
+    enabledForms.forEach(fk => {
+      const card = makeVerbForm(v, fk);
+      if (card) deck.push(card);
+    });
+  });
+  if (order === 'random') shuffle(deck);
+  return deck;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 3c — i18n TRANSLATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+const TRANSLATIONS = {
+  ru: {
+    // topbar labels
+    mode:'Режим:', script:'Азбука:', order:'Порядок:', rows:'Ряды:',
+    dakuten:'Дакутен', yoon:'Ёон',
+    reverse_quiz:'Обратный квиз', choices:'Вариантов:',
+    range:'Диапазон:', cards:'Карточек:', format:'Формат:', step:'Шаг:',
+    front:'Фронт:', scope:'Охват:', meaning:'Перевод:', days:'Числа:',
+    month_short:'Мес:', group:'Группа:', form:'Форма:', phrases:'Фразы',
+    // option values
+    hiragana:'Хирагана', katakana:'Катакана',
+    both_mix:'Обе (микс)', both_together:'Обе (вместе)',
+    sequential:'По порядку', random:'Случайный', mixed:'Микс',
+    num_units:'0–9', num_tens:'10–99', num_hundreds:'100–999',
+    num_thousands:'1000–9999', num_large:'10k–9999万', num_oku:'億 100M–999M',
+    min_1:'1 мин', min_5:'5 мин', min_10:'10 мин', min_15:'15 мин', min_30:'30 мин',
+    full_day:'Весь день', morning:'Утро (5–11)', daytime:'День (12–17)',
+    evening:'Вечер (18–22)', night:'Ночь (23–4)',
+    time_digits:'Цифры', weekdays:'Дни недели',
+    month_days:'Числа месяца', months:'Месяцы', all:'Всё', meaning_opt:'Перевод',
+    off:'Откл.',
+    all_words:'Все слова', all_verbs:'Все глаголы',
+    lesson1:'Урок 1 — Люди', countries:'Страны', lesson2:'Урок 2 — Предметы',
+    fruits:'Фрукты', lesson3:'Урок 3 — Места', lesson4:'Урок 4',
+    lesson5:'Урок 5', family_own:'Семья (своя)', family_other:'Семья (вежл.)',
+    native_to_jp:'Родной → JP', jp_to_native:'JP → Родной',
+    vpres:'Наст/Буд', vpast:'Прошедшее', vneg:'Отрицание',
+    // mode names
+    kana_mode:'Кана', numbers_mode:'Числа', time_mode:'Время',
+    calendar_mode:'Календарь', vocab_mode:'📖 Слова', verbs_mode:'🔤 Глаголы',
+    // buttons
+    again:'Повтор', known:'Знаю', reset:'Сброс',
+    tables_btn:'Таблицы', flashcards_btn:'← Карточки',
+    // stat bar
+    stat_known:'Знаю', stat_attempts:'Попыток', stat_deck:'Карточек',
+    // table titles
+    tbl_hiragana:'Таблица хираганы', tbl_katakana:'Таблица катаканы',
+    tbl_kana:'Таблица каны', tbl_numbers:'Таблица чисел — 数字',
+    tbl_time:'Таблица времени — 時間', tbl_calendar:'Таблица — 曜日・日付',
+    tbl_vocab:'Словарь', tbl_verbs:'Таблица глаголов',
+    // vocab table columns
+    col_native:'Русский', col_jp:'Японский', col_romaji:'Ромаджи', col_script:'Азбука',
+    // verb table columns
+    vcol_native:'Русский', vcol_pres:'Наст./Буд. (ます)',
+    vcol_past:'Прошедшее (ました)', vcol_neg_pres:'Наст. отриц. (ません)',
+    vcol_neg_past:'Прош. отриц. (ませんでした)', vcol_let:'Давайте (ましょう)',
+    vcol_romaji:'Ромаджи (основа)',
+    // verb form labels on cards
+    vf_pres:'Настоящее / Будущее', vf_past:'Прошедшее',
+    vf_neg_pres:'Настоящее отрицательное', vf_neg_past:'Прошедшее отрицательное',
+    vf_let:'Давайте…',
+    // misc card answer labels
+    exc_badge:'⚠ 例外',
+  },
+  en: {
+    mode:'Mode:', script:'Script:', order:'Order:', rows:'Rows:',
+    dakuten:'Dakuten', yoon:'Yoon',
+    reverse_quiz:'Reverse quiz', choices:'Choices:',
+    range:'Range:', cards:'Cards:', format:'Format:', step:'Step:',
+    front:'Front:', scope:'Scope:', meaning:'Meaning:', days:'Days:',
+    month_short:'Mo:', group:'Group:', form:'Form:', phrases:'Phrases',
+    hiragana:'Hiragana', katakana:'Katakana',
+    both_mix:'Both (mix)', both_together:'Both (together)',
+    sequential:'Sequential', random:'Random', mixed:'Mixed',
+    num_units:'0–9', num_tens:'10–99', num_hundreds:'100–999',
+    num_thousands:'1000–9999', num_large:'10k–9999万', num_oku:'億 100M–999M',
+    min_1:'1 min', min_5:'5 min', min_10:'10 min', min_15:'15 min', min_30:'30 min',
+    full_day:'Full day', morning:'Morning (5–11)', daytime:'Day (12–17)',
+    evening:'Evening (18–22)', night:'Night (23–4)',
+    time_digits:'Time digits', weekdays:'Weekdays',
+    month_days:'Month days', months:'Months', all:'All', meaning_opt:'Meaning',
+    off:'Off',
+    all_words:'All words', all_verbs:'All verbs',
+    lesson1:'Lesson 1 — People', countries:'Countries', lesson2:'Lesson 2 — Items',
+    fruits:'Fruits', lesson3:'Lesson 3 — Places', lesson4:'Lesson 4',
+    lesson5:'Lesson 5', family_own:'Family (own)', family_other:'Family (polite)',
+    native_to_jp:'Native → JP', jp_to_native:'JP → Native',
+    vpres:'Pres/Future', vpast:'Past', vneg:'Negative',
+    kana_mode:'Kana', numbers_mode:'Numbers', time_mode:'Time',
+    calendar_mode:'Calendar', vocab_mode:'📖 Words', verbs_mode:'🔤 Verbs',
+    again:'Again', known:'Known', reset:'Reset',
+    tables_btn:'Tables', flashcards_btn:'← Flashcards',
+    stat_known:'Known', stat_attempts:'Attempts', stat_deck:'Deck',
+    tbl_hiragana:'Hiragana chart', tbl_katakana:'Katakana chart',
+    tbl_kana:'Kana chart', tbl_numbers:'Numbers chart — 数字',
+    tbl_time:'Time chart — 時間', tbl_calendar:'Calendar chart — 曜日・日付',
+    tbl_vocab:'Vocabulary', tbl_verbs:'Verb conjugation table',
+    col_native:'English', col_jp:'Japanese', col_romaji:'Romaji', col_script:'Script',
+    vcol_native:'English', vcol_pres:'Pres./Future (ます)',
+    vcol_past:'Past (ました)', vcol_neg_pres:'Neg. Present (ません)',
+    vcol_neg_past:'Neg. Past (ませんでした)', vcol_let:'Let\'s (ましょう)',
+    vcol_romaji:'Romaji (stem)',
+    vf_pres:'Present / Future', vf_past:'Past',
+    vf_neg_pres:'Negative Present', vf_neg_past:'Negative Past',
+    vf_let:'Let\'s…',
+    exc_badge:'⚠ Exception',
+  },
+};
+
+function T(key) {
+  return (TRANSLATIONS[state.uiLang] || TRANSLATIONS.ru)[key] || key;
+}
+
+/* Apply all data-i18n attributes in the DOM */
+function applyI18n() {
+  const lang = state.uiLang;
+  const tr = TRANSLATIONS[lang] || TRANSLATIONS.ru;
+
+  // ── Labels/spans with data-i18n ──────────────────────────
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.dataset.i18n;
+    if (tr[k] !== undefined) el.textContent = tr[k];
+  });
+
+  // ── lblMode (no data-i18n, special case) ─────────────────
+  const lblMode = document.getElementById('lblMode');
+  if (lblMode) lblMode.textContent = tr.mode;
+
+  // ── ALL <option> with data-i18n-opt ─────────────────────
+  // This is the universal pass — covers every select in the app
+  document.querySelectorAll('option[data-i18n-opt]').forEach(o => {
+    const k = o.dataset.i18nOpt;
+    if (tr[k] !== undefined) o.textContent = tr[k];
+  });
+
+  // ── Mode selector options (no data-i18n-opt, use modeMap) ─
+  const modeMap = {
+    kana: tr.kana_mode, numbers: tr.numbers_mode, time: tr.time_mode,
+    calendar: tr.calendar_mode, vocab: tr.vocab_mode, verbs: tr.verbs_mode,
+  };
+  selGlobalMode.querySelectorAll('option').forEach(o => {
+    if (modeMap[o.value]) o.textContent = modeMap[o.value];
+  });
+
+  // ── selVocabFront / selVerbFront (value-based, no data-i18n-opt) ──
+  selVocabFront.querySelectorAll('option').forEach(o => {
+    if (o.value === 'native') o.textContent = tr.native_to_jp;
+    if (o.value === 'jp')     o.textContent = tr.jp_to_native;
+  });
+  selVerbFront.querySelectorAll('option').forEach(o => {
+    if (o.value === 'native') o.textContent = tr.native_to_jp;
+    if (o.value === 'jp')     o.textContent = tr.jp_to_native;
+  });
+
+  // ── Buttons ──────────────────────────────────────────────
+  btnAgain.innerHTML    = '↩ ' + tr.again;
+  btnKnown.innerHTML    = '✓ ' + tr.known;
+  btnReset.innerHTML    = '↺ ' + tr.reset;
+  btnTables.textContent = state.view === 'tables' ? tr.flashcards_btn : tr.tables_btn;
+
+  // ── topHint ──────────────────────────────────────────────
+  topHint.textContent = '☰ ' + tr.mode.replace(':','');
+
+  updateStat();
+  if (state.view === 'tables') renderTable();
+}
+
+/* ═══════════════════════════════════════════════════════════
    SECTION 4 — STATE
    ═══════════════════════════════════════════════════════════ */
 
@@ -537,6 +962,7 @@ const state = {
 
   // Kana
   script:   'hiragana',
+  kanaRows: new Set(['vowels','k','s','t','n','h','m','y','r','w']),  // selected row groups
   order:    'random',
   dakuten:  false,
   yoon:     false,
@@ -572,6 +998,20 @@ const state = {
   calMonthMin: 1,
   calMonthMax: 12,
 
+  // Vocabulary
+  vocabScope:  'all',    // 'all' | group name
+  vocabFront:  'native', // 'native' | 'jp'
+  vocabOrder:  'random',
+
+  // Verbs
+  verbScope:    'all',
+  verbFront:    'native', // 'native' | 'jp'
+  verbOrder:    'random',
+  verbForms: { pres:true, past:true, neg_pres:true, neg_past:true, let:false },
+
+  // UI language
+  uiLang: 'ru', // 'ru' | 'en'
+
   // Session
   deck: [], queue: [], currentIdx: 0, current: null,
   known: 0, attempts: 0, revealed: false, locked: false,
@@ -600,6 +1040,7 @@ const optDakuten   = $('optDakuten');
 const optYoon      = $('optYoon');
 const optReverse   = $('optReverse');
 const choicesLabel = $('choicesLabel');
+const kanaRowsWrap = $('kanaRowsWrap');
 const choicesN     = $('choicesN');
 
 // Numbers
@@ -629,6 +1070,9 @@ const selCalOrder    = $('selCalOrder');
 const selCalDayMin   = $('selCalDayMin');
 const selCalDayMax   = $('selCalDayMax');
 const selCalMeaning  = $('selCalMeaning');
+
+// UI language
+const selUiLang      = $('selUiLang');
 const selCalMonthMin = $('selCalMonthMin');
 const selCalMonthMax = $('selCalMonthMax');
 
@@ -648,6 +1092,22 @@ const tableView     = $('tableView');
 const tableScroller = $('tableScroller');
 const tableTitle    = $('tableTitle');
 const btnTables     = $('btnTables');
+
+// Vocab
+const vocabControls  = $('vocabControls');
+const selVocabScope  = $('selVocabScope');
+const selVocabFront  = $('selVocabFront');
+const selVocabOrder  = $('selVocabOrder');
+
+// Verbs
+const verbControls   = $('verbControls');
+const selVerbScope   = $('selVerbScope');
+const selVerbFront   = $('selVerbFront');
+const selVerbOrder   = $('selVerbOrder');
+const optVerbPres    = $('optVerbPres');
+const optVerbPast    = $('optVerbPast');
+const optVerbNeg     = $('optVerbNeg');
+const optVerbLet     = $('optVerbLet');
 
 /* ═══════════════════════════════════════════════════════════
    SECTION 6 — TOPBAR AUTO-HIDE + HINT
@@ -745,11 +1205,45 @@ window.wallpaperPropertyListener = {
    SECTION 8 — CONTROL EVENT LISTENERS
    ═══════════════════════════════════════════════════════════ */
 
-selGlobalMode.addEventListener('change', () => { state.globalMode = selGlobalMode.value; syncModeUI(); restart(); });
+selGlobalMode.addEventListener('change', () => { state.globalMode = selGlobalMode.value; syncModeUI(); restart(); applyI18n(); });
+
+selUiLang.addEventListener('change', () => {
+  state.uiLang = selUiLang.value;
+  applyI18n();
+});
 
 selScript.addEventListener('change',  () => { state.script   = selScript.value;  restart(); });
+
+// Kana row toggles
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.kana-row-btn');
+  if (!btn) return;
+  const row = btn.dataset.row;
+  if (state.kanaRows.has(row)) {
+    // Don't allow deselecting if it's the last one
+    if (state.kanaRows.size <= 1) return;
+    state.kanaRows.delete(row);
+    btn.classList.remove('active');
+  } else {
+    state.kanaRows.add(row);
+    btn.classList.add('active');
+  }
+  restart();
+});
 selOrder.addEventListener('change',   () => { state.order    = selOrder.value;   restart(); });
-optDakuten.addEventListener('change', () => { state.dakuten  = optDakuten.checked; restart(); });
+optDakuten.addEventListener('change', () => {
+  state.dakuten = optDakuten.checked;
+  const dakRowsEl = $('kanaRowsDak');
+  if (dakRowsEl) dakRowsEl.classList.toggle('hidden', !state.dakuten);
+  // add/remove dakuten rows from selection
+  const dakRows = ['g','z','d','b','p'];
+  if (state.dakuten) {
+    dakRows.forEach(r => state.kanaRows.add(r));
+  } else {
+    dakRows.forEach(r => state.kanaRows.delete(r));
+  }
+  restart();
+});
 optYoon.addEventListener('change',    () => { state.yoon     = optYoon.checked;    restart(); });
 optReverse.addEventListener('change', () => { state.reverse  = optReverse.checked; updateKanaUI(); showCard(); });
 choicesN.addEventListener('change',   () => { state.choicesN = Math.max(2,Math.min(12,parseInt(choicesN.value)||6)); updateKanaUI(); showCard(); });
@@ -779,6 +1273,22 @@ selCalMeaning.addEventListener('change', () => { state.calMeaningLang= selCalMea
 selCalMonthMin.addEventListener('change', () => { state.calMonthMin = parseInt(selCalMonthMin.value,10)||1;  restart(); });
 selCalMonthMax.addEventListener('change', () => { state.calMonthMax = parseInt(selCalMonthMax.value,10)||12; restart(); });
 
+selVocabScope.addEventListener('change',  () => { state.vocabScope = selVocabScope.value;  restart(); });
+selVocabFront.addEventListener('change',  () => { state.vocabFront = selVocabFront.value;  showCard(); });
+selVocabOrder.addEventListener('change',  () => { state.vocabOrder = selVocabOrder.value;  restart(); });
+
+selVerbScope.addEventListener('change',  () => { state.verbScope = selVerbScope.value;  restart(); });
+selVerbFront.addEventListener('change',  () => { state.verbFront = selVerbFront.value;  showCard(); });
+selVerbOrder.addEventListener('change',  () => { state.verbOrder = selVerbOrder.value;  restart(); });
+optVerbPres.addEventListener('change',   () => { state.verbForms.pres     = optVerbPres.checked;     restart(); });
+optVerbPast.addEventListener('change',   () => { state.verbForms.past     = optVerbPast.checked;     restart(); });
+optVerbNeg.addEventListener('change',    () => {
+  state.verbForms.neg_pres = optVerbNeg.checked;
+  state.verbForms.neg_past = optVerbNeg.checked;
+  restart();
+});
+optVerbLet.addEventListener('change',    () => { state.verbForms.let  = optVerbLet.checked;      restart(); });
+
 btnAgain.addEventListener('click',  doAgain);
 btnKnown.addEventListener('click',  doKnown);
 btnReset.addEventListener('click',  restart);
@@ -796,6 +1306,8 @@ function syncModeUI() {
   numControls.classList.toggle('hidden',  m !== 'numbers');
   timeControls.classList.toggle('hidden', m !== 'time');
   calControls.classList.toggle('hidden',  m !== 'calendar');
+  vocabControls.classList.toggle('hidden', m !== 'vocab');
+  verbControls.classList.toggle('hidden',  m !== 'verbs');
 }
 
 function updateKanaUI() {
@@ -827,7 +1339,7 @@ function restart() {
   state.attempts = 0;
 
   if (state.globalMode === 'kana') {
-    state.deck = buildKanaDeck(state.script, state.dakuten, state.yoon);
+    state.deck = buildKanaDeck(state.script, state.dakuten, state.yoon, state.kanaRows);
     buildQueue();
     syncModeUI(); updateKanaUI();
   } else if (state.globalMode === 'numbers') {
@@ -842,6 +1354,14 @@ function restart() {
     state.deck = buildCalendarDeck(state);
     buildQueue();
     syncModeUI(); updateNumUI();
+  } else if (state.globalMode === 'vocab') {
+    state.deck = buildVocabDeck(state.vocabScope, state.vocabOrder);
+    buildQueue();
+    syncModeUI(); updateNumUI();
+  } else if (state.globalMode === 'verbs') {
+    state.deck = buildVerbDeck(state.verbScope, state.verbForms, state.verbOrder);
+    buildQueue();
+    syncModeUI(); updateNumUI();
   }
 
   if (state.view === 'flash') showCard();
@@ -854,7 +1374,9 @@ function buildQueue() {
   const doShuffle = (state.globalMode === 'kana' && state.order === 'random')
                  || (state.globalMode === 'numbers')
                  || (state.globalMode === 'time' && state.timeOrder === 'random')
-                 || (state.globalMode === 'calendar' && state.calOrder === 'random');
+                 || (state.globalMode === 'calendar' && state.calOrder === 'random')
+                 || (state.globalMode === 'vocab' && state.vocabOrder === 'random')
+                 || (state.globalMode === 'verbs' && state.verbOrder === 'random');
   if (doShuffle) shuffle(state.queue);
   state.currentIdx = 0;
 }
@@ -903,10 +1425,12 @@ function showCard() {
     cardFront.className  = 'card-face';
     cardFront.innerHTML  = '';
 
-    if      (state.globalMode === 'kana')    renderKanaCard(entry);
-    else if (state.globalMode === 'numbers') renderNumberCard(entry);
-    else if (state.globalMode === 'time')    renderTimeCard(entry);
+    if      (state.globalMode === 'kana')     renderKanaCard(entry);
+    else if (state.globalMode === 'numbers')  renderNumberCard(entry);
+    else if (state.globalMode === 'time')     renderTimeCard(entry);
     else if (state.globalMode === 'calendar') renderCalendarCard(entry);
+    else if (state.globalMode === 'vocab')    renderVocabCard(entry);
+    else if (state.globalMode === 'verbs')    renderVerbCard(entry);
 
     card.classList.remove('fading');
     updateStat();
@@ -1155,11 +1679,159 @@ function renderCalendarCard(entry) {
   }
 }
 
+/* ── Vocab card ── */
+function renderVocabCard(entry) {
+  actionsRow.classList.remove('hidden');
+  choicesRow.classList.add('hidden');
+
+  // front: 'native' (native lang → JP) or 'jp' (JP → native)
+  const front = state.vocabFront;
+  const isJpFront = front === 'jp';
+  const nativeTxt = state.uiLang === 'en' ? entry.en : entry.ru;
+  const otherTxt  = state.uiLang === 'en' ? entry.ru : entry.en;
+
+  cardAnswer.innerHTML = '';
+  cardFront.innerHTML  = '';
+
+  if (!isJpFront) {
+    // Front: native language word
+    cardFront.classList.add('vocab-meaning-prompt');
+    cardFront.textContent = nativeTxt;
+    // Answer: Japanese + romaji
+    const jpSpan = document.createElement('span');
+    jpSpan.className = entry.script === 'k' ? 'ans-vocab-kata' : 'ans-vocab-hira';
+    jpSpan.textContent = entry.jp;
+    cardAnswer.appendChild(jpSpan);
+    const romaSpan = document.createElement('span');
+    romaSpan.className = 'ans-romaji';
+    romaSpan.textContent = entry.romaji;
+    cardAnswer.appendChild(romaSpan);
+    // Show the other language too
+    const otherSpan = document.createElement('span');
+    otherSpan.className = 'ans-meaning';
+    otherSpan.textContent = otherTxt;
+    cardAnswer.appendChild(otherSpan);
+  } else {
+    // Front: Japanese word
+    cardFront.classList.add(entry.script === 'k' ? 'vocab-kata-prompt' : 'vocab-hira-prompt');
+    cardFront.textContent = entry.jp;
+    // Answer: native meaning + romaji + other language
+    const mainSpan = document.createElement('span');
+    mainSpan.className = 'ans-vocab-meaning-main';
+    mainSpan.textContent = nativeTxt;
+    cardAnswer.appendChild(mainSpan);
+    const romaSpan = document.createElement('span');
+    romaSpan.className = 'ans-romaji';
+    romaSpan.textContent = entry.romaji;
+    cardAnswer.appendChild(romaSpan);
+    const otherSpan = document.createElement('span');
+    otherSpan.className = 'ans-meaning';
+    otherSpan.textContent = otherTxt;
+    cardAnswer.appendChild(otherSpan);
+  }
+
+  // Script badge
+  if (entry.script === 'k') {
+    const badge = document.createElement('span');
+    badge.className = 'script-badge katakana-badge';
+    badge.textContent = 'カタカナ';
+    cardAnswer.appendChild(badge);
+  }
+}
+
+/* ── Verb card ── */
+function renderVerbCard(entry) {
+  actionsRow.classList.remove('hidden');
+  choicesRow.classList.add('hidden');
+
+  // front: 'native' (native lang → JP) or 'jp' (JP → native)
+  const front = state.verbFront;
+  const isJpFront = front === 'jp';
+  const nativeTxt = state.uiLang === 'en' ? entry.en : entry.ru;
+  const otherTxt  = state.uiLang === 'en' ? entry.ru : entry.en;
+  // Form label uses T() so it matches current UI language
+  const formLabel = T('vf_' + entry.verbKey);
+
+  cardAnswer.innerHTML = '';
+  cardFront.innerHTML  = '';
+
+  if (isJpFront) {
+    // Front: Japanese verb form + form tag
+    cardFront.classList.add('verb-jp-prompt');
+    const verbSpan = document.createElement('span');
+    verbSpan.className = 'verb-jp-main';
+    verbSpan.textContent = entry.jp;
+    const formTag = document.createElement('span');
+    formTag.className = 'verb-form-tag';
+    formTag.textContent = formLabel;
+    cardFront.append(verbSpan, formTag);
+
+    // Answer: native meaning + romaji + other lang
+    const mainSpan = document.createElement('span');
+    mainSpan.className = 'ans-vocab-meaning-main';
+    mainSpan.textContent = nativeTxt;
+    cardAnswer.appendChild(mainSpan);
+    const romaSpan = document.createElement('span');
+    romaSpan.className = 'ans-romaji';
+    romaSpan.textContent = entry.romaji;
+    cardAnswer.appendChild(romaSpan);
+    const otherSpan = document.createElement('span');
+    otherSpan.className = 'ans-meaning';
+    otherSpan.textContent = otherTxt;
+    cardAnswer.appendChild(otherSpan);
+  } else {
+    // Front: native meaning + form tag
+    cardFront.classList.add('verb-meaning-prompt');
+    const meanSpan = document.createElement('span');
+    meanSpan.className = 'verb-meaning-main';
+    meanSpan.textContent = nativeTxt;
+    const formTag = document.createElement('span');
+    formTag.className = 'verb-form-tag';
+    formTag.textContent = formLabel;
+    cardFront.append(meanSpan, formTag);
+
+    // Answer: Japanese verb form + romaji + other lang
+    const jpSpan = document.createElement('span');
+    jpSpan.className = 'ans-vocab-hira';
+    jpSpan.textContent = entry.jp;
+    cardAnswer.appendChild(jpSpan);
+    const romaSpan = document.createElement('span');
+    romaSpan.className = 'ans-romaji';
+    romaSpan.textContent = entry.romaji;
+    cardAnswer.appendChild(romaSpan);
+    const otherSpan = document.createElement('span');
+    otherSpan.className = 'ans-meaning';
+    otherSpan.textContent = otherTxt;
+    cardAnswer.appendChild(otherSpan);
+  }
+}
+
 /* ── Choice buttons (kana reverse) ── */
+// Категории карточек для пула вариантов в обратном квизе:
+// 'yoon'   — йоны: きゃ しゅ ちょ…                   (ромадзи 3+ символа, не x, не исключение)
+// 'basic'  — всё остальное
+// Базовые каны с 3-символьным ромадзи (shi, chi, tsu, fu — НЕ йоны):
+const BASIC_LONG = new Set(['shi','chi','tsu','fu']);
+function kanaCategory(e) {
+  if (!e) return 'basic';
+  if (e._yoonBase) return 'yoon_' + e._yoonBase;  // e.g. 'yoon_gi', 'yoon_ki'
+  const r = kanaRomajiLabel(e);
+  if (r.length >= 3 && !BASIC_LONG.has(r)) return 'yoon_unknown';
+  return 'basic';
+}
+
 function buildChoiceButtons(entry) {
-  const pool = state.deck.filter(e => e !== entry);
+  const cat = kanaCategory(entry);
+  // Варианты — только из той же базы (yoon_gi → только gya/gyu/gyo)
+  let pool = state.deck.filter(e => e !== entry && kanaCategory(e) === cat);
+  // Fallback 1: все йоны (если в базе только 2 карточки и choicesN > 3)
+  if (pool.length < state.choicesN - 1 && cat.startsWith('yoon_')) {
+    pool = state.deck.filter(e => e !== entry && kanaCategory(e).startsWith('yoon_'));
+  }
+  // Fallback 2: полный пул
+  if (pool.length < state.choicesN - 1) pool = state.deck.filter(e => e !== entry);
   const shuf = [...pool]; shuffle(shuf);
-  const picks = shuf.slice(0, state.choicesN-1);
+  const picks = shuf.slice(0, state.choicesN - 1);
   picks.push(entry); shuffle(picks);
   choicesRow.classList.remove('hidden');
   picks.forEach(ch => {
@@ -1215,13 +1887,13 @@ function toggleView() {
     state.view = 'tables';
     flashView.classList.add('hidden');
     tableView.classList.remove('hidden');
-    btnTables.textContent = '← Flashcards';
+    btnTables.textContent = T('flashcards_btn');
     renderTable();
   } else {
     state.view = 'flash';
     tableView.classList.add('hidden');
     flashView.classList.remove('hidden');
-    btnTables.textContent = 'Tables';
+    btnTables.textContent = T('tables_btn');
     showCard();
   }
 }
@@ -1231,12 +1903,12 @@ function applyStartView() {
     state.view = 'tables';
     flashView.classList.add('hidden');
     tableView.classList.remove('hidden');
-    btnTables.textContent = '← Flashcards';
+    btnTables.textContent = T('flashcards_btn');
   } else {
     state.view = 'flash';
     flashView.classList.remove('hidden');
     tableView.classList.add('hidden');
-    btnTables.textContent = 'Tables';
+    btnTables.textContent = T('tables_btn');
   }
 }
 
@@ -1245,10 +1917,12 @@ function applyStartView() {
    ═══════════════════════════════════════════════════════════ */
 
 function renderTable() {
-  if      (state.globalMode === 'kana')    renderKanaTable();
-  else if (state.globalMode === 'numbers') renderNumbersTable();
-  else if (state.globalMode === 'time')    renderTimeTable();
+  if      (state.globalMode === 'kana')     renderKanaTable();
+  else if (state.globalMode === 'numbers')  renderNumbersTable();
+  else if (state.globalMode === 'time')     renderTimeTable();
   else if (state.globalMode === 'calendar') renderCalendarTable();
+  else if (state.globalMode === 'vocab')    renderVocabTable();
+  else if (state.globalMode === 'verbs')    renderVerbTable();
 }
 
 /* ── Kana table ── */
@@ -1256,9 +1930,9 @@ function renderKanaTable() {
   const showH = state.script !== 'katakana';
   const showK = state.script !== 'hiragana';
   tableTitle.textContent =
-    state.script==='hiragana' ? 'Hiragana chart' :
-    state.script==='katakana' ? 'Katakana chart' :
-    'Kana chart — Hiragana + Katakana';
+    state.script==='hiragana' ? T('tbl_hiragana') :
+    state.script==='katakana' ? T('tbl_katakana') :
+    T('tbl_kana');
 
   const dakCols = state.dakuten
     ? [...DAKUTEN_ROWS].reverse().map(r => ({ hd:r.c+'-', cells:r.cells, dak:true }))
@@ -1355,7 +2029,7 @@ function renderKanaCellTd(td, cell, showH, showK) {
 const SPECIAL_SET = new Set(Object.keys(SPECIAL_READINGS).map(Number));
 
 function renderNumbersTable() {
-  tableTitle.textContent = 'Numbers chart — 数字';
+  tableTitle.textContent = T('tbl_numbers');
   const COLS = [
     { label:'UNITS',     sub:'一〜九',  mult:1 },
     { label:'TENS',      sub:'十〜九十',mult:10 },
@@ -1428,7 +2102,7 @@ function renderNumbersTable() {
 
 /* ── Time table ── */
 function renderTimeTable() {
-  tableTitle.textContent = 'Time chart — 時間';
+  tableTitle.textContent = T('tbl_time');
   tableScroller.innerHTML = '';
 
   const wrap = document.createElement('div');
@@ -1532,7 +2206,7 @@ function renderTimeTable() {
 
 /* ── Calendar table ── */
 function renderCalendarTable() {
-  tableTitle.textContent = 'Calendar chart — 曜日・日付';
+  tableTitle.textContent = T('tbl_calendar');
   tableScroller.innerHTML = '';
   const wrap = document.createElement('div');
   wrap.className = 'cal-table-wrap';
@@ -1670,7 +2344,7 @@ function renderCalendarTable() {
    ═══════════════════════════════════════════════════════════ */
 
 function updateStat() {
-  statTxt.textContent = `Known: ${state.known}  ·  Attempts: ${state.attempts}  ·  Deck: ${state.deck.length}`;
+  statTxt.textContent = `${T('stat_known')}: ${state.known}  ·  ${T('stat_attempts')}: ${state.attempts}  ·  ${T('stat_deck')}: ${state.deck.length}`;
 }
 
 function shuffle(arr) {
@@ -1684,8 +2358,120 @@ function shuffle(arr) {
    SECTION 15 — BOOT
    ═══════════════════════════════════════════════════════════ */
 
+/* ── Vocab table ── */
+function renderVocabTable() {
+  const scope = state.vocabScope;
+  const words = scope === 'all' ? VOCAB_DATA : VOCAB_DATA.filter(w => w.group === scope);
+
+  // Group names for display — use T() so they switch with UI lang
+  const GROUP_LABELS = {
+    lesson1:      T('lesson1'),
+    countries:    T('countries'),
+    lesson2:      T('lesson2'),
+    fruits:       T('fruits'),
+    lesson3:      T('lesson3'),
+    lesson4:      T('lesson4'),
+    family_own:   T('family_own'),
+    family_other: T('family_other'),
+  };
+
+  tableTitle.textContent = T('tbl_vocab') + ' — ' + (GROUP_LABELS[scope] || T('all_words'));
+  tableScroller.innerHTML = '';
+
+  // Group by group key when showing all
+  const groups = scope === 'all'
+    ? [...new Set(VOCAB_DATA.map(w => w.group))]
+    : [scope];
+
+  groups.forEach(g => {
+    const groupWords = words.filter(w => w.group === g);
+    if (!groupWords.length) return;
+
+    if (scope === 'all') {
+      const hdr = document.createElement('div');
+      hdr.className = 'vocab-table-group-hdr';
+      hdr.textContent = GROUP_LABELS[g] || g;
+      tableScroller.appendChild(hdr);
+    }
+
+    const table = document.createElement('table');
+    table.className = 'vocab-table';
+    const thead = table.createTHead();
+    const hr = thead.insertRow();
+    [T('col_native'), T('col_jp'), T('col_romaji'), T('col_script')].forEach(t => {
+      const th = document.createElement('th'); th.textContent = t; hr.appendChild(th);
+    });
+    const tbody = table.createTBody();
+    groupWords.forEach(w => {
+      const tr = tbody.insertRow();
+      const nativeTxt = state.uiLang === 'en' ? w.en : w.ru;
+      const cells = [nativeTxt, w.jp, w.romaji, w.script === 'k' ? 'カタカナ' : 'ひらがな'];
+      cells.forEach((txt, i) => {
+        const td = tr.insertCell();
+        td.textContent = txt;
+        if (i === 1) td.className = w.script === 'k' ? 'vocab-cell-kata' : 'vocab-cell-hira';
+        if (i === 3) td.className = w.script === 'k' ? 'vocab-script-k' : 'vocab-script-h';
+      });
+    });
+    tableScroller.appendChild(table);
+  });
+}
+
+/* ── Verb table ── */
+function renderVerbTable() {
+  const scope = state.verbScope;
+  const verbs = scope === 'all' ? VERB_DATA : VERB_DATA.filter(v => v.group === scope);
+
+  tableTitle.textContent = T('tbl_verbs');
+  tableScroller.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'verb-table-wrap';
+
+  const table = document.createElement('table');
+  table.className = 'verb-table';
+  const thead = table.createTHead();
+  const hr = thead.insertRow();
+  [
+    T('vcol_native'),
+    T('vcol_pres'),
+    T('vcol_past'),
+    T('vcol_neg_pres'),
+    T('vcol_neg_past'),
+    T('vcol_let'),
+    T('vcol_romaji'),
+  ].forEach(t => {
+    const th = document.createElement('th'); th.textContent = t; hr.appendChild(th);
+  });
+
+  const tbody = table.createTBody();
+  verbs.forEach(v => {
+    const tr = tbody.insertRow();
+    const nativeTxt = state.uiLang === 'en' ? v.en : v.ru;
+    const cells = [
+      nativeTxt,
+      v.stem + 'ます',
+      v.stem + 'ました',
+      v.stem + 'ません',
+      v.stem + 'ませんでした',
+      v.stem + 'ましょう',
+      v.romaji_stem + '-masu',
+    ];
+    cells.forEach((txt, i) => {
+      const td = tr.insertCell();
+      td.textContent = txt;
+      if (i >= 1 && i <= 5) td.className = 'verb-cell-jp';
+      if (i === 3 || i === 4) td.classList.add('verb-cell-neg');
+    });
+  });
+
+  wrap.appendChild(table);
+  tableScroller.appendChild(wrap);
+}
+
 function init() {
   selGlobalMode.value   = state.globalMode;
+  selUiLang.value       = state.uiLang;
   selScript.value       = state.script;
   selOrder.value        = state.order;
   optDakuten.checked    = state.dakuten;
@@ -1714,9 +2500,20 @@ function init() {
   selCalMeaning.value   = state.calMeaningLang;
   selCalMonthMin.value  = state.calMonthMin;
   selCalMonthMax.value  = state.calMonthMax;
+  selVocabScope.value   = state.vocabScope;
+  selVocabFront.value   = state.vocabFront;
+  selVocabOrder.value   = state.vocabOrder;
+  selVerbScope.value    = state.verbScope;
+  selVerbFront.value    = state.verbFront;
+  selVerbOrder.value    = state.verbOrder;
+  optVerbPres.checked   = state.verbForms.pres;
+  optVerbPast.checked   = state.verbForms.past;
+  optVerbNeg.checked    = state.verbForms.neg_pres;
+  optVerbLet.checked    = state.verbForms.let;
 
   updateTimeUI();
   syncModeUI();
+  applyI18n();
   restart();
 }
 

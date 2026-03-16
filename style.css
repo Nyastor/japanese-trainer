@@ -473,8 +473,144 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
   text-shadow: 0 0 20px rgba(255,255,255,.30);
 }
 
+
+/* ===== Kana row selector buttons ===== */
+.kana-rows-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.kana-rows-dak {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 4px;
+  padding-left: 6px;
+  border-left: 1px solid rgba(255,255,255,.18);
+}
+.kana-rows-dak.hidden { display: none; }
+
+.kana-row-btn {
+  border: 0;
+  border-radius: 9px;
+  padding: 5px 8px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.40);
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease, box-shadow 100ms ease;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset;
+  line-height: 1;
+  min-width: 30px;
+}
+.kana-row-btn:hover {
+  background: rgba(255,255,255,.16);
+  color: rgba(255,255,255,.75);
+}
+.kana-row-btn.active {
+  background: rgba(120,160,255,.22);
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(140,180,255,.35) inset;
+}
+.kana-row-btn.active:hover {
+  background: rgba(120,160,255,.35);
+}
+
 /* ===== Utility ===== */
 .hidden { display:none !important; }
+
+/* ===== Vocab / Verb card fronts ===== */
+.card-face.vocab-meaning-prompt  { font-size:clamp(28px,5vw,78px); line-height:1.2; color:#e8e8ff; letter-spacing:.01em; }
+.card-face.vocab-hira-prompt     { font-size:clamp(52px,9vw,140px); line-height:1.15; }
+.card-face.vocab-kata-prompt     { font-size:clamp(52px,9vw,140px); line-height:1.15; color:#aad4ff; }
+.card-face.verb-meaning-prompt   {
+  font-size:clamp(26px,4.5vw,70px); line-height:1.2; color:#e8e8ff;
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.card-face.verb-jp-prompt {
+  font-size:clamp(42px,7vw,110px); line-height:1.15;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+}
+.verb-meaning-main { display:block; }
+.verb-jp-main      { display:block; }
+.verb-form-tag {
+  font-size:clamp(12px,1.4vw,18px); color:rgba(180,210,255,.75);
+  background:rgba(100,150,255,.15); border-radius:10px;
+  padding:4px 14px; letter-spacing:.04em; border:1px solid rgba(100,150,255,.22);
+  font-weight:500;
+}
+
+/* Answer spans for vocab/verb */
+.ans-vocab-hira  { font-size:clamp(36px,5.5vw,80px); color:#fff;  line-height:1.1; text-shadow:0 0 14px rgba(255,255,255,.25); }
+.ans-vocab-kata  { font-size:clamp(36px,5.5vw,80px); color:#aad4ff; line-height:1.1; text-shadow:0 0 14px rgba(150,200,255,.25); }
+.ans-vocab-meaning-main { font-size:clamp(24px,4vw,56px); color:#fff; line-height:1.2; }
+.ans-meaning     { font-size:clamp(13px,1.6vw,20px); color:#9ab; line-height:1.3; }
+.script-badge    { font-size:11px; padding:2px 8px; border-radius:8px; margin-top:4px; }
+.katakana-badge  { color:#7acfff; background:rgba(100,190,255,.12); border:1px solid rgba(100,190,255,.22); }
+
+/* ===== Vocab table ===== */
+.vocab-table-group-hdr {
+  font-size:14px; color:#b8a8ff; font-weight:600; letter-spacing:.04em;
+  padding:10px 4px 6px; border-bottom:1px solid rgba(255,255,255,.08); margin-bottom:4px;
+}
+.vocab-table {
+  width:100%; border-collapse:separate; border-spacing:2px;
+  background:transparent; margin-bottom:18px;
+  table-layout:fixed;
+}
+.vocab-table th,
+.vocab-table td {
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+/* col 1: native word — 38% */
+.vocab-table th:nth-child(1),
+.vocab-table td:nth-child(1) { width:38%; }
+/* col 2: Japanese — 28% */
+.vocab-table th:nth-child(2),
+.vocab-table td:nth-child(2) { width:28%; }
+/* col 3: Romaji — 22% */
+.vocab-table th:nth-child(3),
+.vocab-table td:nth-child(3) { width:22%; }
+/* col 4: Script badge — 12% */
+.vocab-table th:nth-child(4),
+.vocab-table td:nth-child(4) { width:12%; text-align:center; }
+.vocab-table th {
+  font-size:clamp(10px,1vw,12px); color:#ccc; padding:5px 10px 4px;
+  text-align:left; font-weight:600; letter-spacing:.04em;
+  background:rgba(0,0,0,.40); border-radius:8px;
+}
+.vocab-table td {
+  font-size:clamp(12px,1.2vw,15px); color:#ddd; padding:6px 10px;
+  background:rgba(0,0,0,.25); border-radius:8px; vertical-align:middle;
+  transition:background 100ms ease;
+}
+.vocab-table tr:hover td { background:rgba(255,255,255,.08); }
+.vocab-cell-hira { font-size:clamp(14px,1.5vw,18px)!important; color:#fff!important; }
+.vocab-cell-kata { font-size:clamp(14px,1.5vw,18px)!important; color:#aad4ff!important; }
+.vocab-script-h  { color:#aaa!important; font-size:11px!important; text-align:center; }
+.vocab-script-k  { color:#7acfff!important; font-size:11px!important; text-align:center; }
+
+/* ===== Verb table ===== */
+.verb-table-wrap { width:100%; overflow-x:auto; }
+.verb-table {
+  width:100%; border-collapse:separate; border-spacing:2px; background:transparent;
+  min-width:700px;
+}
+.verb-table th {
+  font-size:clamp(10px,1vw,13px); color:#ccc; padding:5px 10px 4px;
+  text-align:center; font-weight:600; letter-spacing:.03em;
+  background:rgba(0,0,0,.45); border-radius:8px; white-space:nowrap;
+}
+.verb-table th:first-child { text-align:left; min-width:130px; }
+.verb-table td {
+  padding:6px 10px; border-radius:8px; background:rgba(0,0,0,.25);
+  font-size:clamp(12px,1.2vw,15px); color:#ddd; vertical-align:middle;
+  transition:background 100ms ease;
+}
+.verb-table tr:hover td { background:rgba(255,255,255,.08); }
+.verb-cell-jp  { font-size:clamp(14px,1.5vw,18px)!important; color:#fff!important; text-align:center; }
+.verb-cell-neg { color:#ffaaaa!important; }
 
 @media (max-width:700px) {
   .card-face { font-size:clamp(70px,20vw,160px); }
@@ -483,4 +619,6 @@ button.ghost:hover { background:rgba(255,255,255,.12); }
   .num-cell { min-width:70px; }
   .num-kanji { font-size:18px; }
   .time-table-wrap { flex-direction:column; }
+  .card-face.vocab-meaning-prompt { font-size:clamp(22px,6vw,52px); }
+  .card-face.verb-meaning-prompt  { font-size:clamp(20px,5.5vw,46px); }
 }

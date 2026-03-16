@@ -1,466 +1,161 @@
 {
-  "contentrating": "Everyone",
-  "description": "Kana Night — Japanese Practice\nLearn Hiragana, Katakana, Numbers and Time with flashcards and reference tables.\n\nModes: Kana · Numbers · Time",
-  "file": "index.html",
-  "general": {
-    "properties": {
-      "schemecolor": {
-        "order": 0,
-        "text": "ui_browse_properties_scheme_color",
-        "type": "color",
-        "value": "0.035 0.027 0.11"
-      },
-      "global_mode": {
-        "order": 10,
-        "text": "Mode",
-        "type": "combo",
-        "value": "kana",
-        "options": [
-          {
-            "label": "Kana",
-            "value": "kana"
-          },
-          {
-            "label": "Numbers",
-            "value": "numbers"
-          },
-          {
-            "label": "Time",
-            "value": "time"
-          },
-          {
-            "label": "Calendar",
-            "value": "calendar"
-          }
-        ]
-      },
-      "start_view": {
-        "order": 11,
-        "text": "Start view",
-        "type": "combo",
-        "value": "flash",
-        "options": [
-          {
-            "label": "Flashcards",
-            "value": "flash"
-          },
-          {
-            "label": "Table",
-            "value": "tables"
-          }
-        ]
-      },
-      "kana_script_mode": {
-        "order": 101,
-        "text": "Kana: script",
-        "type": "combo",
-        "value": "hiragana",
-        "options": [
-          {
-            "label": "Hiragana",
-            "value": "hiragana"
-          },
-          {
-            "label": "Katakana",
-            "value": "katakana"
-          },
-          {
-            "label": "Both (mix)",
-            "value": "both_mix"
-          },
-          {
-            "label": "Both (together)",
-            "value": "both_together"
-          }
-        ]
-      },
-      "default_dakuten": {
-        "order": 102,
-        "text": "Kana: Dakuten/Handakuten",
-        "type": "bool",
-        "value": false
-      },
-      "default_yoon": {
-        "order": 103,
-        "text": "Kana: Yoon (拗音)",
-        "type": "bool",
-        "value": false
-      },
-      "default_random_next": {
-        "order": 104,
-        "text": "Kana: Random order",
-        "type": "bool",
-        "value": true
-      },
-      "reverse_quiz": {
-        "order": 105,
-        "text": "Kana: Reverse quiz",
-        "type": "bool",
-        "value": false
-      },
-      "reverse_choices": {
-        "order": 106,
-        "text": "Kana: Reverse quiz choices",
-        "type": "slider",
-        "value": 6,
-        "min": 2,
-        "max": 12,
-        "step": 1
-      },
-      "num_mode": {
-        "order": 201,
-        "text": "Numbers: range",
-        "type": "combo",
-        "value": "mixed",
-        "options": [
-          {
-            "label": "Mixed",
-            "value": "mixed"
-          },
-          {
-            "label": "Units (0–9)",
-            "value": "units"
-          },
-          {
-            "label": "Tens (10–99)",
-            "value": "tens"
-          },
-          {
-            "label": "Hundreds (100–999)",
-            "value": "hundreds"
-          },
-          {
-            "label": "Thousands (1000–9999)",
-            "value": "thousands"
-          },
-          {
-            "label": "Large (10k–999k)",
-            "value": "large"
-          }
-        ]
-      },
-      "num_min": {
-        "order": 202,
-        "text": "Numbers: minimum",
-        "type": "slider",
-        "value": 1,
-        "min": 0,
-        "max": 9999,
-        "step": 1
-      },
-      "num_max": {
-        "order": 203,
-        "text": "Numbers: maximum",
-        "type": "slider",
-        "value": 9999,
-        "min": 1,
-        "max": 999999,
-        "step": 1
-      },
-      "num_deck_size": {
-        "order": 204,
-        "text": "Numbers: cards per session",
-        "type": "slider",
-        "value": 20,
-        "min": 5,
-        "max": 100,
-        "step": 5
-      },
-      "num_show_kanji": {
-        "order": 205,
-        "text": "Numbers: show kanji",
-        "type": "bool",
-        "value": true
-      },
-      "num_show_romaji": {
-        "order": 206,
-        "text": "Numbers: show romaji",
-        "type": "bool",
-        "value": true
-      },
-      "num_show_hiragana": {
-        "order": 207,
-        "text": "Numbers: show hiragana",
-        "type": "bool",
-        "value": true
-      },
-      "time_format": {
-        "order": 301,
-        "text": "Time: format",
-        "type": "combo",
-        "value": "24h",
-        "options": [
-          {
-            "label": "24h",
-            "value": "24h"
-          },
-          {
-            "label": "12h",
-            "value": "12h"
-          }
-        ]
-      },
-      "time_step": {
-        "order": 302,
-        "text": "Time: step (minutes)",
-        "type": "combo",
-        "value": "5",
-        "options": [
-          {
-            "label": "1 min",
-            "value": "1"
-          },
-          {
-            "label": "5 min",
-            "value": "5"
-          },
-          {
-            "label": "10 min",
-            "value": "10"
-          },
-          {
-            "label": "15 min",
-            "value": "15"
-          },
-          {
-            "label": "30 min",
-            "value": "30"
-          }
-        ]
-      },
-      "time_range": {
-        "order": 303,
-        "text": "Time: range",
-        "type": "combo",
-        "value": "full",
-        "options": [
-          {
-            "label": "Full day",
-            "value": "full"
-          },
-          {
-            "label": "Morning (5–11)",
-            "value": "morning"
-          },
-          {
-            "label": "Day (12–17)",
-            "value": "day"
-          },
-          {
-            "label": "Evening (18–22)",
-            "value": "evening"
-          },
-          {
-            "label": "Night (23–4)",
-            "value": "night"
-          }
-        ]
-      },
-      "time_show_front": {
-        "order": 304,
-        "text": "Time: show on card front",
-        "type": "combo",
-        "value": "time",
-        "options": [
-          {
-            "label": "Time digits",
-            "value": "time"
-          },
-          {
-            "label": "Kanji",
-            "value": "kanji"
-          },
-          {
-            "label": "Hiragana",
-            "value": "hira"
-          },
-          {
-            "label": "Romaji",
-            "value": "romaji"
-          },
-          {
-            "label": "Mixed",
-            "value": "mixed"
-          }
-        ]
-      },
-      "time_order": {
-        "order": 305,
-        "text": "Time: card order",
-        "type": "combo",
-        "value": "random",
-        "options": [
-          {
-            "label": "Random",
-            "value": "random"
-          },
-          {
-            "label": "Sequential",
-            "value": "sequential"
-          }
-        ]
-      },
-      "time_gozen_gogo": {
-        "order": 306,
-        "text": "Time: show 午前/午後 (12h only)",
-        "type": "bool",
-        "value": false
-      },
-      "time_include_special": {
-        "order": 307,
-        "text": "Time: include special phrases",
-        "type": "bool",
-        "value": false
-      },
-      "cal_scope": {
-        "order": 401,
-        "text": "Calendar: scope",
-        "type": "combo",
-        "value": "mixed",
-        "options": [
-          {
-            "label": "All",
-            "value": "mixed"
-          },
-          {
-            "label": "Weekdays",
-            "value": "weekdays"
-          },
-          {
-            "label": "Month days",
-            "value": "days"
-          },
-          {
-            "label": "Months",
-            "value": "months"
-          },
-          {
-            "label": "Weekdays + Days",
-            "value": "wd_days"
-          },
-          {
-            "label": "Days + Months",
-            "value": "days_months"
-          }
-        ]
-      },
-      "cal_show_front": {
-        "order": 402,
-        "text": "Calendar: card front",
-        "type": "combo",
-        "value": "kanji",
-        "options": [
-          {
-            "label": "Kanji",
-            "value": "kanji"
-          },
-          {
-            "label": "Hiragana",
-            "value": "hira"
-          },
-          {
-            "label": "Romaji",
-            "value": "romaji"
-          },
-          {
-            "label": "Meaning",
-            "value": "meaning"
-          },
-          {
-            "label": "Mixed",
-            "value": "mixed"
-          }
-        ]
-      },
-      "cal_order": {
-        "order": 403,
-        "text": "Calendar: order",
-        "type": "combo",
-        "value": "random",
-        "options": [
-          {
-            "label": "Random",
-            "value": "random"
-          },
-          {
-            "label": "Sequential",
-            "value": "sequential"
-          }
-        ]
-      },
-      "cal_day_min": {
-        "order": 404,
-        "text": "Calendar: day range from",
-        "type": "slider",
-        "value": 1,
-        "min": 1,
-        "max": 31,
-        "step": 1
-      },
-      "cal_day_max": {
-        "order": 405,
-        "text": "Calendar: day range to",
-        "type": "slider",
-        "value": 31,
-        "min": 1,
-        "max": 31,
-        "step": 1
-      },
-      "cal_ex_only": {
-        "order": 406,
-        "text": "Calendar: exceptions only",
-        "type": "bool",
-        "value": false
-      },
-      "cal_meaning_lang": {
-        "order": 407,
-        "text": "Calendar: meaning language",
-        "type": "combo",
-        "value": "en",
-        "options": [
-          {
-            "label": "English",
-            "value": "en"
-          },
-          {
-            "label": "Русский",
-            "value": "ru"
-          },
-          {
-            "label": "Off",
-            "value": "off"
-          }
-        ]
-      },
-      "cal_month_min": {
-        "order": 408,
-        "text": "Calendar: month from",
-        "type": "slider",
-        "value": 1,
-        "min": 1,
-        "max": 12,
-        "step": 1
-      },
-      "cal_month_max": {
-        "order": 409,
-        "text": "Calendar: month to",
-        "type": "slider",
-        "value": 12,
-        "min": 1,
-        "max": 12,
-        "step": 1
-      }
-    },
-    "supportsaudioprocessing": false
-  },
-  "preview": "preview.jpg",
-  "ratingsex": "none",
-  "ratingviolence": "none",
-  "tags": [
-    "Anime",
-    "Educational"
-  ],
-  "title": "Kana Night — Japanese Practice",
-  "type": "web",
-  "version": 0
+	"contentrating" : "Everyone",
+	"description" : "Kana Night — Hiragana & Katakana Practice\nA calm, minimal interactive wallpaper designed for learning Japanese kana.\nPractice Hiragana and Katakana with clean flashcards and a full kana chart, set against a peaceful night view of Mount Fuji.\nThe interface stays out of the way and gently appears only when you need it, making this wallpaper suitable both for focused study and everyday desktop use.\nFeatures:\nFlashcards for Hiragana, Katakana, or both\nOptional Dakuten / Handakuten, Yōon, and Small kana\nRandom or sequential card flow\nBuilt-in kana tables with hover highlights\nSession statistics (known cards and attempts)\nMinimal dark UI with smooth transitions\nAuto-hiding controls for a clean desktop\n\nWallpaper Engine properties to customize defaults\nDesigned to be non-distracting, readable, and comfortable for long sessions.\nPerfect for:\nJapanese learners\nStudy-focused setups\nMinimal and aesthetic desktops",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"deck_mode" : 
+			{
+				"index" : 1,
+				"options" : 
+				[
+					{
+						"label" : "Hiragana",
+						"value" : "hira"
+					},
+					{
+						"label" : "Katakana",
+						"value" : "kata"
+					},
+					{
+						"label" : "Both (mix)",
+						"value" : "mix"
+					},
+					{
+						"label" : "Both (together)",
+						"value" : "both"
+					}
+				],
+				"order" : 101,
+				"text" : "Deck",
+				"type" : "combo",
+				"value" : "hira"
+			},
+			"reverse_quiz" : 
+			{
+				"index" : 10,
+				"order" : 110,
+				"text" : "Flashcards: Reverse quiz (romaji → pick kana)",
+				"type" : "bool",
+				"value" : false
+			},
+			"quiz_options" : 
+			{
+				"index" : 11,
+				"min" : 2,
+				"max" : 12,
+				"step" : 1,
+				"order" : 111,
+				"text" : "Flashcards: Reverse quiz options (N)",
+				"type" : "slider",
+				"value" : 6
+			},
+			"default_dakuten" : 
+			{
+				"index" : 2,
+				"order" : 102,
+				"text" : "Default: Dakuten/Handakuten",
+				"type" : "bool",
+				"value" : false
+			},
+			"default_random_next" : 
+			{
+				"index" : 5,
+				"order" : 105,
+				"text" : "Default: Random next",
+				"type" : "bool",
+				"value" : true
+			},
+			"default_small" : 
+			{
+				"index" : 4,
+				"order" : 104,
+				"text" : "Default: Small kana",
+				"type" : "bool",
+				"value" : false
+			},
+			"default_yoon" : 
+			{
+				"index" : 3,
+				"order" : 103,
+				"text" : "Default: Yōon",
+				"type" : "bool",
+				"value" : false
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0.03529411764705882 0.027450980392156862 0.10980392156862745"
+			},
+			"start_view" : 
+			{
+				"index" : 0,
+				"options" : 
+				[
+					{
+						"label" : "Flashcards",
+						"value" : "cards"
+					},
+					{
+						"label" : "Tables",
+						"value" : "tables"
+					}
+				],
+				"order" : 100,
+				"text" : "Start view",
+				"type" : "combo",
+				"value" : "tables"
+			},
+			"ui_autohide_bottom" : 
+			{
+				"index" : 7,
+				"order" : 107,
+				"text" : "UI: Auto-hide bottom controls",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_autohide_top" : 
+			{
+				"index" : 6,
+				"order" : 106,
+				"text" : "UI: Auto-hide top bar",
+				"type" : "bool",
+				"value" : true
+			},
+			"ui_bottom_hide_delay" : 
+			{
+				"index" : 9,
+				"max" : 300,
+				"min" : 10,
+				"order" : 109,
+				"step" : 10,
+				"text" : "UI: Bottom controls hide delay (sec)",
+				"type" : "slider",
+				"value" : 60
+			},
+			"ui_top_hide_delay" : 
+			{
+				"index" : 8,
+				"max" : 30,
+				"min" : 2,
+				"order" : 108,
+				"step" : 1,
+				"text" : "UI: Top bar hide delay (sec)",
+				"type" : "slider",
+				"value" : 10
+			}
+		},
+		"supportsaudioprocessing" : false
+	},
+	"preview" : "preview.jpg",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Anime" ],
+	"title" : "Kana Night — Hiragana & Katakana Practice",
+	"type" : "web",
+	"version" : 0
 }

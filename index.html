@@ -16,131 +16,164 @@
   <div class="topbar" id="topbar">
     <div class="tb-left">
 
-      <!-- ① Global mode -->
-      <span class="label">Mode:</span>
+      <!-- ① Global mode + UI language -->
+      <span class="label" id="lblMode">Режим:</span>
       <select id="selGlobalMode">
-        <option value="kana">Kana</option>
-        <option value="numbers">Numbers</option>
-        <option value="time">Time</option>
-        <option value="calendar">Calendar</option>
+        <option value="kana">Кана</option>
+        <option value="numbers">Числа</option>
+        <option value="time">Время</option>
+        <option value="calendar">Календарь</option>
+        <option value="vocab">📖 Слова</option>
+        <option value="verbs">🔤 Глаголы</option>
+      </select>
+
+      <span class="tb-sep"></span>
+
+      <!-- ⓪ UI Language toggle -->
+      <span class="label">UI:</span>
+      <select id="selUiLang">
+        <option value="ru">RU</option>
+        <option value="en">EN</option>
       </select>
 
       <span class="tb-sep"></span>
 
       <!-- ② Kana controls -->
       <span id="kanaControls" class="tb-group">
-        <span class="label">Script:</span>
+        <span class="label" data-i18n="script">Азбука:</span>
         <select id="selScript">
-          <option value="hiragana">Hiragana</option>
-          <option value="katakana">Katakana</option>
-          <option value="both_mix">Both (mix)</option>
-          <option value="both_together">Both (together)</option>
+          <option value="hiragana" data-i18n-opt="hiragana">Хирагана</option>
+          <option value="katakana" data-i18n-opt="katakana">Катакана</option>
+          <option value="both_mix" data-i18n-opt="both_mix">Обе (микс)</option>
+          <option value="both_together" data-i18n-opt="both_together">Обе (вместе)</option>
         </select>
-        <span class="label">Order:</span>
+        <span class="label" data-i18n="order">Порядок:</span>
         <select id="selOrder">
-          <option value="sequential">Sequential</option>
-          <option value="random">Random</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
+          <option value="random" data-i18n-opt="random">Случайный</option>
         </select>
-        <label class="chk"><input type="checkbox" id="optDakuten" /> Dakuten</label>
-        <label class="chk"><input type="checkbox" id="optYoon" /> Yoon</label>
-        <label class="chk"><input type="checkbox" id="optReverse" /> Reverse quiz</label>
-        <span class="label hidden" id="choicesLabel">Choices:</span>
+        <label class="chk"><input type="checkbox" id="optDakuten" /> <span data-i18n="dakuten">Дакутен</span></label>
+        <label class="chk"><input type="checkbox" id="optYoon" /> <span data-i18n="yoon">Ёон</span></label>
+
+        <span id="kanaRowsWrap" class="kana-rows-wrap">
+          <span class="label" data-i18n="rows">Ряды:</span>
+          <button type="button" class="kana-row-btn active" data-row="vowels">あ</button>
+          <button type="button" class="kana-row-btn active" data-row="k">か</button>
+          <button type="button" class="kana-row-btn active" data-row="s">さ</button>
+          <button type="button" class="kana-row-btn active" data-row="t">た</button>
+          <button type="button" class="kana-row-btn active" data-row="n">な</button>
+          <button type="button" class="kana-row-btn active" data-row="h">は</button>
+          <button type="button" class="kana-row-btn active" data-row="m">ま</button>
+          <button type="button" class="kana-row-btn active" data-row="y">や</button>
+          <button type="button" class="kana-row-btn active" data-row="r">ら</button>
+          <button type="button" class="kana-row-btn active" data-row="w">わ</button>
+          <span class="kana-rows-dak hidden" id="kanaRowsDak">
+            <button type="button" class="kana-row-btn active" data-row="g">が</button>
+            <button type="button" class="kana-row-btn active" data-row="z">ざ</button>
+            <button type="button" class="kana-row-btn active" data-row="d">だ</button>
+            <button type="button" class="kana-row-btn active" data-row="b">ば</button>
+            <button type="button" class="kana-row-btn active" data-row="p">ぱ</button>
+          </span>
+        </span>
+        <label class="chk"><input type="checkbox" id="optReverse" /> <span data-i18n="reverse_quiz">Обратный квиз</span></label>
+        <span class="label hidden" id="choicesLabel" data-i18n="choices">Вариантов:</span>
         <input id="choicesN" type="number" min="2" max="12" value="6" class="num hidden" />
       </span>
 
       <!-- ③ Numbers controls -->
       <span id="numControls" class="tb-group hidden">
-        <span class="label">Range:</span>
+        <span class="label" data-i18n="range">Диапазон:</span>
         <select id="selNumMode">
-          <option value="mixed">Mixed</option>
-          <option value="units">Units (0–9)</option>
-          <option value="tens">Tens (10–99)</option>
-          <option value="hundreds">Hundreds (100–999)</option>
-          <option value="thousands">Thousands (1000–9999)</option>
-          <option value="large">Large (10k–999k)</option>
+          <option value="mixed"     data-i18n-opt="mixed">Смешанный</option>
+          <option value="units"     data-i18n-opt="num_units">0–9</option>
+          <option value="tens"      data-i18n-opt="num_tens">10–99</option>
+          <option value="hundreds"  data-i18n-opt="num_hundreds">100–999</option>
+          <option value="thousands" data-i18n-opt="num_thousands">1000–9999</option>
+          <option value="large"     data-i18n-opt="num_large">10k–9999万</option>
+          <option value="oku"       data-i18n-opt="num_oku">億 100M–999M</option>
         </select>
         <span class="label">Min:</span>
-        <input id="numMin" type="number" min="0" max="999999" value="1" class="num" />
+        <input id="numMin" type="number" min="0" max="999999999" value="1" class="num" />
         <span class="label">Max:</span>
-        <input id="numMax" type="number" min="0" max="999999" value="9999" class="num" />
-        <span class="label">Cards:</span>
+        <input id="numMax" type="number" min="0" max="999999999" value="9999" class="num" />
+        <span class="label" data-i18n="cards">Карточек:</span>
         <input id="numDeckSize" type="number" min="1" max="100" value="20" class="num" />
-        <label class="chk"><input type="checkbox" id="optNumKanji"  checked /> Kanji</label>
+        <label class="chk"><input type="checkbox" id="optNumKanji"  checked /> 漢字</label>
         <label class="chk"><input type="checkbox" id="optNumRomaji" checked /> Romaji</label>
-        <label class="chk"><input type="checkbox" id="optNumHira"   checked /> Hiragana</label>
+        <label class="chk"><input type="checkbox" id="optNumHira"   checked /> ひらがな</label>
       </span>
 
       <!-- ④ Time controls -->
       <span id="timeControls" class="tb-group hidden">
-        <span class="label">Format:</span>
+        <span class="label" data-i18n="format">Формат:</span>
         <select id="selTimeFormat">
           <option value="24h">24h</option>
           <option value="12h">12h</option>
         </select>
 
-        <span class="label">Step:</span>
+        <span class="label" data-i18n="step">Шаг:</span>
         <select id="selTimeStep">
-          <option value="1">1 min</option>
-          <option value="5" selected>5 min</option>
-          <option value="10">10 min</option>
-          <option value="15">15 min</option>
-          <option value="30">30 min</option>
+          <option value="1"  data-i18n-opt="min_1">1 мин</option>
+          <option value="5"  data-i18n-opt="min_5" selected>5 мин</option>
+          <option value="10" data-i18n-opt="min_10">10 мин</option>
+          <option value="15" data-i18n-opt="min_15">15 мин</option>
+          <option value="30" data-i18n-opt="min_30">30 мин</option>
         </select>
 
-        <span class="label">Range:</span>
+        <span class="label" data-i18n="range">Диапазон:</span>
         <select id="selTimeRange">
-          <option value="full">Full day</option>
-          <option value="morning">Morning (5–11)</option>
-          <option value="day">Day (12–17)</option>
-          <option value="evening">Evening (18–22)</option>
-          <option value="night">Night (23–4)</option>
+          <option value="full" data-i18n-opt="full_day">Весь день</option>
+          <option value="morning" data-i18n-opt="morning">Утро (5–11)</option>
+          <option value="day" data-i18n-opt="daytime">День (12–17)</option>
+          <option value="evening" data-i18n-opt="evening">Вечер (18–22)</option>
+          <option value="night" data-i18n-opt="night">Ночь (23–4)</option>
         </select>
 
-        <span class="label">Front:</span>
+        <span class="label" data-i18n="front">Фронт:</span>
         <select id="selShowFront">
-          <option value="time">Time digits</option>
-          <option value="kanji">Kanji</option>
-          <option value="hira">Hiragana</option>
-          <option value="mixed">Mixed</option>
+          <option value="time" data-i18n-opt="time_digits">Цифры</option>
+          <option value="kanji">漢字</option>
+          <option value="hira">ひらがな</option>
+          <option value="mixed" data-i18n-opt="mixed">Микс</option>
         </select>
 
-        <span class="label">Order:</span>
+        <span class="label" data-i18n="order">Порядок:</span>
         <select id="selTimeOrder">
-          <option value="random">Random</option>
-          <option value="sequential">Sequential</option>
+          <option value="random" data-i18n-opt="random">Случайный</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
         </select>
 
         <span id="gozenGogoWrap" class="hidden">
           <label class="chk"><input type="checkbox" id="optGozenGogo" /> 午前/午後</label>
         </span>
-        <label class="chk"><input type="checkbox" id="optSpecial" /> Phrases</label>
+        <label class="chk"><input type="checkbox" id="optSpecial" /> <span data-i18n="phrases">Фразы</span></label>
       </span>
 
       <!-- ⑤ Calendar controls -->
       <span id="calControls" class="tb-group hidden">
-        <span class="label">Scope:</span>
+        <span class="label" data-i18n="scope">Охват:</span>
         <select id="selCalScope">
-          <option value="mixed">All</option>
-          <option value="weekdays">Weekdays</option>
-          <option value="days">Month days</option>
-          <option value="months">Months</option>
-          <option value="wd_days">Weekdays + Days</option>
-          <option value="days_months">Days + Months</option>
+          <option value="mixed" data-i18n-opt="all">Всё</option>
+          <option value="weekdays" data-i18n-opt="weekdays">Дни недели</option>
+          <option value="days" data-i18n-opt="month_days">Числа месяца</option>
+          <option value="months" data-i18n-opt="months">Месяцы</option>
+          <option value="wd_days">曜日 + 日付</option>
+          <option value="days_months">日付 + 月</option>
         </select>
-        <span class="label">Front:</span>
+        <span class="label" data-i18n="front">Фронт:</span>
         <select id="selCalFront">
-          <option value="kanji">Kanji</option>
-          <option value="hira">Hiragana</option>
+          <option value="kanji">漢字</option>
+          <option value="hira">ひらがな</option>
           <option value="romaji">Romaji</option>
-          <option value="meaning">Meaning</option>
-          <option value="mixed">Mixed</option>
+          <option value="meaning" data-i18n-opt="meaning">Перевод</option>
+          <option value="mixed" data-i18n-opt="mixed">Микс</option>
         </select>
-        <span class="label">Order:</span>
+        <span class="label" data-i18n="order">Порядок:</span>
         <select id="selCalOrder">
-          <option value="random">Random</option>
-          <option value="sequential">Sequential</option>
+          <option value="random" data-i18n-opt="random">Случайный</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
         </select>
-        <span class="label">Days:</span>
+        <span class="label" data-i18n="days">Числа:</span>
         <select id="selCalDayMin">
           <option value="1">1</option><option value="11">11</option><option value="21">21</option>
         </select>
@@ -148,41 +181,92 @@
         <select id="selCalDayMax">
           <option value="10">10</option><option value="20">20</option><option value="31" selected>31</option>
         </select>
-                <span class="label">Mo:</span>
+        <span class="label" data-i18n="month_short">Мес:</span>
         <select id="selCalMonthMin">
-          <option value="1" selected>Jan</option>
-          <option value="2">Feb</option>
-          <option value="3">Mar</option>
-          <option value="4">Apr</option>
-          <option value="5">May</option>
-          <option value="6">Jun</option>
-          <option value="7">Jul</option>
-          <option value="8">Aug</option>
-          <option value="9">Sep</option>
-          <option value="10">Oct</option>
-          <option value="11">Nov</option>
-          <option value="12">Dec</option>
+          <option value="1" selected>Янв</option>
+          <option value="2">Фев</option>
+          <option value="3">Мар</option>
+          <option value="4">Апр</option>
+          <option value="5">Май</option>
+          <option value="6">Июн</option>
+          <option value="7">Июл</option>
+          <option value="8">Авг</option>
+          <option value="9">Сен</option>
+          <option value="10">Окт</option>
+          <option value="11">Ноя</option>
+          <option value="12">Дек</option>
         </select>
         <span style="color:#888;font-size:12px">–</span>
         <select id="selCalMonthMax">
-          <option value="1">Jan</option>
-          <option value="2">Feb</option>
-          <option value="3">Mar</option>
-          <option value="4">Apr</option>
-          <option value="5">May</option>
-          <option value="6">Jun</option>
-          <option value="7">Jul</option>
-          <option value="8">Aug</option>
-          <option value="9">Sep</option>
-          <option value="10">Oct</option>
-          <option value="11">Nov</option>
-          <option value="12" selected>Dec</option>
+          <option value="1">Янв</option>
+          <option value="2">Фев</option>
+          <option value="3">Мар</option>
+          <option value="4">Апр</option>
+          <option value="5">Май</option>
+          <option value="6">Июн</option>
+          <option value="7">Июл</option>
+          <option value="8">Авг</option>
+          <option value="9">Сен</option>
+          <option value="10">Окт</option>
+          <option value="11">Ноя</option>
+          <option value="12" selected>Дек</option>
         </select>
-        <span class="label">Meaning:</span>
+        <span class="label" data-i18n="meaning">Перевод:</span>
         <select id="selCalMeaning">
           <option value="en">EN</option>
           <option value="ru">RU</option>
-          <option value="off">Off</option>
+          <option value="off" data-i18n-opt="off">Откл.</option>
+        </select>
+      </span>
+
+      <!-- ⑥ Vocab controls -->
+      <span id="vocabControls" class="tb-group hidden">
+        <span class="label" data-i18n="group">Группа:</span>
+        <select id="selVocabScope">
+          <option value="all" data-i18n-opt="all_words">Все слова</option>
+          <option value="lesson1" data-i18n-opt="lesson1">Урок 1 — Люди</option>
+          <option value="countries" data-i18n-opt="countries">Страны</option>
+          <option value="lesson2" data-i18n-opt="lesson2">Урок 2 — Предметы</option>
+          <option value="fruits" data-i18n-opt="fruits">Фрукты</option>
+          <option value="lesson3" data-i18n-opt="lesson3">Урок 3 — Места</option>
+          <option value="lesson4" data-i18n-opt="lesson4">Урок 4 — Время</option>
+          <option value="family_own" data-i18n-opt="family_own">Семья (своя)</option>
+          <option value="family_other" data-i18n-opt="family_other">Семья (вежл.)</option>
+        </select>
+        <span class="label" data-i18n="front">Фронт:</span>
+        <select id="selVocabFront">
+          <option value="native">Родной → JP</option>
+          <option value="jp">JP → Родной</option>
+        </select>
+        <span class="label" data-i18n="order">Порядок:</span>
+        <select id="selVocabOrder">
+          <option value="random" data-i18n-opt="random">Случайный</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
+        </select>
+      </span>
+
+      <!-- ⑦ Verb controls -->
+      <span id="verbControls" class="tb-group hidden">
+        <span class="label" data-i18n="group">Группа:</span>
+        <select id="selVerbScope">
+          <option value="all" data-i18n-opt="all_verbs">Все глаголы</option>
+          <option value="lesson4" data-i18n-opt="lesson4">Урок 4</option>
+          <option value="lesson5" data-i18n-opt="lesson5">Урок 5</option>
+        </select>
+        <span class="label" data-i18n="form">Форма:</span>
+        <label class="chk"><input type="checkbox" id="optVerbPres" checked /> <span data-i18n="vpres">Наст/Буд</span></label>
+        <label class="chk"><input type="checkbox" id="optVerbPast" checked /> <span data-i18n="vpast">Прошедшее</span></label>
+        <label class="chk"><input type="checkbox" id="optVerbNeg"  checked /> <span data-i18n="vneg">Отрицание</span></label>
+        <label class="chk"><input type="checkbox" id="optVerbLet"  /> ましょう</label>
+        <span class="label" data-i18n="front">Фронт:</span>
+        <select id="selVerbFront">
+          <option value="native">Родной → JP</option>
+          <option value="jp">JP → Родной</option>
+        </select>
+        <span class="label" data-i18n="order">Порядок:</span>
+        <select id="selVerbOrder">
+          <option value="random" data-i18n-opt="random">Случайный</option>
+          <option value="sequential" data-i18n-opt="sequential">По порядку</option>
         </select>
       </span>
 
@@ -202,9 +286,9 @@
       </div>
       <div class="choices-row hidden" id="choicesRow"></div>
       <div class="actions-row" id="actionsRow">
-        <button id="btnAgain">↩ Again</button>
-        <button id="btnKnown" class="primary">✓ Known</button>
-        <button id="btnReset" class="ghost">↺ Reset</button>
+        <button id="btnAgain">↩ <span data-i18n="again">Повтор</span></button>
+        <button id="btnKnown" class="primary">✓ <span data-i18n="known">Знаю</span></button>
+        <button id="btnReset" class="ghost">↺ <span data-i18n="reset">Сброс</span></button>
       </div>
     </div>
 
@@ -216,10 +300,9 @@
       <div class="table-scroller" id="tableScroller"></div>
     </div>
 
-    <button class="tables-btn" id="btnTables">Tables</button>
+    <button class="tables-btn" id="btnTables" data-i18n-btn="tables">Таблицы</button>
 
   </div>
 
   <script src="main.js"></script>
 </body>
-</html>
